@@ -75,20 +75,20 @@
     };
 
     const navigationNodes = [
-      { label: "HOME", url: "/index.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 0.2, distance: 260, size: 13 },
-      { label: "ABOUT", url: "/about.html", color: palette.purple, glow: palette.purpleSoft, baseAngle: 1.7, distance: 290, size: 15 },
-      { label: "AUDIO", url: "/audio.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 3.4, distance: 265, size: 15 },
-      { label: "VIDEO", url: "/video.html", color: palette.orange, glow: palette.orangeSoft, baseAngle: 5.2, distance: 300, size: 15 },
-      { label: "VISUAL", url: "/visual.html", color: palette.purple, glow: palette.purpleSoft, baseAngle: 6.8, distance: 270, size: 15 },
-      { label: "PERFORMANCE", url: "/performance.html", color: palette.white, glow: palette.whiteSoft, baseAngle: 0.9, distance: 155, size: 15 },
+      { label: "HOME", url: "/index.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 0.2, distance: 260, size: 13, isBold: true },
+      { label: "ABOUT", url: "/about.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 1.7, distance: 290, size: 15, isBold: true },
+      { label: "AUDIO", url: "/audio.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 3.4, distance: 265, size: 15, isBold: true  },
+      { label: "VIDEO", url: "/video.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 5.2, distance: 300, size: 15, isBold: true },
+      { label: "VISUAL", url: "/visual.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 6.8, distance: 270, size: 15, isBold: true },
+      { label: "PERFORMANCE", url: "/performance.html", color: palette.blue, glow: palette.blueoft, baseAngle: 0.9, distance: 155, size: 15, isBold: true },
      
       { label: "EVENTS", url: "/events.html", color: palette.orange, glow: palette.orangeSoft, baseAngle: 2.9, distance: 170, size: 10 },
-      { label: "CONTACT", url: "/contact.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 5.1, distance: 165, size: 10 },
+      { label: "CONTACT", url: "/contact.html", color: palette.white, glow: palette.whiteSoft, baseAngle: 5.1, distance: 165, size: 10 },
 
-      { label: "INSTAGRAM", url: "https://instagram.com", color: palette.orange, glow: palette.orangeSoft, baseAngle: 1.1, distance: 72, size: 6 },
+      { label: "INSTAGRAM", url: "https://instagram.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 1.1, distance: 72, size: 6 },
       { label: "SPOTIFY", url: "https://spotify.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 2.5, distance: 78, size: 6 },
-      { label: "SOUNDCLOUD", url: "https://soundcloud.com", color: palette.blue, glow: palette.blueSoft, baseAngle: 4.2, distance: 82, size: 6 },
-      { label: "BOOKING", url: "mailto:booking@egos.com", color: palette.white, glow: palette.whiteSoft, baseAngle: 5.8, distance: 74, size: 6 }
+      { label: "SOUNDCLOUD", url: "https://soundcloud.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 4.2, distance: 82, size: 6 },
+      { label: "BOOKING", url: "mailto:booking@egos.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 5.8, distance: 74, size: 6 }
     ];
 
     let nodes = [];
@@ -174,6 +174,22 @@
         ctx.fillText(this.label, lx, ly);
         ctx.globalAlpha = 1;
       }
+       // Use different font sizing and weight based on isBold flag
+        if (this.isBold) {
+          ctx.font = "700 13px Segoe UI, sans-serif";
+        } else {
+          ctx.font = "600 10px Segoe UI, sans-serif";
+        }
+
+        const labelAngle = Math.atan2(this.y - height / 2, this.x - width / 2);
+        const labelDistance = this.radius + 20 + this.hoverScale * 8;
+        const lx = this.x + Math.cos(labelAngle) * labelDistance;
+        const ly = this.y + Math.sin(labelAngle) * labelDistance;
+
+        ctx.fillText(this.label, lx, ly);
+        ctx.globalAlpha = 1;
+      }
+
 
       hitTest(mx, my) {
         const dist = Math.hypot(this.x - mx, this.y - my);
