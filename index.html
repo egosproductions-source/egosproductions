@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="">
+    <meta name="description" content="e-GoS Productions is a multidisciplinary artist collective exploring music, performance, video, and visual art in St. Louis.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   
+    
     <title>e-Gos Productions</title>
 
     <!-- Favicon -->
@@ -37,10 +37,10 @@
 
                 <div class="container">
 
-                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav" aria-label="Main navigation">
 
                          <!-- Nav brand -->
-                        <a href="index.html" class="nav-brand"><img src="images/g8.jpg" alt=""></a>
+                        <a href="index.html" class="nav-brand"><img src="images/g8.jpg" alt="e-Gos Productions Logo"></a>
 
 
                         <!-- Navbar Toggler -->
@@ -67,7 +67,7 @@
                             <div class="classynav">
                                 <ul>
                                     <li>
-                                        <a href="index.html">Home</a>
+                                        <a href="index.html#about">Home</a>
                                     </li>
 
                                     <li>
@@ -85,7 +85,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="contact.html">Contact</a>
+                                        <a href="#contact">Contact</a>
                                     </li>
                                 </ul>
                             </div>
@@ -107,7 +107,7 @@
     <div class="hero-slides owl-carousel">
 
         <!-- Hero Slide -->
-        <div class="single-hero-slide d-flex align-items-center justify-content-center">
+        <div class="single-hero-slide d-flex align-items-start justify-content-center">
 
             <!-- Background Image -->
             <div
@@ -116,7 +116,7 @@
             </div>
 
             <!-- Hero Content -->
-            <div class="container">
+            <div class="container" style="padding-top: 150px;">
                 <div class="row">
                     <div class="col-12">
 
@@ -124,19 +124,20 @@
 
                             <h2
                                 data-animation="fadeInUp"
-                                data-delay="300ms">
+                                data-delay="300ms"
+                                style="margin-bottom: 30px;">
                                 e-Gos Productions
                                 <span>e-Gos Productions</span>
                             </h2>
-<a
-    data-animation="fadeInUp"
-    data-delay="500ms"
-    href="#"
-    class="btn oneMusic-btn mt-50 pulse-button">
-    Go
-    <i class="fa fa-angle-double-right"></i>
-</a>
-
+                            <a
+                                data-animation="fadeInUp"
+                                data-delay="500ms"
+                                href="#about"
+                                class="btn oneMusic-btn pulse-button"
+                                style="animation: pulse 2s infinite;">
+                                Go
+                                <i class="fa fa-angle-double-right"></i>
+                            </a>
 
                         </div>
 
@@ -177,8 +178,8 @@
                             <a
                                 data-animation="fadeInUp"
                                 data-delay="500ms"
-                                href="#"
-                                class="btn oneMusic-btn mt-50">
+                                href="#about"
+                                class="btn oneMusic-btn">
                                 Discover
                                 <i class="fa fa-angle-double-right"></i>
                             </a>
@@ -221,6 +222,7 @@
 
     <!-- ##### Featured Artist Area Start ##### -->
     <section
+        id="about"
         class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed">
 
         <div class="container">
@@ -312,6 +314,7 @@
 
     <!-- ##### Contact Area Start ##### -->
     <section
+        id="contact"
         class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img"
         style="background-image: url('images/g (9).jpg');">
 
@@ -357,7 +360,8 @@
                                             type="text"
                                             class="form-control"
                                             id="name"
-                                            placeholder="Name">
+                                            placeholder="Name"
+                                            aria-label="Name">
 
                                     </div>
 
@@ -375,7 +379,8 @@
                                             type="email"
                                             class="form-control"
                                             id="email"
-                                            placeholder="E-mail">
+                                            placeholder="E-mail"
+                                            aria-label="E-mail">
 
                                     </div>
 
@@ -393,7 +398,8 @@
                                             type="text"
                                             class="form-control"
                                             id="subject"
-                                            placeholder="Subject">
+                                            placeholder="Subject"
+                                            aria-label="Subject">
 
                                     </div>
 
@@ -413,7 +419,8 @@
                                             id="message"
                                             cols="30"
                                             rows="10"
-                                            placeholder="Message"></textarea>
+                                            placeholder="Message"
+                                            aria-label="Message"></textarea>
 
                                     </div>
 
@@ -465,19 +472,20 @@
                     <div class="footer-nav">
 
                         <ul>
-                            <li><a href="#">Home</a></li>
+                            <li><a href="index.html#about">Home</a></li>
                             <li><a href="#">Audio</a></li>
                             <li><a href="#">Video</a></li>
                             <li><a href="#">Visual</a></li>
                             <li><a href="#">Performance</a></li>
-                            <li><a href="#">Events</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="event.html">Events</a></li>
+                            <li><a href="#contact">Contact</a></li>
                         </ul>
 
                     </div>
 
                 </div>
 
+                <div class="col-12 col-md-6">
                     <div class="footer-social">
 
                         <div
@@ -486,9 +494,8 @@
                         </div>
 
                     </div>
-
                 </div>
-  </div>
+
             </div>
 
         </div>
