@@ -577,6 +577,7 @@ img {
       text-transform: capitalize;
       letter-spacing: 30px;
       overflow: hidden; }
+      transform: translateY(-20px);
       .single-hero-slide .hero-slides-content h2 span {
         position: absolute;
         top: 0;
@@ -1689,7 +1690,7 @@ img {
   font-size: 16px;
   text-decoration: none;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 26px;
 }
 /* ====== The End ====== */
 
