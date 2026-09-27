@@ -1,404 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Egos Productions - Network</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Egos Productions</title>
+  <style>
+    :root {
+      --bg-1: #050b17;
+      --bg-2: #0d1630;
+      --bg-3: #120d25;
+      --blue: #1d4ed8;
+      --blue-soft: rgba(29, 78, 216, 0.3);
+      --purple: #4c1d95;
+      --purple-soft: rgba(76, 29, 149, 0.3);
+      --orange: #f97316;
+      --orange-soft: rgba(249, 115, 22, 0.3);
+      --white: #f8fafc;
+      --white-soft: rgba(248, 250, 252, 0.25);
+      --line: rgba(148, 163, 184, 0.18);
+    }
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: radial-gradient(ellipse at center, #0a0f1f 0%, #050810 100%);
-            font-family: 'Orbitron', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        #network-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
+        radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
+        linear-gradient(180deg, var(--bg-2), var(--bg-1));
+      font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--white);
+    }
 
-        .overlay-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            text-align: center;
-            color: #ffffff;
-            pointer-events: none;
-        }
+    body {
+      position: relative;
+    }
 
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: 6px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(99, 102, 241, 0.4), 0 0 60px rgba(14, 165, 233, 0.2);
-            animation: glitch 0.15s infinite;
-        }
-
-        p {
-            color: #a78bfa;
-            font-size: 1rem;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
-            animation: pulse-text 3s ease-in-out infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-1px, 1px); }
-            40% { transform: translate(-1px, -1px); }
-            60% { transform: translate(1px, 1px); }
-            80% { transform: translate(1px, -1px); }
-        }
-
-        @keyframes pulse-text {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-    </style>
+    #network-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: transparent;
+      cursor: default;
+    }
+  </style>
 </head>
 <body>
+  <canvas id="network-canvas"></canvas>
 
-    <canvas id="network-canvas"></canvas>
+  <script>
+    const canvas = document.getElementById("network-canvas");
+    const ctx = canvas.getContext("2d");
 
-    <div class="overlay-content">
-        <h1>EGOS</h1>
-        <p>NAVIGATE THE WEB</p>
-    </div>
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
-    <script>
-        const canvas = document.getElementById('network-canvas');
-        const ctx = canvas.getContext('2d');
+    const palette = {
+      blue: "#1d4ed8",
+      purple: "#4c1d95",
+      orange: "#f97316",
+      white: "#f8fafc",
+      blueSoft: "rgba(29, 78, 216, 0.35)",
+      purpleSoft: "rgba(76, 29, 149, 0.35)",
+      orangeSoft: "rgba(249, 115, 22, 0.35)",
+      whiteSoft: "rgba(248, 250, 252, 0.2)"
+    };
 
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+    const navigationNodes = [
+      { label: "HOME", url: "/index.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 0.2, distance: 260, size: 13 },
+      { label: "ABOUT", url: "/about.html", color: palette.purple, glow: palette.purpleSoft, baseAngle: 1.7, distance: 290, size: 12 },
+      { label: "AUDIO", url: "/audio.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 3.4, distance: 265, size: 12 },
+      { label: "VIDEO", url: "/video.html", color: palette.orange, glow: palette.orangeSoft, baseAngle: 5.2, distance: 300, size: 12 },
+      { label: "VISUAL", url: "/visual.html", color: palette.purple, glow: palette.purpleSoft, baseAngle: 6.8, distance: 270, size: 12 },
 
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            initNodes();
-        });
+      { label: "PERFORMANCE", url: "/performance.html", color: palette.white, glow: palette.whiteSoft, baseAngle: 0.9, distance: 155, size: 10 },
+      { label: "EVENTS", url: "/events.html", color: palette.orange, glow: palette.orangeSoft, baseAngle: 2.9, distance: 170, size: 10 },
+      { label: "CONTACT", url: "/contact.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 5.1, distance: 165, size: 10 },
 
-        // Main navigation nodes with custom colors and positions
-        const navigationNodes = [
-            // Main navigation (larger orbit)
-            { label: "HOME", url: "/index.html", color: '#0ea5e9', glowColor: 'rgba(14, 165, 233, 0.4)', baseAngle: 0, distance: 280, size: 14 },
-            { label: "ABOUT", url: "/about.html", color: '#06b6d4', glowColor: 'rgba(6, 182, 212, 0.4)', baseAngle: 1.5, distance: 300, size: 14 },
-            { label: "AUDIO", url: "/audio.html", color: '#8b5cf6', glowColor: 'rgba(139, 92, 246, 0.4)', baseAngle: 3, distance: 310, size: 14 },
-            { label: "VIDEO", url: "/video.html", color: '#ec4899', glowColor: 'rgba(236, 72, 153, 0.4)', baseAngle: 4.5, distance: 290, size: 14 },
-            { label: "VISUAL", url: "/visual.html", color: '#f43f5e', glowColor: 'rgba(244, 63, 94, 0.4)', baseAngle: 6, distance: 305, size: 14 },
-            
-            // Secondary tier (medium orbit)
-            { label: "PERFORMANCE", url: "/performance.html", color: '#14b8a6', glowColor: 'rgba(20, 184, 166, 0.4)', baseAngle: 1, distance: 180, size: 12 },
-            { label: "EVENTS", url: "/events.html", color: '#f59e0b', glowColor: 'rgba(245, 158, 11, 0.4)', baseAngle: 3.5, distance: 185, size: 12 },
-            { label: "CONTACT", url: "/contact.html", color: '#10b981', glowColor: 'rgba(16, 185, 129, 0.4)', baseAngle: 5.5, distance: 175, size: 12 },
-            
-            // Social links (inner orbit)
-            { label: "INSTAGRAM", url: "https://instagram.com", color: '#a855f7', glowColor: 'rgba(168, 85, 247, 0.4)', baseAngle: 0.5, distance: 80, size: 10 },
-            { label: "SPOTIFY", url: "https://spotify.com", color: '#22c55e', glowColor: 'rgba(34, 197, 94, 0.4)', baseAngle: 2.1, distance: 85, size: 10 },
-            { label: "SOUNDCLOUD", url: "https://soundcloud.com", color: '#f97316', glowColor: 'rgba(249, 115, 22, 0.4)', baseAngle: 3.7, distance: 90, size: 10 },
-            { label: "BOOKING", url: "mailto:booking@egos.com", color: '#06b6d4', glowColor: 'rgba(6, 182, 212, 0.4)', baseAngle: 5.3, distance: 80, size: 10 }
-        ];
+      { label: "INSTAGRAM", url: "https://instagram.com", color: palette.orange, glow: palette.orangeSoft, baseAngle: 1.1, distance: 72, size: 8 },
+      { label: "SPOTIFY", url: "https://spotify.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 2.5, distance: 78, size: 8 },
+      { label: "SOUNDCLOUD", url: "https://soundcloud.com", color: palette.blue, glow: palette.blueSoft, baseAngle: 4.2, distance: 82, size: 8 },
+      { label: "BOOKING", url: "mailto:booking@egos.com", color: palette.white, glow: palette.whiteSoft, baseAngle: 5.8, distance: 74, size: 8 }
+    ];
 
-        let nodes = [];
-        let backgroundParticles = [];
-        let tendrils = [];
+    let nodes = [];
+    let particles = [];
+    let tendrils = [];
 
-        class InteractiveNode {
-            constructor(config) {
-                this.label = config.label;
-                this.url = config.url;
-                this.baseAngle = config.baseAngle;
-                this.distance = config.distance;
-                this.color = config.color;
-                this.glowColor = config.glowColor;
-                this.nodeSize = config.size;
-                
-                // Position properties
-                this.x = 0;
-                this.y = 0;
-                this.radius = this.nodeSize;
-                this.pulse = 0;
-                this.isHovered = false;
-                this.wobble = Math.random() * Math.PI * 2;
-                
-                // Unique offset for organic movement
-                this.breathingOffset = Math.random() * 100;
-                this.orbitWave = Math.random() * Math.PI * 2;
-            }
+    class InteractiveNode {
+      constructor(config) {
+        this.label = config.label;
+        this.url = config.url;
+        this.baseAngle = config.baseAngle;
+        this.distance = config.distance;
+        this.color = config.color;
+        this.glow = config.glow;
+        this.radius = config.size;
+        this.size = config.size;
 
-            update(time) {
-                // Breathing logic with slower, more organic movement
-                const breath = Math.sin(time * 0.0008 + this.breathingOffset) * 20;
-                const currentDistance = this.distance + breath;
+        this.x = 0;
+        this.y = 0;
+        this.hoverScale = 0;
+        this.pulse = 0;
+        this.phase = Math.random() * Math.PI * 2;
+        this.isHovered = false;
+      }
 
-                // Center anchor
-                const centerX = width / 2;
-                const centerY = height / 2;
+      update(time) {
+        const cx = width / 2;
+        const cy = height / 2;
 
-                // Complex orbital movement for trippy, flowy feel
-                const orbitWaveMotion = Math.sin(time * 0.0003 + this.orbitWave) * 0.15;
-                const wobbleMotion = Math.cos(time * 0.0004 + this.wobble) * 0.08;
-                const currentAngle = this.baseAngle + orbitWaveMotion + wobbleMotion;
+        const drift = Math.sin(time * 0.00018 + this.phase) * 8;
+        const orbit = this.baseAngle + Math.sin(time * 0.00012 + this.phase) * 0.14;
+        const distance = this.distance + drift;
 
-                this.x = centerX + Math.cos(currentAngle) * currentDistance;
-                this.y = centerY + Math.sin(currentAngle) * currentDistance;
+        this.x = cx + Math.cos(orbit) * distance;
+        this.y = cy + Math.sin(orbit) * distance;
 
-                // Pulsing glow with depth effect
-                this.pulse = Math.sin(time * 0.004 + this.breathingOffset) * 8 + 4;
-            }
+        this.pulse = 1 + Math.sin(time * 0.0016 + this.phase) * 0.8;
 
-            draw() {
-                // Draw expanding glow ring
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius + this.pulse, 0, Math.PI * 2);
-                ctx.fillStyle = this.isHovered ? 
-                    this.glowColor.replace('0.4', '0.7') : 
-                    this.glowColor;
-                ctx.fill();
+        const target = this.isHovered ? 1 : 0;
+        this.hoverScale += (target - this.hoverScale) * 0.08;
+      }
 
-                // Inner glow layer
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius + this.pulse * 0.5, 0, Math.PI * 2);
-                ctx.fillStyle = this.isHovered ? 
-                    this.glowColor.replace('0.4', '0.5') : 
-                    this.glowColor.replace('0.4', '0.2');
-                ctx.fill();
+      draw() {
+        const glowRadius = this.radius + this.pulse * 7 + this.hoverScale * 12;
 
-                // Core node
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.isHovered ? this.radius + 3 : this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
+        // soft outer halo
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, glowRadius, 0, Math.PI * 2);
+        ctx.fillStyle = this.glow;
+        ctx.fill();
 
-                // Inner bright spot for depth
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2);
-                ctx.fillStyle = '#ffffff';
-                ctx.globalAlpha = 0.5;
-                ctx.fill();
-                ctx.globalAlpha = 1;
+        // inner glow bloom
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius + this.pulse * 4 + this.hoverScale * 8, 0, Math.PI * 2);
+        ctx.fillStyle = this.glow.replace("0.35", "0.22").replace("0.2", "0.22");
+        ctx.fill();
 
-                // Text label with custom font
-                ctx.fillStyle = this.isHovered ? '#ffffff' : this.color;
-                ctx.font = `bold 11px 'Orbitron'`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.globalAlpha = this.isHovered ? 1 : 0.8;
-                
-                // Slightly offset text for visibility
-                const labelDistance = this.radius + this.pulse + 20;
-                const labelAngle = Math.atan2(this.y - height/2, this.x - width/2);
-                const labelX = this.x + Math.cos(labelAngle) * labelDistance;
-                const labelY = this.y + Math.sin(labelAngle) * labelDistance;
-                
-                ctx.fillText(this.label, labelX, labelY);
-                ctx.globalAlpha = 1;
-            }
+        // node core
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius + this.hoverScale * 4, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
 
-            checkMouse(mx, my) {
-                const dist = Math.hypot(this.x - mx, this.y - my);
-                this.isHovered = dist < this.radius + this.pulse + 15;
-                return this.isHovered;
-            }
+        // soft center highlight
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, Math.max(1.6, this.radius * 0.35), 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.8)";
+        ctx.fill();
+
+        // label
+        ctx.fillStyle = this.color === palette.white ? "#f8fafc" : this.color;
+        ctx.font = "600 10px Segoe UI, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.letterSpacing = "0.08em";
+        ctx.globalAlpha = 0.7 + this.hoverScale * 0.25;
+
+        const labelAngle = Math.atan2(this.y - height / 2, this.x - width / 2);
+        const labelDistance = this.radius + 20 + this.hoverScale * 8;
+        const lx = this.x + Math.cos(labelAngle) * labelDistance;
+        const ly = this.y + Math.sin(labelAngle) * labelDistance;
+
+        ctx.fillText(this.label, lx, ly);
+        ctx.globalAlpha = 1;
+      }
+
+      hitTest(mx, my) {
+        const dist = Math.hypot(this.x - mx, this.y - my);
+        const hitRadius = this.radius + 14 + this.hoverScale * 10;
+        this.isHovered = dist < hitRadius;
+        return this.isHovered;
+      }
+    }
+
+    class GlitterParticle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.18;
+        this.vy = (Math.random() - 0.5) * 0.18;
+        this.size = Math.random() * 1.8 + 0.5;
+        this.alpha = Math.random() * 0.7 + 0.2;
+        this.phase = Math.random() * Math.PI * 2;
+        this.color = ["#f8fafc", "#1d4ed8", "#4c1d95"][Math.floor(Math.random() * 3)];
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        this.x = Math.min(width, Math.max(0, this.x));
+        this.y = Math.min(height, Math.max(0, this.y));
+
+        this.alpha = 0.2 + (Math.sin(performance.now() * 0.0018 + this.phase) + 1) * 0.25;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    class Tendril {
+      constructor(a, b) {
+        this.a = a;
+        this.b = b;
+        this.offset = Math.random() * Math.PI * 2;
+        this.baseColor = a.color === palette.white ? palette.white : a.color;
+      }
+
+      update(time) {
+        this.offset = time * 0.00008 + this.offset * 0.02;
+      }
+
+      draw() {
+        const dx = this.b.x - this.a.x;
+        const dy = this.b.y - this.a.y;
+        const midX = (this.a.x + this.b.x) / 2;
+        const midY = (this.a.y + this.b.y) / 2;
+        const curve = 18;
+
+        const waveX = midX + Math.sin(this.offset) * curve;
+        const waveY = midY + Math.cos(this.offset * 1.4) * curve;
+
+        ctx.beginPath();
+        ctx.moveTo(this.a.x, this.a.y);
+        ctx.quadraticCurveTo(waveX, waveY, this.b.x, this.b.y);
+
+        ctx.strokeStyle = this.baseColor;
+        ctx.lineWidth = 0.7;
+        ctx.globalAlpha = 0.18;
+        ctx.stroke();
+
+        // faint glow layer
+        ctx.beginPath();
+        ctx.moveTo(this.a.x, this.a.y);
+        ctx.quadraticCurveTo(waveX, waveY, this.b.x, this.b.y);
+
+        ctx.strokeStyle = this.baseColor;
+        ctx.lineWidth = 2.2;
+        ctx.globalAlpha = 0.04;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function createTendrils() {
+      tendrils = [];
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const distance = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          if (distance < 420) {
+            tendrils.push(new Tendril(nodes[i], nodes[j]));
+          }
         }
+      }
+    }
 
-        // Ethereal background particles (glittery stars)
-        class GlitterParticle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 2 + 0.5;
-                this.brightness = Math.random() * 0.7 + 0.3;
-                this.twinkleSpeed = Math.random() * 0.01 + 0.005;
-                this.hue = ['#0ea5e9', '#8b5cf6', '#ec4899', '#f43f5e', '#14b8a6'][Math.floor(Math.random() * 5)];
-            }
+    function initScene() {
+      nodes = navigationNodes.map(config => new InteractiveNode(config));
+      particles = [];
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                
-                // Wrap around edges
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
+      for (let i = 0; i < 120; i++) {
+        particles.push(new GlitterParticle());
+      }
 
-                // Keep in bounds
-                this.x = Math.max(0, Math.min(width, this.x));
-                this.y = Math.max(0, Math.min(height, this.y));
-                
-                // Pulsing brightness
-                this.brightness += Math.sin(performance.now() * this.twinkleSpeed) * 0.01;
-                this.brightness = Math.max(0.1, Math.min(0.9, this.brightness));
-            }
+      createTendrils();
+    }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.hue;
-                ctx.globalAlpha = this.brightness;
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
+    function animate(time) {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => p.update());
+      nodes.forEach(node => node.update(time));
+
+      // draw tendrils first
+      tendrils.forEach(t => t.update(time));
+      tendrils.forEach(t => t.draw());
+
+      // draw particles
+      particles.forEach(p => p.draw());
+
+      // draw nodes
+      nodes.forEach(node => node.draw());
+
+      requestAnimationFrame(animate);
+    }
+
+    let lastPointer = { x: 0, y: 0 };
+    let pointerActive = false;
+
+    canvas.addEventListener("mousemove", (event) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = event.clientX - rect.left;
+      const my = event.clientY - rect.top;
+
+      lastPointer.x = mx;
+      lastPointer.y = my;
+      pointerActive = true;
+
+      let hoverFound = false;
+      nodes.forEach(node => {
+        if (node.hitTest(mx, my)) {
+          hoverFound = true;
         }
+      });
 
-        // Flowing tendril strands connecting nodes
-        class Tendril {
-            constructor(startNode, endNode) {
-                this.startNode = startNode;
-                this.endNode = endNode;
-                this.points = [];
-                this.color = startNode.color;
-                this.offset = Math.random() * Math.PI * 2;
-                this.generatePoints();
-            }
+      canvas.style.cursor = hoverFound ? "pointer" : "default";
+    });
 
-            generatePoints() {
-                const steps = 30;
-                this.points = [];
-                
-                for (let i = 0; i <= steps; i++) {
-                    const t = i / steps;
-                    // Bezier curve with wave motion
-                    const wave = Math.sin(t * Math.PI + this.offset) * 30;
-                    
-                    const x = this.startNode.x + (this.endNode.x - this.startNode.x) * t + wave;
-                    const y = this.startNode.y + (this.endNode.y - this.startNode.y) * t;
-                    
-                    this.points.push({ x, y, t });
-                }
-            }
+    canvas.addEventListener("mouseleave", () => {
+      pointerActive = false;
+      nodes.forEach(node => {
+        node.isHovered = false;
+      });
+      canvas.style.cursor = "default";
+    });
 
-            update(time) {
-                this.offset = Math.sin(time * 0.0002) * Math.PI;
-                this.generatePoints();
-            }
+    canvas.addEventListener("click", (event) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = event.clientX - rect.left;
+      const my = event.clientY - rect.top;
 
-            draw(time) {
-                if (this.points.length < 2) return;
-
-                ctx.strokeStyle = this.color;
-                ctx.lineWidth = 0.5;
-                ctx.globalAlpha = 0.15;
-
-                ctx.beginPath();
-                ctx.moveTo(this.points[0].x, this.points[0].y);
-                
-                for (let i = 1; i < this.points.length; i++) {
-                    ctx.lineTo(this.points[i].x, this.points[i].y);
-                }
-                ctx.stroke();
-                
-                // Add glowing highlights to tendril
-                for (let i = 0; i < this.points.length; i += 5) {
-                    const point = this.points[i];
-                    ctx.beginPath();
-                    ctx.arc(point.x, point.y, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.globalAlpha = 0.3 * point.t;
-                    ctx.fill();
-                }
-                
-                ctx.globalAlpha = 1;
-            }
+      for (const node of nodes) {
+        if (node.hitTest(mx, my)) {
+          window.location.href = node.url;
+          return;
         }
+      }
+    });
 
-        function initNodes() {
-            nodes = navigationNodes.map(config => new InteractiveNode(config));
-            
-            // Create background glitter particles
-            backgroundParticles = [];
-            for(let i = 0; i < 80; i++) {
-                backgroundParticles.push(new GlitterParticle());
-            }
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initScene();
+    });
 
-            // Create interconnected tendrils between all nodes
-            tendrils = [];
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    // Create tendril with some randomness for organic feel
-                    if (Math.random() > 0.3) { // Not all pairs connected
-                        tendrils.push(new Tendril(nodes[i], nodes[j]));
-                    }
-                }
-            }
-        }
-
-        function animate(timestamp) {
-            ctx.clearRect(0, 0, width, height);
-
-            // Update all entities
-            backgroundParticles.forEach(p => p.update());
-            nodes.forEach(n => n.update(timestamp));
-            tendrils.forEach(t => t.update(timestamp));
-
-            // Draw tendrils first (background)
-            tendrils.forEach(t => t.draw(timestamp));
-            
-            // Draw glitter particles
-            backgroundParticles.forEach(p => p.draw());
-
-            // Draw interactive nodes
-            nodes.forEach(n => n.draw());
-
-            requestAnimationFrame(animate);
-        }
-
-        // Mouse Event Handlers
-        let cachedRect = null;
-        let lastCursorStyle = 'default';
-
-        canvas.addEventListener('mousemove', (e) => {
-            if (!cachedRect) cachedRect = canvas.getBoundingClientRect();
-            const mx = e.clientX - cachedRect.left;
-            const my = e.clientY - cachedRect.top;
-            
-            let cursorStyle = 'default';
-            nodes.forEach(n => {
-                if (n.checkMouse(mx, my)) cursorStyle = 'pointer';
-            });
-            
-            if (cursorStyle !== lastCursorStyle) {
-                document.body.style.cursor = cursorStyle;
-                lastCursorStyle = cursorStyle;
-            }
-        });
-
-        canvas.addEventListener('click', (e) => {
-            if (!cachedRect) cachedRect = canvas.getBoundingClientRect();
-            const mx = e.clientX - cachedRect.left;
-            const my = e.clientY - cachedRect.top;
-            
-            nodes.forEach(n => {
-                if (n.checkMouse(mx, my)) {
-                    window.location.href = n.url; 
-                }
-            });
-        });
-
-        window.addEventListener('resize', () => {
-            cachedRect = null;
-        });
-
-        initNodes();
-        requestAnimationFrame(animate);
-    </script>
+    initScene();
+    requestAnimationFrame(animate);
+  </script>
 </body>
 </html>
