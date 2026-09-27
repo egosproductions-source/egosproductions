@@ -1679,6 +1679,18 @@ img {
   display: flex;
   gap: 10px; /* Optional: Adds spacing between elements */
 }
+
+.instagram-btn {
+  display: inline-block;
+  background: #E1306C;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+}
 /* ====== The End ====== */
 
 /*# sourceMappingURL=style.css.map */
