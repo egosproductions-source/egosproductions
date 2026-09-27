@@ -1,4 +1,69 @@
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="e-GoS Productions is a multidisciplinary artist collective exploring music, performance, video, and visual art in St. Louis.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>e-Gos - Video</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg-1: #050b17;
+            --bg-2: #0d1630;
+            --bg-3: #120d25;
+            --blue: #1d4ed8;
+            --blue-soft: rgba(29, 78, 216, 0.3);
+            --purple: #4c1d95;
+            --purple-soft: rgba(76, 29, 149, 0.3);
+            --orange: #f97316;
+            --orange-soft: rgba(249, 115, 22, 0.3);
+            --white: #f8fafc;
+            --white-soft: rgba(248, 250, 252, 0.25);
+            --line: rgba(148, 163, 184, 0.18);
+        }
+
+        #performance-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
+                radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
+                linear-gradient(180deg, var(--bg-2), var(--bg-1));
+        }
+
+        #network-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: transparent;
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ##### Preloader ##### -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 
 
@@ -50,7 +115,7 @@
                                         <a href="video.html">Video</a>
                                     </li>
                                      <li>
-                                        <a href="Visual.html">Visual</a>
+                                        <a href="visual.html">Visual</a>
                                     </li>
                                      <li>
                                         <a href="performance.html">Performance </a>
@@ -60,7 +125,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="#contact">Contact</a>
+                                        <a href="contact.html">Contact</a>
                                     </li>
                                 </ul>
                             </div>
@@ -76,169 +141,57 @@
     </header>
     <!-- ##### Header Area End ##### -->
 
+
+
     <!-- ##### Breadcumb Area Start ##### -->
-    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(images/g8.jpg);">
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
         <div class="bradcumbContent">
             <p>See what’s new</p>
-            <h2>Events</h2>
+            <h2>Login</h2>
         </div>
     </section>
     <!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Events Area Start ##### -->
-    <section class="events-area section-padding-100">
+    <!-- ##### Login Area Start ##### -->
+    <section class="login-area section-padding-100">
         <div class="container">
-            <div class="row">
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e1.jpg" alt="">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="login-content">
+                        <h3>Welcome Back</h3>
+                        <!-- Login Form -->
+                        <div class="login-form">
+                            <form action="#" method="post">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-mail">
+                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                </div>
+                                <button type="submit" class="btn oneMusic-btn mt-30">Login</button>
+                            </form>
                         </div>
-                        <div class="event-text">
-                            <h4>Dj Night Party</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">VIP Sala</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e2.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>The Mission</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Gold Arena</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e3.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Planet ibiza</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Space Ibiza</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="load-more-btn text-center mt-70">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ##### Events Area End ##### -->
-
-    <!-- ##### Newsletter & Testimonials Area Start ##### -->
-    <section class="newsletter-testimonials-area">
-        <div class="container">
-            <div class="row">
-
-                <!-- Newsletter Area -->
-                <div class="col-12 col-lg-6">
-                    <div class="newsletter-area mb-100">
-                        <div class="section-heading text-left mb-50">
-                            <p>Watch for more</p>
-                            <h2>Follow me on Instagram</h2>
-                        </div>
-                      <a href="https://www.instagram.com/egos.producer" target="_blank" rel="noopener noreferrer" class="btn oneMusic-btn mt-30">
-</a>
-
-                    </div>
-                </div>
-
-                <!-- Testimonials Area -->
-                <div class="col-12 col-lg-6">
-                       <div class="newsletter-area mb-100">
-                        <div class="section-heading text-left mb-50">
-                            <p>Watch for more</p>
-                            <h2>hi</h2>
-                        </div>
-                      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn oneMusic-btn mt-30">
-</a>
-
-        </div>
-    </section>
-    <!-- ##### Newsletter & Testimonials Area End ##### -->
-
-    <!-- ##### Contact Area Start ##### -->
-    <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading white">
-                        <p>See what’s new</p>
-                        <h2>Get In Touch</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <!-- Contact Form Area -->
-                    <div class="contact-form-area">
-                        <form action="#" method="post">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button class="btn oneMusic-btn mt-30" type="submit">Send</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Contact Area End ##### -->
+    <!-- ##### Login Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
         <div class="container">
             <div class="row d-flex flex-wrap align-items-center">
+                <div class="col-12 col-md-6">
+                    <a href="#"><img src="img/core-img/logo.png" alt=""></a>
+                    <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </div>
+
                 <div class="col-12 col-md-6">
                     <div class="footer-nav">
                         <ul>
