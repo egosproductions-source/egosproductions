@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Egos Productions - Network</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,8 +18,8 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #0b0f19;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: radial-gradient(ellipse at center, #0a0f1f 0%, #050810 100%);
+            font-family: 'Orbitron', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         #network-canvas {
@@ -36,20 +39,37 @@
             z-index: 2;
             text-align: center;
             color: #ffffff;
-            pointer-events: none; /* Allows clicking the canvas underneath */
+            pointer-events: none;
         }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(99, 102, 241, 0.4), 0 0 60px rgba(14, 165, 233, 0.2);
+            animation: glitch 0.15s infinite;
         }
 
         p {
-            color: #64748b;
-            font-size: 1.1rem;
+            color: #a78bfa;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
+            animation: pulse-text 3s ease-in-out infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-1px, 1px); }
+            40% { transform: translate(-1px, -1px); }
+            60% { transform: translate(1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
@@ -58,8 +78,8 @@
     <canvas id="network-canvas"></canvas>
 
     <div class="overlay-content">
-        <h1>WELCOME</h1>
-        <p>Choose a node</p>
+        <h1>EGOS</h1>
+        <p>NAVIGATE THE WEB</p>
     </div>
 
     <script>
@@ -75,16 +95,30 @@
             initNodes();
         });
 
-        // Configuration for your main navigation pages
+        // Main navigation nodes with custom colors and positions
         const navigationNodes = [
-            { label: "ABOUT", url: "/about.html", baseAngle: 0, distance: 200 },
-            { label: "CONTACT", url: "/contact.html", baseAngle: 2, distance: 220 },
-            { label: "EVENTS", url: "/events.html", baseAngle: 4, distance: 210 },
-            { label: "PROJECTS", url: "/projects.html", baseAngle: 5.2, distance: 190 }
+            // Main navigation (larger orbit)
+            { label: "HOME", url: "/index.html", color: '#0ea5e9', glowColor: 'rgba(14, 165, 233, 0.4)', baseAngle: 0, distance: 280, size: 14 },
+            { label: "ABOUT", url: "/about.html", color: '#06b6d4', glowColor: 'rgba(6, 182, 212, 0.4)', baseAngle: 1.5, distance: 300, size: 14 },
+            { label: "AUDIO", url: "/audio.html", color: '#8b5cf6', glowColor: 'rgba(139, 92, 246, 0.4)', baseAngle: 3, distance: 310, size: 14 },
+            { label: "VIDEO", url: "/video.html", color: '#ec4899', glowColor: 'rgba(236, 72, 153, 0.4)', baseAngle: 4.5, distance: 290, size: 14 },
+            { label: "VISUAL", url: "/visual.html", color: '#f43f5e', glowColor: 'rgba(244, 63, 94, 0.4)', baseAngle: 6, distance: 305, size: 14 },
+            
+            // Secondary tier (medium orbit)
+            { label: "PERFORMANCE", url: "/performance.html", color: '#14b8a6', glowColor: 'rgba(20, 184, 166, 0.4)', baseAngle: 1, distance: 180, size: 12 },
+            { label: "EVENTS", url: "/events.html", color: '#f59e0b', glowColor: 'rgba(245, 158, 11, 0.4)', baseAngle: 3.5, distance: 185, size: 12 },
+            { label: "CONTACT", url: "/contact.html", color: '#10b981', glowColor: 'rgba(16, 185, 129, 0.4)', baseAngle: 5.5, distance: 175, size: 12 },
+            
+            // Social links (inner orbit)
+            { label: "INSTAGRAM", url: "https://instagram.com", color: '#a855f7', glowColor: 'rgba(168, 85, 247, 0.4)', baseAngle: 0.5, distance: 80, size: 10 },
+            { label: "SPOTIFY", url: "https://spotify.com", color: '#22c55e', glowColor: 'rgba(34, 197, 94, 0.4)', baseAngle: 2.1, distance: 85, size: 10 },
+            { label: "SOUNDCLOUD", url: "https://soundcloud.com", color: '#f97316', glowColor: 'rgba(249, 115, 22, 0.4)', baseAngle: 3.7, distance: 90, size: 10 },
+            { label: "BOOKING", url: "mailto:booking@egos.com", color: '#06b6d4', glowColor: 'rgba(6, 182, 212, 0.4)', baseAngle: 5.3, distance: 80, size: 10 }
         ];
 
         let nodes = [];
         let backgroundParticles = [];
+        let tendrils = [];
 
         class InteractiveNode {
             constructor(config) {
@@ -92,162 +126,275 @@
                 this.url = config.url;
                 this.baseAngle = config.baseAngle;
                 this.distance = config.distance;
+                this.color = config.color;
+                this.glowColor = config.glowColor;
+                this.nodeSize = config.size;
                 
                 // Position properties
                 this.x = 0;
                 this.y = 0;
-                this.radius = 12;
+                this.radius = this.nodeSize;
                 this.pulse = 0;
                 this.isHovered = false;
+                this.wobble = Math.random() * Math.PI * 2;
                 
-                // Unique offset so they don't sync up perfectly while breathing
+                // Unique offset for organic movement
                 this.breathingOffset = Math.random() * 100;
+                this.orbitWave = Math.random() * Math.PI * 2;
             }
 
             update(time) {
-                // The "Breathing" logic: subtly alters the distance from the center over time
-                const breath = Math.sin(time * 0.002 + this.breathingOffset) * 15;
+                // Breathing logic with slower, more organic movement
+                const breath = Math.sin(time * 0.0008 + this.breathingOffset) * 20;
                 const currentDistance = this.distance + breath;
 
-                // Center of the screen anchor
+                // Center anchor
                 const centerX = width / 2;
                 const centerY = height / 2;
 
-                // Orbit slightly over time to give it life
-                const currentAngle = this.baseAngle + Math.sin(time * 0.0005) * 0.1;
+                // Complex orbital movement for trippy, flowy feel
+                const orbitWaveMotion = Math.sin(time * 0.0003 + this.orbitWave) * 0.15;
+                const wobbleMotion = Math.cos(time * 0.0004 + this.wobble) * 0.08;
+                const currentAngle = this.baseAngle + orbitWaveMotion + wobbleMotion;
 
                 this.x = centerX + Math.cos(currentAngle) * currentDistance;
                 this.y = centerY + Math.sin(currentAngle) * currentDistance;
 
-                // Pulsing glow animation
-                this.pulse = Math.sin(time * 0.005 + this.breathingOffset) * 6 + 6;
+                // Pulsing glow with depth effect
+                this.pulse = Math.sin(time * 0.004 + this.breathingOffset) * 8 + 4;
             }
 
             draw() {
-                // Draw expanding pulse glow ring
+                // Draw expanding glow ring
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius + this.pulse, 0, Math.PI * 2);
-                ctx.fillStyle = this.isHovered ? 'rgba(99, 102, 241, 0.2)' : 'rgba(14, 165, 233, 0.15)';
+                ctx.fillStyle = this.isHovered ? 
+                    this.glowColor.replace('0.4', '0.7') : 
+                    this.glowColor;
                 ctx.fill();
 
-                // Draw core node
+                // Inner glow layer
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.isHovered ? 8 : 6, 0, Math.PI * 2);
-                ctx.fillStyle = this.isHovered ? '#6366f1' : '#0ea5e9';
+                ctx.arc(this.x, this.y, this.radius + this.pulse * 0.5, 0, Math.PI * 2);
+                ctx.fillStyle = this.isHovered ? 
+                    this.glowColor.replace('0.4', '0.5') : 
+                    this.glowColor.replace('0.4', '0.2');
                 ctx.fill();
 
-                // Text labels
-                ctx.fillStyle = this.isHovered ? '#ffffff' : '#94a3b8';
-                ctx.font = '14px sans-serif';
+                // Core node
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.isHovered ? this.radius + 3 : this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+
+                // Inner bright spot for depth
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.globalAlpha = 0.5;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+
+                // Text label with custom font
+                ctx.fillStyle = this.isHovered ? '#ffffff' : this.color;
+                ctx.font = `bold 11px 'Orbitron'`;
                 ctx.textAlign = 'center';
-                ctx.fillText(this.label, this.x, this.y - (this.radius + 12));
+                ctx.textBaseline = 'middle';
+                ctx.globalAlpha = this.isHovered ? 1 : 0.8;
+                
+                // Slightly offset text for visibility
+                const labelDistance = this.radius + this.pulse + 20;
+                const labelAngle = Math.atan2(this.y - height/2, this.x - width/2);
+                const labelX = this.x + Math.cos(labelAngle) * labelDistance;
+                const labelY = this.y + Math.sin(labelAngle) * labelDistance;
+                
+                ctx.fillText(this.label, labelX, labelY);
+                ctx.globalAlpha = 1;
             }
 
             checkMouse(mx, my) {
                 const dist = Math.hypot(this.x - mx, this.y - my);
-                this.isHovered = dist < this.radius + 10;
+                this.isHovered = dist < this.radius + this.pulse + 15;
                 return this.isHovered;
             }
         }
 
-        // Tiny floating dots to flesh out the "web" structure
-        class BackgroundParticle {
+        // Ethereal background particles (glittery stars)
+        class GlitterParticle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 2 + 0.5;
+                this.brightness = Math.random() * 0.7 + 0.3;
+                this.twinkleSpeed = Math.random() * 0.01 + 0.005;
+                this.hue = ['#0ea5e9', '#8b5cf6', '#ec4899', '#f43f5e', '#14b8a6'][Math.floor(Math.random() * 5)];
             }
+
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
+                
+                // Wrap around edges
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Keep in bounds
+                this.x = Math.max(0, Math.min(width, this.x));
+                this.y = Math.max(0, Math.min(height, this.y));
+                
+                // Pulsing brightness
+                this.brightness += Math.sin(performance.now() * this.twinkleSpeed) * 0.01;
+                this.brightness = Math.max(0.1, Math.min(0.9, this.brightness));
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.hue;
+                ctx.globalAlpha = this.brightness;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        // Flowing tendril strands connecting nodes
+        class Tendril {
+            constructor(startNode, endNode) {
+                this.startNode = startNode;
+                this.endNode = endNode;
+                this.points = [];
+                this.color = startNode.color;
+                this.offset = Math.random() * Math.PI * 2;
+                this.generatePoints();
+            }
+
+            generatePoints() {
+                const steps = 30;
+                this.points = [];
+                
+                for (let i = 0; i <= steps; i++) {
+                    const t = i / steps;
+                    // Bezier curve with wave motion
+                    const wave = Math.sin(t * Math.PI + this.offset) * 30;
+                    
+                    const x = this.startNode.x + (this.endNode.x - this.startNode.x) * t + wave;
+                    const y = this.startNode.y + (this.endNode.y - this.startNode.y) * t;
+                    
+                    this.points.push({ x, y, t });
+                }
+            }
+
+            update(time) {
+                this.offset = Math.sin(time * 0.0002) * Math.PI;
+                this.generatePoints();
+            }
+
+            draw(time) {
+                if (this.points.length < 2) return;
+
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 0.5;
+                ctx.globalAlpha = 0.15;
+
+                ctx.beginPath();
+                ctx.moveTo(this.points[0].x, this.points[0].y);
+                
+                for (let i = 1; i < this.points.length; i++) {
+                    ctx.lineTo(this.points[i].x, this.points[i].y);
+                }
+                ctx.stroke();
+                
+                // Add glowing highlights to tendril
+                for (let i = 0; i < this.points.length; i += 5) {
+                    const point = this.points[i];
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 1.5, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = 0.3 * point.t;
+                    ctx.fill();
+                }
+                
+                ctx.globalAlpha = 1;
             }
         }
 
         function initNodes() {
             nodes = navigationNodes.map(config => new InteractiveNode(config));
+            
+            // Create background glitter particles
             backgroundParticles = [];
-            for(let i = 0; i < 40; i++) {
-                backgroundParticles.push(new BackgroundParticle());
+            for(let i = 0; i < 80; i++) {
+                backgroundParticles.push(new GlitterParticle());
             }
-        }
 
-        function drawConnections() {
-            ctx.strokeStyle = 'rgba(51, 65, 85, 0.3)';
-            ctx.lineWidth = 1;
-
-            // Connect interactive nodes to each other
+            // Create interconnected tendrils between all nodes
+            tendrils = [];
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
-                    ctx.beginPath();
-                    ctx.moveTo(nodes[i].x, nodes[i].y);
-                    ctx.lineTo(nodes[j].x, nodes[j].y);
-                    ctx.stroke();
+                    // Create tendril with some randomness for organic feel
+                    if (Math.random() > 0.3) { // Not all pairs connected
+                        tendrils.push(new Tendril(nodes[i], nodes[j]));
+                    }
                 }
             }
-
-            // Draw faint web links to background floating particles
-            backgroundParticles.forEach(p => {
-                nodes.forEach(n => {
-                    const dist = Math.hypot(n.x - p.x, n.y - p.y);
-                    if (dist < 180) {
-                        ctx.strokeStyle = `rgba(51, 65, 85, ${0.15 * (1 - dist/180)})`;
-                        ctx.beginPath();
-                        ctx.moveTo(n.x, n.y);
-                        ctx.lineTo(p.x, p.y);
-                        ctx.stroke();
-                    }
-                });
-            });
         }
 
         function animate(timestamp) {
             ctx.clearRect(0, 0, width, height);
 
+            // Update all entities
             backgroundParticles.forEach(p => p.update());
             nodes.forEach(n => n.update(timestamp));
+            tendrils.forEach(t => t.update(timestamp));
 
-            drawConnections();
+            // Draw tendrils first (background)
+            tendrils.forEach(t => t.draw(timestamp));
             
-            // Draw background tiny dots
-            ctx.fillStyle = 'rgba(148, 163, 184, 0.4)';
-            backgroundParticles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-            });
+            // Draw glitter particles
+            backgroundParticles.forEach(p => p.draw());
 
+            // Draw interactive nodes
             nodes.forEach(n => n.draw());
 
             requestAnimationFrame(animate);
         }
 
         // Mouse Event Handlers
+        let cachedRect = null;
+        let lastCursorStyle = 'default';
+
         canvas.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const mx = e.clientX - rect.left;
-            const my = e.clientY - rect.top;
+            if (!cachedRect) cachedRect = canvas.getBoundingClientRect();
+            const mx = e.clientX - cachedRect.left;
+            const my = e.clientY - cachedRect.top;
             
             let cursorStyle = 'default';
             nodes.forEach(n => {
                 if (n.checkMouse(mx, my)) cursorStyle = 'pointer';
             });
-            document.body.style.cursor = cursorStyle;
+            
+            if (cursorStyle !== lastCursorStyle) {
+                document.body.style.cursor = cursorStyle;
+                lastCursorStyle = cursorStyle;
+            }
         });
 
         canvas.addEventListener('click', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const mx = e.clientX - rect.left;
-            const my = e.clientY - rect.top;
+            if (!cachedRect) cachedRect = canvas.getBoundingClientRect();
+            const mx = e.clientX - cachedRect.left;
+            const my = e.clientY - cachedRect.top;
             
             nodes.forEach(n => {
                 if (n.checkMouse(mx, my)) {
-                    // Triggers the page transition when clicked
                     window.location.href = n.url; 
                 }
             });
+        });
+
+        window.addEventListener('resize', () => {
+            cachedRect = null;
         });
 
         initNodes();
