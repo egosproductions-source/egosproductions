@@ -1,188 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-      <!-- Title -->
-    <title>e-Gos - Audio</title>
-
-    <!-- Favicon -->
+    <title>e-Gos Productions | Audio</title>
     <link rel="icon" href="img/core-img/favicon.ico">
-
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
+    <style>
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 18, 0.82);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .site-nav a, .site-nav button {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .site-nav .brand { margin-right: 0.5rem; font-size: 0.9rem; }
+        .site-nav .dropdown { position: relative; }
+        .site-nav .dropdown-menu {
+            position: absolute;
+            left: 0;
+            top: calc(100% + 0.7rem);
+            display: none;
+            flex-direction: column;
+            min-width: 180px;
+            padding: 0.5rem;
+            background: rgba(17, 17, 24, 0.96);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.25);
+        }
+        .site-nav .dropdown:hover .dropdown-menu,
+        .site-nav .dropdown:focus-within .dropdown-menu { display: flex; }
+        .site-nav .dropdown-menu a {
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            text-transform: none;
+            letter-spacing: 0.01em;
+            font-weight: 500;
+        }
+        .site-nav .dropdown-menu a:hover { background: rgba(255,255,255,0.05); }
+        .page-shell { max-width: 960px; margin: 3rem auto; padding: 0 1.5rem 4rem; }
+        .page-shell h1 { text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1rem; }
+        .page-shell p { color: #b4bed5; line-height: 1.8; }
+        .audio-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .audio-card h2 { text-transform: uppercase; font-size: 1rem; letter-spacing: 0.08em; }
+        audio { width: 100%; margin-top: 0.75rem; }
+        @media (max-width: 700px) { .site-nav { flex-wrap: wrap; gap: 0.75rem 1rem; } }
+    </style>
 </head>
-
 <body>
-    <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a class="brand" href="index.html">e-GoS</a>
+        <div class="dropdown">
+            <button type="button">Projects</button>
+            <div class="dropdown-menu" aria-label="Projects submenu">
+                <a href="audio.html">Audio</a>
+                <a href="video.html">Video</a>
+                <a href="visual.html">Visual</a>
+                <a href="performance.html">Performance</a>
+            </div>
         </div>
-    </div>
+        <a href="event.html">Events</a>
+        <a href="contact.html">Contact</a>
+    </nav>
 
-    <!-- ##### Header Area Start ##### -->
     <header class="header-area">
-        <!-- Navbar Area -->
         <div class="oneMusic-main-menu">
             <div class="classy-nav-container breakpoint-off">
                 <div class="container">
-                    <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="oneMusicNav">
-
-                        <!-- Nav brand -->
                         <a href="index.html" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
+                        <div class="classy-navbar-toggler"><span class="navbarToggler"><span></span><span></span><span></span></span></div>
                         <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Nav Start -->
+                            <div class="classycloseIcon"><div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div></div>
                             <div class="classynav">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li><a href="#">Projects</a>
+                                    <li>
+                                        <a href="#">Projects</a>
                                         <ul class="dropdown">
-                                                    <li><a href="#">Audio</a></li>
-                                                    <li><a href="#">Video</a></li>
-                                                    <li><a href="#">Visual Art</a></li>
-                                                    <li><a href="#">Performance</a>
-                                                </ul>
+                                            <li><a href="audio.html">Audio</a></li>
+                                            <li><a href="video.html">Video</a></li>
+                                            <li><a href="visual.html">Visual Art</a></li>
+                                            <li><a href="performance.html">Performance</a></li>
+                                        </ul>
                                     </li>
                                     <li><a href="event.html">Events</a></li>
                                     <li><a href="contact.html">Contact</a></li>
                                 </ul>
-                                </div>
                             </div>
-                            <!-- Nav End -->
-                            <!-- Nav End -->
-
                         </div>
                     </nav>
                 </div>
             </div>
         </div>
     </header>
-    <!-- ##### Header Area End ##### -->
 
-    <!-- ##### Breadcumb Area Start ##### -->
-    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
-        <div class="bradcumbContent">
-            <p></p>
-            <h2>AUDIO</h2>
+    <main class="page-shell">
+        <h1>Audio</h1>
+        <p>Experimental sound work, live recordings, and sonic material shaped by motion, atmosphere, and improvisation.</p>
+
+        <div class="audio-card">
+            <h2>Featured audio</h2>
+            <audio controls preload="metadata">
+                <source src="audio/dummy-audio.mp3" type="audio/mpeg">
+            </audio>
         </div>
-    </section>
-    <!-- ##### Breadcumb Area End ##### -->
- <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
-   <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/3UwMLw1TZ5IHYDzHLvj6yl?utm_source=generator&si=b5fba4c28fe94391" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
-    </section>
-    <!-- ##### Contact Area Start ##### -->
-    <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading white">
-                        <p>See what’s new</p>
-                        <h2>Get In Touch</h2>
-                    </div>
-                </div>
-            </div>
+    </main>
 
-            <div class="row">
-                <div class="col-12">
-                    <!-- Contact Form Area -->
-                    <div class="contact-form-area">
-                        <form action="#" method="post">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button class="btn oneMusic-btn mt-30" type="submit">Send <i class="fa fa-angle-double-right"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Contact Area End ##### -->
-
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
-        <div class="container">
-            <div class="row d-flex flex-wrap align-items-center">
-                <div class="col-12 col-md-6">
-                    <a href="#"><img src="img/core-img/logo.png" alt=""></a>
-                    <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
-
-                <div class="col-12 col-md-6">
-                    <div class="footer-nav">
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Albums</a></li>
-                            <li><a href="#">Events</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area Start ##### -->
-
-    <!-- ##### All Javascript Script ##### -->
-    <!-- jQuery-2.2.4 js -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
     <script src="js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
     <script src="js/plugins/plugins.js"></script>
-    <!-- Active js -->
     <script src="js/active.js"></script>
 </body>
-
 </html>
