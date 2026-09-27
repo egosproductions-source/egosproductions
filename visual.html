@@ -1,83 +1,69 @@
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="e-GoS Productions is a multidisciplinary artist collective exploring music, performance, video, and visual art in St. Louis.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>e-Gos Productions</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg-1: #050b17;
+            --bg-2: #0d1630;
+            --bg-3: #120d25;
+            --blue: #1d4ed8;
+            --blue-soft: rgba(29, 78, 216, 0.3);
+            --purple: #4c1d95;
+            --purple-soft: rgba(76, 29, 149, 0.3);
+            --orange: #f97316;
+            --orange-soft: rgba(249, 115, 22, 0.3);
+            --white: #f8fafc;
+            --white-soft: rgba(248, 250, 252, 0.25);
+            --line: rgba(148, 163, 184, 0.18);
+        }
+
+        #performance-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
+                radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
+                linear-gradient(180deg, var(--bg-2), var(--bg-1));
+        }
+
+        #network-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: transparent;
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ##### Preloader ##### -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 
 
@@ -154,7 +140,6 @@
 
     </header>
     <!-- ##### Header Area End ##### -->
-
 
     <main class="page-shell">
         <h1>Visual</h1>
