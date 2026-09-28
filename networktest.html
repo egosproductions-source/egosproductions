@@ -1,1510 +1,1801 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>e-Gos Network</title>
 
-<title>e-Gos Network</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 50%, #17102d 0%, #090715 42%, #03030a 100%);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    body {
+      position: relative;
+    }
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    #network-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: default;
+    }
 
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            rgba(29,78,216,0.20),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 30% 25%,
-            rgba(76,29,149,0.18),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 75% 70%,
-            rgba(249,115,22,0.08),
-            transparent 30%
-        ),
-        linear-gradient(
-            180deg,
-            #0d1630,
-            #050b17
-        );
+    .network-title {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
 
-    font-family:
-        "Segoe UI",
-        Helvetica,
-        Arial,
-        sans-serif;
-}
+      color: rgba(248, 250, 252, 0.72);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      pointer-events: none;
+      white-space: nowrap;
+      text-shadow:
+        0 0 12px rgba(255,255,255,0.25),
+        0 0 30px rgba(76,29,149,0.45);
+    }
 
-#network-canvas {
-    position: absolute;
-    inset: 0;
+    .network-hint {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
 
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    background: transparent;
-}
-
-</style>
+      color: rgba(248, 250, 252, 0.38);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+  </style>
 </head>
 
 <body>
 
-<canvas id="network-canvas"></canvas>
+  <div class="network-title">e-Gos Productions</div>
 
-<script>
+  <canvas id="network-canvas"></canvas>
 
-const canvas =
-    document.getElementById("network-canvas");
+  <div class="network-hint">
+    explore the web
+  </div>
 
-const ctx =
-    canvas.getContext("2d");
+  <script>
+    const canvas = document.getElementById("network-canvas");
+    const ctx = canvas.getContext("2d");
 
-let width =
-    canvas.width =
-    window.innerWidth;
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-let height =
-    canvas.height =
-    window.innerHeight;
+    const mouse = {
+      x: -1000,
+      y: -1000
+    };
 
+    const palette = {
+      blue: "#1d4ed8",
+      purple: "#4c1d95",
+      orange: "#f97316",
+      white: "#f8fafc",
 
-/* =====================================================
-   COLORS
-===================================================== */
-
-const palette = {
-
-    blue: "#1d4ed8",
-
-    purple: "#4c1d95",
-
-    orange: "#f97316",
-
-    white: "#f8fafc",
-
-    blueSoft:
-        "rgba(29,78,216,0.35)",
-
-    purpleSoft:
-        "rgba(76,29,149,0.35)",
-
-    orangeSoft:
-        "rgba(249,115,22,0.35)",
-
-    whiteSoft:
-        "rgba(248,250,252,0.20)"
-};
+      blueSoft: "rgba(29, 78, 216, 0.35)",
+      purpleSoft: "rgba(76, 29, 149, 0.35)",
+      orangeSoft: "rgba(249, 115, 22, 0.35)",
+      whiteSoft: "rgba(248, 250, 252, 0.20)"
+    };
 
 
-/* =====================================================
-   MAIN NODES
-===================================================== */
+    /*
+    ============================================================
+    NAVIGATION NODES
+    ============================================================
+    */
 
-const navigationNodes = [
+    const navigationNodes = [
 
-    {
+      /* HOME */
+
+      {
         id: "home",
         label: "HOME",
         url: "/index.html",
         color: palette.white,
         glow: palette.whiteSoft,
-        size: 16,
-        bold: true
-    },
+        size: 23,
+        bold: true,
+        primary: true,
+        home: true,
+        fixedX: 0.50,
+        fixedY: 0.50
+      },
 
-    {
-        id: "about",
-        label: "ABOUT",
-        url: "/about.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
-        size: 15,
-        bold: true
-    },
 
-    {
-        id: "audio",
-        label: "AUDIO",
-        url: "/audio.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
-        size: 15,
-        bold: true
-    },
+      /* MAIN PRIMARY NODES */
 
-    {
-        id: "video",
-        label: "VIDEO",
-        url: "/video.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
-        size: 15,
-        bold: true
-    },
-
-    {
+      {
         id: "visual",
         label: "VISUAL",
         url: "/visual.html",
         color: palette.blue,
         glow: palette.blueSoft,
-        size: 15,
-        bold: true
-    },
+        size: 18,
+        bold: true,
+        primary: true,
+        fixedX: 0.50,
+        fixedY: 0.16
+      },
 
-    {
+      {
+        id: "video",
+        label: "VIDEO",
+        url: "/video.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 18,
+        bold: true,
+        primary: true,
+        fixedX: 0.79,
+        fixedY: 0.29
+      },
+
+      {
         id: "performance",
         label: "PERFORMANCE",
         url: "/performance.html",
         color: palette.blue,
         glow: palette.blueSoft,
-        size: 13,
-        bold: true
-    },
+        size: 18,
+        bold: true,
+        primary: true,
+        fixedX: 0.82,
+        fixedY: 0.68
+      },
 
-    {
-        id: "events",
-        label: "EVENTS",
-        url: "/events.html",
-        color: palette.orange,
-        glow: palette.orangeSoft,
-        size: 10
-    },
-
-    {
+      {
         id: "contact",
         label: "CONTACT",
         url: "/contact.html",
         color: palette.orange,
         glow: palette.orangeSoft,
-        size: 10
-    },
+        size: 17,
+        bold: true,
+        primary: true,
+        fixedX: 0.55,
+        fixedY: 0.86
+      },
 
-    {
+      {
+        id: "events",
+        label: "EVENTS",
+        url: "/events.html",
+        color: palette.orange,
+        glow: palette.orangeSoft,
+        size: 17,
+        bold: true,
+        primary: true,
+        fixedX: 0.19,
+        fixedY: 0.68
+      },
+
+      {
+        id: "audio",
+        label: "AUDIO",
+        url: "/audio.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 18,
+        bold: true,
+        primary: true,
+        fixedX: 0.21,
+        fixedY: 0.30
+      },
+
+
+      /* SMALLER NETWORK NODES */
+
+      {
+        id: "about",
+        label: "ABOUT",
+        url: "/about.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 12
+      },
+
+      {
         id: "instagram",
         label: "INSTAGRAM",
         url: "https://www.instagram.com/egos.producer/",
         color: palette.purple,
         glow: palette.purpleSoft,
         size: 6
-    },
+      },
 
-    {
+      {
         id: "spotify",
         label: "SPOTIFY",
         url: "https://open.spotify.com/artist/7BO0dsRrLZgyIqVinsUjnA?si=rrb20EO4SI-xgIIj46CuUQ",
         color: palette.purple,
         glow: palette.purpleSoft,
         size: 6
-    },
+      },
 
-    {
+      {
         id: "soundcloud",
         label: "SOUNDCLOUD",
         url: "https://soundcloud.com/e-gosss",
         color: palette.purple,
         glow: palette.purpleSoft,
         size: 6
-    },
+      },
 
-    {
+      {
         id: "booking",
         label: "BOOKING",
         url: "mailto:booking@egosproductions.com",
         color: palette.purple,
         glow: palette.purpleSoft,
         size: 6
-    }
+      }
+    ];
 
-];
 
+    /*
+    ============================================================
+    OUTSIDE / CUSTOMIZABLE NODES
+    ============================================================
+    */
 
-/* =====================================================
-   LARGE OUTER NODES
-   SAME STYLE AS NORMAL NODES
-===================================================== */
+    const outerNodes = [
 
-const outerNodes = [
-
-    {
+      {
         id: "outer-1",
+        label: "YOUR LINK",
+        url: "#",
+        color: palette.purple,
+        glow: palette.purpleSoft,
+        size: 16,
+        distance: 330,
+        angle: 5.7
+      },
+
+      {
+        id: "outer-2",
         label: "YOUR LINK",
         url: "#",
         color: palette.orange,
         glow: palette.orangeSoft,
-        size: 19,
-        distance: 360,
-        angle: 0.55
-    },
+        size: 17,
+        distance: 325,
+        angle: 2.7
+      },
 
-    {
-        id: "outer-2",
-        label: "YOUR LINK",
-        url: "#",
-        color: palette.blue,
-        glow: palette.blueSoft,
-        size: 21,
-        distance: 370,
-        angle: 2.35
-    },
-
-    {
+      {
         id: "outer-3",
         label: "YOUR LINK",
         url: "#",
         color: palette.white,
         glow: palette.whiteSoft,
-        size: 18,
-        distance: 355,
-        angle: 4.0
-    },
-
-    {
-        id: "outer-4",
-        label: "YOUR LINK",
-        url: "#",
-        color: palette.purple,
-        glow: palette.purpleSoft,
-        size: 17,
-        distance: 365,
-        angle: 5.4
-    }
-
-];
+        size: 16,
+        distance: 335,
+        angle: 4.6
+      }
+    ];
 
 
-/* =====================================================
-   STORAGE
-===================================================== */
+    /*
+    ============================================================
+    INTERACTIVE NODE
+    ============================================================
+    */
 
-let nodes = [];
+    class InteractiveNode {
 
-let outer = [];
+      constructor(config, index = 0) {
 
-let particles = [];
+        this.id = config.id;
+        this.label = config.label;
+        this.url = config.url;
 
-let sparkles = [];
+        this.color = config.color;
+        this.glow = config.glow;
 
-let tendrils = [];
+        this.radius = config.size || 8;
 
+        this.isBold = config.bold || false;
 
-/* =====================================================
-   NORMAL NODE
-===================================================== */
+        this.primary = config.primary || false;
+        this.home = config.home || false;
 
-class InteractiveNode {
+        this.fixedX = config.fixedX;
+        this.fixedY = config.fixedY;
 
-    constructor(config) {
+        this.index = index;
 
-        this.id =
-            config.id;
+        this.baseAngle =
+          config.angle !== undefined
+            ? config.angle
+            : Math.random() * Math.PI * 2;
 
-        this.label =
-            config.label;
+        this.distance =
+          config.distance ||
+          100 + Math.random() * 210;
 
-        this.url =
-            config.url;
+        this.phase =
+          Math.random() * Math.PI * 2;
 
-        this.color =
-            config.color;
+        this.speed =
+          0.00025 +
+          Math.random() * 0.0002;
 
-        this.glow =
-            config.glow;
+        this.pulsePhase =
+          Math.random() * Math.PI * 2;
 
-        this.radius =
-            config.size;
-
-        this.bold =
-            config.bold || false;
+        this.pulseSpeed =
+          0.001 +
+          Math.random() * 0.0015;
 
         this.x = 0;
         this.y = 0;
 
-        this.baseAngle =
-            Math.random() *
-            Math.PI * 2;
-
-        this.distance =
-            80 +
-            Math.random() * 245;
-
-        this.phase =
-            Math.random() *
-            Math.PI * 2;
-
         this.hoverScale = 0;
 
-        this.pulse = 0;
-
-        this.isHovered = false;
-    }
+        this.hovered = false;
+      }
 
 
-    update(time) {
+      update(time) {
 
-        const cx =
-            width / 2;
-
-        const cy =
-            height / 2;
+        const cx = width / 2;
+        const cy = height / 2;
 
 
-        const orbit =
+        /*
+        PRIMARY NODES STAY IN THEIR
+        SPECIFIC POSITIONS
+        */
+
+        if (this.primary) {
+
+          this.x = width * this.fixedX;
+          this.y = height * this.fixedY;
+
+          /*
+          Tiny breathing movement so they
+          aren't completely frozen.
+          */
+
+          this.x +=
+            Math.sin(
+              time * 0.00035 + this.phase
+            ) * 3;
+
+          this.y +=
+            Math.cos(
+              time * 0.00030 + this.phase
+            ) * 3;
+
+        }
+
+
+        /*
+        SMALLER NODES MOVE ORGANICALLY
+        AROUND THE WEB
+        */
+
+        else {
+
+          const orbit =
             this.baseAngle +
             Math.sin(
-                time * 0.00012 +
-                this.phase
+              time * 0.00012 + this.phase
             ) * 0.16;
 
-
-        const distance =
+          const distance =
             this.distance +
             Math.sin(
-                time * 0.00018 +
-                this.phase
+              time * 0.00018 + this.phase
             ) * 18;
 
-
-        this.x =
+          this.x =
             cx +
             Math.cos(orbit) *
             distance;
 
-        this.y =
+          this.y =
             cy +
             Math.sin(orbit) *
             distance *
             0.72;
-
-
-        this.pulse =
-            1 +
-            Math.sin(
-                time * 0.0016 +
-                this.phase
-            ) * 0.8;
-
-
-        const target =
-            this.isHovered
-                ? 1
-                : 0;
-
-
-        this.hoverScale +=
-            (
-                target -
-                this.hoverScale
-            ) * 0.08;
-    }
-
-
-    draw() {
-
-        const glowRadius =
-            this.radius +
-            this.pulse * 7 +
-            this.hoverScale * 12;
-
-
-        /* outer halo */
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            glowRadius,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            this.glow;
-
-        ctx.fill();
-
-
-        /* inner glow */
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.radius +
-            this.pulse * 4 +
-            this.hoverScale * 8,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            this.glow
-                .replace(
-                    "0.35",
-                    "0.22"
-                )
-                .replace(
-                    "0.2",
-                    "0.22"
-                );
-
-        ctx.fill();
-
-
-        /* node core */
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.radius +
-            this.hoverScale * 4,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            this.color;
-
-        ctx.fill();
-
-
-        /* tiny center light */
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            Math.max(
-                1.6,
-                this.radius * 0.35
-            ),
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            "rgba(255,255,255,0.8)";
-
-        ctx.fill();
-
-
-        /* label */
-
-        ctx.fillStyle =
-            this.color === palette.white
-                ? "#f8fafc"
-                : this.color;
-
-        ctx.font =
-            this.bold
-                ? "700 13px Segoe UI, sans-serif"
-                : "600 10px Segoe UI, sans-serif";
-
-        ctx.textAlign =
-            "center";
-
-        ctx.textBaseline =
-            "middle";
-
-        ctx.globalAlpha =
-            0.7 +
-            this.hoverScale * 0.25;
-
-
-        const labelAngle =
-            Math.atan2(
-                this.y - height / 2,
-                this.x - width / 2
-            );
-
-
-        const labelDistance =
-            this.radius +
-            20 +
-            this.hoverScale * 8;
-
-
-        const lx =
-            this.x +
-            Math.cos(labelAngle) *
-            labelDistance;
-
-        const ly =
-            this.y +
-            Math.sin(labelAngle) *
-            labelDistance;
-
-
-        ctx.fillText(
-            this.label,
-            lx,
-            ly
-        );
-
-        ctx.globalAlpha = 1;
-    }
-
-
-    hitTest(mx, my) {
-
-        const distance =
-            Math.hypot(
-                this.x - mx,
-                this.y - my
-            );
-
-        const hitRadius =
-            this.radius +
-            15 +
-            this.hoverScale * 10;
-
-        this.isHovered =
-            distance <
-            hitRadius;
-
-        return this.isHovered;
-    }
-
-}
-
-
-/* =====================================================
-   OUTER NODE
-   Same appearance, simply larger/farther away.
-===================================================== */
-
-class OuterNode
-    extends InteractiveNode {
-
-    constructor(config) {
-
-        super(config);
-
-        this.baseAngle =
-            config.angle;
-
-        this.distance =
-            config.distance;
-    }
-
-}
-
-
-/* =====================================================
-   GLITTER PARTICLES
-===================================================== */
-
-class GlitterParticle {
-
-    constructor() {
-
-        this.x =
-            Math.random() * width;
-
-        this.y =
-            Math.random() * height;
-
-        this.vx =
-            (Math.random() - 0.5)
-            * 0.16;
-
-        this.vy =
-            (Math.random() - 0.5)
-            * 0.16;
-
-        this.size =
-            Math.random() *
-            1.7 + 0.3;
-
-        this.phase =
-            Math.random() *
-            Math.PI * 2;
-
-        this.color =
-            [
-                palette.white,
-                palette.blue,
-                palette.purple,
-                palette.orange
-            ][
-                Math.floor(
-                    Math.random() * 4
-                )
-            ];
-    }
-
-
-    update() {
-
-        this.x += this.vx;
-
-        this.y += this.vy;
-
-
-        if (
-            this.x < 0 ||
-            this.x > width
-        ) {
-            this.vx *= -1;
         }
-
-
-        if (
-            this.y < 0 ||
-            this.y > height
-        ) {
-            this.vy *= -1;
-        }
-    }
-
-
-    draw() {
-
-        const alpha =
-            0.15 +
-            (
-                Math.sin(
-                    performance.now() *
-                    0.0018 +
-                    this.phase
-                ) + 1
-            ) * 0.25;
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            this.color;
-
-        ctx.globalAlpha =
-            alpha;
-
-        ctx.fill();
-
-        ctx.globalAlpha = 1;
-    }
-
-}
-
-
-/* =====================================================
-   BRIGHT SPARKLES
-===================================================== */
-
-class Sparkle {
-
-    constructor() {
-
-        this.x =
-            Math.random() * width;
-
-        this.y =
-            Math.random() * height;
-
-        this.size =
-            Math.random() *
-            2.5 + 0.8;
-
-        this.phase =
-            Math.random() *
-            Math.PI * 2;
-
-        this.color =
-            [
-                palette.white,
-                palette.blue,
-                palette.purple
-            ][
-                Math.floor(
-                    Math.random() * 3
-                )
-            ];
-    }
-
-
-    draw() {
-
-        const pulse =
-            (
-                Math.sin(
-                    performance.now() *
-                    0.002 +
-                    this.phase
-                ) + 1
-            ) / 2;
-
-
-        const alpha =
-            0.08 +
-            pulse * 0.65;
-
-
-        ctx.globalAlpha =
-            alpha;
-
-
-        ctx.strokeStyle =
-            this.color;
-
-        ctx.lineWidth =
-            0.7;
-
-
-        /* vertical */
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            this.x,
-            this.y - this.size * 3
-        );
-
-        ctx.lineTo(
-            this.x,
-            this.y + this.size * 3
-        );
-
-        ctx.stroke();
-
-
-        /* horizontal */
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            this.x - this.size * 3,
-            this.y
-        );
-
-        ctx.lineTo(
-            this.x + this.size * 3,
-            this.y
-        );
-
-        ctx.stroke();
-
-
-        /* center */
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            this.color;
-
-        ctx.fill();
-
-
-        ctx.globalAlpha = 1;
-    }
-
-}
-
-
-/* =====================================================
-   SWISHY TENDRIL
-===================================================== */
-
-class Tendril {
-
-    constructor(a, b) {
-
-        this.a = a;
-
-        this.b = b;
-
-        this.phase =
-            Math.random() *
-            Math.PI * 2;
-
-        this.wave =
-            15 +
-            Math.random() * 55;
-
-        this.speed =
-            0.00025 +
-            Math.random() * 0.0004;
-
-        this.color =
-            a.color;
-    }
-
-
-    draw(time) {
-
-        const ax =
-            this.a.x;
-
-        const ay =
-            this.a.y;
-
-        const bx =
-            this.b.x;
-
-        const by =
-            this.b.y;
-
-
-        const dx =
-            bx - ax;
-
-        const dy =
-            by - ay;
-
-
-        const distance =
-            Math.hypot(
-                dx,
-                dy
-            );
-
-
-        if (distance === 0)
-            return;
-
-
-        const nx =
-            -dy / distance;
-
-        const ny =
-            dx / distance;
-
-
-        const wave =
-            Math.sin(
-                time *
-                this.speed +
-                this.phase
-            ) *
-            this.wave;
 
 
         /*
-          Two opposing control points
-          create the smooth "squiggle".
+        HOVER EFFECT
         */
 
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+
+        const mouseDistance =
+          Math.sqrt(dx * dx + dy * dy);
+
+        const hoverRange =
+          this.radius + 35;
+
+        this.hovered =
+          mouseDistance < hoverRange;
+
+        const targetScale =
+          this.hovered ? 1 : 0;
+
+        this.hoverScale +=
+          (targetScale - this.hoverScale) * 0.12;
+      }
+
+
+      draw(time) {
+
+        const pulse =
+          Math.sin(
+            time * this.pulseSpeed +
+            this.pulsePhase
+          ) * 0.5 + 0.5;
+
+
+        /*
+        OUTER HALO
+        */
+
+        const glowRadius =
+          this.radius +
+          pulse * 7 +
+          this.hoverScale * 12;
+
+        ctx.beginPath();
+
+        ctx.arc(
+          this.x,
+          this.y,
+          glowRadius,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fillStyle = this.glow;
+
+        ctx.globalAlpha =
+          0.18 +
+          pulse * 0.16 +
+          this.hoverScale * 0.15;
+
+        ctx.fill();
+
+
+        /*
+        SECONDARY GLOW
+        */
+
+        ctx.beginPath();
+
+        ctx.arc(
+          this.x,
+          this.y,
+          this.radius +
+          pulse * 4 +
+          this.hoverScale * 8,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fillStyle =
+          this.glow
+            .replace("0.35", "0.22")
+            .replace("0.20", "0.22");
+
+        ctx.globalAlpha =
+          0.55 +
+          pulse * 0.2;
+
+        ctx.fill();
+
+
+        /*
+        CORE
+        */
+
+        ctx.beginPath();
+
+        ctx.arc(
+          this.x,
+          this.y,
+          this.radius +
+          this.hoverScale * 4,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fillStyle = this.color;
+
+        ctx.globalAlpha = 1;
+
+        ctx.shadowBlur =
+          12 +
+          pulse * 12 +
+          this.hoverScale * 15;
+
+        ctx.shadowColor = this.color;
+
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+
+        /*
+        SOFT WHITE CENTER
+        */
+
+        ctx.beginPath();
+
+        ctx.arc(
+          this.x,
+          this.y,
+          Math.max(
+            1.6,
+            this.radius * 0.35
+          ),
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fillStyle =
+          "rgba(255,255,255,0.82)";
+
+        ctx.globalAlpha =
+          0.65 +
+          pulse * 0.25;
+
+        ctx.fill();
+
+
+        /*
+        LABEL
+        */
+
+        ctx.globalAlpha = 1;
+
+        const labelAngle =
+          Math.atan2(
+            this.y - height / 2,
+            this.x - width / 2
+          );
+
+        const labelDistance =
+          this.radius +
+          20 +
+          this.hoverScale * 8;
+
+        const lx =
+          this.x +
+          Math.cos(labelAngle) *
+          labelDistance;
+
+        const ly =
+          this.y +
+          Math.sin(labelAngle) *
+          labelDistance;
+
+
+        ctx.fillStyle =
+          this.color === palette.white
+            ? "#f8fafc"
+            : this.color;
+
+        ctx.font =
+          this.isBold
+            ? "600 14px 'Trebuchet MS', 'Segoe UI', sans-serif"
+            : "500 11px 'Trebuchet MS', 'Segoe UI', sans-serif";
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+
+        ctx.fillText(
+          this.label,
+          lx,
+          ly
+        );
+
+        ctx.shadowBlur = 0;
+      }
+
+
+      containsPoint(x, y) {
+
+        const dx =
+          x - this.x;
+
+        const dy =
+          y - this.y;
+
+        const distance =
+          Math.sqrt(
+            dx * dx +
+            dy * dy
+          );
+
+        return (
+          distance <
+          this.radius +
+          18
+        );
+      }
+    }
+
+
+    /*
+    ============================================================
+    TENDRIL
+    ============================================================
+    */
+
+    class Tendril {
+
+      constructor(a, b) {
+
+        this.a = a;
+        this.b = b;
+
+        this.phase =
+          Math.random() *
+          Math.PI *
+          2;
+
+        this.speed =
+          0.0005 +
+          Math.random() *
+          0.0006;
+
+        this.wave =
+          12 +
+          Math.random() *
+          35;
+      }
+
+
+      draw(time) {
+
+        const ax = this.a.x;
+        const ay = this.a.y;
+
+        const bx = this.b.x;
+        const by = this.b.y;
+
+        const dx =
+          bx - ax;
+
+        const dy =
+          by - ay;
+
+        const distance =
+          Math.hypot(dx, dy);
+
+        if (distance === 0) {
+          return;
+        }
+
+
+        /*
+        PERPENDICULAR VECTOR
+        USED TO MAKE THE CONNECTION
+        SWOOP AND CURVE
+        */
+
+        const nx =
+          -dy / distance;
+
+        const ny =
+          dx / distance;
+
+
+        const wave =
+          Math.sin(
+            time * this.speed +
+            this.phase
+          ) *
+          this.wave;
+
+
         const c1x =
-            ax +
-            dx * 0.25 +
-            nx * wave;
+          ax +
+          dx * 0.25 +
+          nx * wave;
 
         const c1y =
-            ay +
-            dy * 0.25 +
-            ny * wave;
+          ay +
+          dy * 0.25 +
+          ny * wave;
 
 
         const c2x =
-            ax +
-            dx * 0.72 -
-            nx * wave;
-
+          ax +
+          dx * 0.72 -
+          nx * wave;
 
         const c2y =
-            ay +
-            dy * 0.72 -
-            ny * wave;
+          ay +
+          dy * 0.72 -
+          ny * wave;
 
 
-        /* soft glow */
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            ax,
-            ay
-        );
-
-        ctx.bezierCurveTo(
-            c1x,
-            c1y,
-            c2x,
-            c2y,
-            bx,
-            by
-        );
-
-        ctx.strokeStyle =
-            this.color;
-
-        ctx.lineWidth =
-            3;
-
-        ctx.globalAlpha =
-            0.025;
-
-        ctx.stroke();
-
-
-        /* actual tendril */
+        /*
+        VERY SOFT OUTER GLOW
+        */
 
         ctx.beginPath();
 
         ctx.moveTo(
-            ax,
-            ay
+          ax,
+          ay
         );
 
         ctx.bezierCurveTo(
-            c1x,
-            c1y,
-            c2x,
-            c2y,
-            bx,
-            by
+          c1x,
+          c1y,
+          c2x,
+          c2y,
+          bx,
+          by
         );
 
         ctx.strokeStyle =
-            this.color;
+          "rgba(130, 100, 255, 0.035)";
 
-        ctx.lineWidth =
-            0.7;
+        ctx.lineWidth = 3;
 
-        ctx.globalAlpha =
-            0.15;
+        ctx.shadowBlur = 14;
+
+        ctx.shadowColor =
+          "rgba(120, 80, 255, 0.25)";
 
         ctx.stroke();
 
-        ctx.globalAlpha = 1;
-    }
 
-}
+        /*
+        MAIN TENDRIL
+        */
 
+        ctx.beginPath();
 
-/* =====================================================
-   CREATE LOTS OF CONNECTIONS
-===================================================== */
+        ctx.moveTo(
+          ax,
+          ay
+        );
 
-function createTendrils() {
+        ctx.bezierCurveTo(
+          c1x,
+          c1y,
+          c2x,
+          c2y,
+          bx,
+          by
+        );
 
-    tendrils = [];
+        ctx.strokeStyle =
+          "rgba(190, 170, 255, 0.15)";
 
+        ctx.lineWidth = 0.7;
 
-    /*
-      Dense organic web.
-    */
+        ctx.shadowBlur = 0;
 
-    for (
-        let i = 0;
-        i < nodes.length;
-        i++
-    ) {
-
-        for (
-            let j = i + 1;
-            j < nodes.length;
-            j++
-        ) {
-
-            const distance =
-                Math.hypot(
-                    nodes[i].x -
-                    nodes[j].x,
-
-                    nodes[i].y -
-                    nodes[j].y
-                );
-
-
-            if (
-                distance < 390 &&
-                Math.random() < 0.82
-            ) {
-
-                tendrils.push(
-                    new Tendril(
-                        nodes[i],
-                        nodes[j]
-                    )
-                );
-            }
-        }
+        ctx.stroke();
+      }
     }
 
 
     /*
-      Connect outer nodes into
-      the main web.
+    ============================================================
+    GLITTER PARTICLE
+    ============================================================
     */
 
-    outer.forEach(
-        outerNode => {
+    class GlitterParticle {
 
-            const nearby =
-                nodes
-                    .slice()
-                    .sort(
-                        (a, b) =>
-                            Math.hypot(
-                                a.x -
-                                outerNode.x,
-                                a.y -
-                                outerNode.y
-                            ) -
-                            Math.hypot(
-                                b.x -
-                                outerNode.x,
-                                b.y -
-                                outerNode.y
-                            )
-                    )
-                    .slice(0, 4);
+      constructor() {
+
+        this.reset();
+      }
 
 
-            nearby.forEach(
-                node => {
+      reset() {
 
-                    tendrils.push(
-                        new Tendril(
-                            outerNode,
-                            node
-                        )
-                    );
-                }
-            );
-        }
-    );
+        this.x =
+          Math.random() *
+          width;
+
+        this.y =
+          Math.random() *
+          height;
+
+        this.size =
+          0.4 +
+          Math.random() *
+          1.7;
+
+        this.alpha =
+          0.15 +
+          Math.random() *
+          0.6;
+
+        this.phase =
+          Math.random() *
+          Math.PI *
+          2;
+
+        this.speed =
+          0.0007 +
+          Math.random() *
+          0.002;
+
+        const colors = [
+          palette.white,
+          palette.blue,
+          palette.purple,
+          palette.orange
+        ];
+
+        this.color =
+          colors[
+            Math.floor(
+              Math.random() *
+              colors.length
+            )
+          ];
+      }
 
 
-    /*
-      Extra random tendrils.
-    */
+      update(time) {
 
-    for (
-        let i = 0;
-        i < 25;
-        i++
-    ) {
+        /*
+        Extremely slow floating motion
+        */
 
-        const a =
-            nodes[
-                Math.floor(
-                    Math.random() *
-                    nodes.length
-                )
-            ];
+        this.x +=
+          Math.sin(
+            time * 0.00012 +
+            this.phase
+          ) *
+          0.08;
 
-        const b =
-            nodes[
-                Math.floor(
-                    Math.random() *
-                    nodes.length
-                )
-            ];
-
+        this.y +=
+          Math.cos(
+            time * 0.00010 +
+            this.phase
+          ) *
+          0.06;
 
         if (
-            a &&
-            b &&
-            a !== b
+          this.x < -20 ||
+          this.x > width + 20 ||
+          this.y < -20 ||
+          this.y > height + 20
+        ) {
+          this.reset();
+        }
+      }
+
+
+      draw(time) {
+
+        const pulse =
+          Math.sin(
+            time * this.speed +
+            this.phase
+          ) * 0.5 + 0.5;
+
+        ctx.beginPath();
+
+        ctx.arc(
+          this.x,
+          this.y,
+          this.size +
+          pulse * 0.8,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fillStyle =
+          this.color;
+
+        ctx.globalAlpha =
+          this.alpha *
+          (0.45 + pulse * 0.55);
+
+        ctx.shadowBlur =
+          5 +
+          pulse * 8;
+
+        ctx.shadowColor =
+          this.color;
+
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+      }
+    }
+
+
+    /*
+    ============================================================
+    SPARKLE / STAR TWINKLE
+    ============================================================
+    */
+
+    class Sparkle {
+
+      constructor() {
+
+        this.x =
+          Math.random() *
+          width;
+
+        this.y =
+          Math.random() *
+          height;
+
+        this.size =
+          2 +
+          Math.random() *
+          5;
+
+        this.phase =
+          Math.random() *
+          Math.PI *
+          2;
+
+        this.speed =
+          0.001 +
+          Math.random() *
+          0.002;
+
+        const colors = [
+          palette.white,
+          palette.blue,
+          palette.purple,
+          palette.orange
+        ];
+
+        this.color =
+          colors[
+            Math.floor(
+              Math.random() *
+              colors.length
+            )
+          ];
+      }
+
+
+      update(time) {
+
+        this.x +=
+          Math.sin(
+            time * 0.00015 +
+            this.phase
+          ) *
+          0.12;
+
+        this.y +=
+          Math.cos(
+            time * 0.00013 +
+            this.phase
+          ) *
+          0.10;
+      }
+
+
+      draw(time) {
+
+        const pulse =
+          Math.sin(
+            time * this.speed +
+            this.phase
+          ) * 0.5 + 0.5;
+
+        const alpha =
+          0.08 +
+          pulse * 0.55;
+
+        const size =
+          this.size *
+          (0.45 + pulse);
+
+
+        /*
+        CENTER GLOW
+        */
+
+        ctx.beginPath();
+
+        ctx.arc(
+          this.x,
+          this.y,
+          size * 0.45,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fillStyle =
+          this.color;
+
+        ctx.globalAlpha =
+          alpha * 0.7;
+
+        ctx.shadowBlur =
+          size * 4;
+
+        ctx.shadowColor =
+          this.color;
+
+        ctx.fill();
+
+
+        /*
+        HORIZONTAL RAY
+        */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          this.x - size * 2.2,
+          this.y
+        );
+
+        ctx.lineTo(
+          this.x + size * 2.2,
+          this.y
+        );
+
+        ctx.strokeStyle =
+          this.color;
+
+        ctx.globalAlpha =
+          alpha * 0.45;
+
+        ctx.lineWidth =
+          0.5;
+
+        ctx.stroke();
+
+
+        /*
+        VERTICAL RAY
+        */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          this.x,
+          this.y - size * 2.2
+        );
+
+        ctx.lineTo(
+          this.x,
+          this.y + size * 2.2
+        );
+
+        ctx.strokeStyle =
+          this.color;
+
+        ctx.globalAlpha =
+          alpha * 0.45;
+
+        ctx.stroke();
+
+        ctx.shadowBlur = 0;
+      }
+    }
+
+
+    /*
+    ============================================================
+    CREATE NODES
+    ============================================================
+    */
+
+    const nodes = [];
+
+
+    navigationNodes.forEach(
+      (config, index) => {
+
+        nodes.push(
+          new InteractiveNode(
+            config,
+            index
+          )
+        );
+      }
+    );
+
+
+    /*
+    OUTER NODES
+    */
+
+    outerNodes.forEach(
+      (config, index) => {
+
+        nodes.push(
+          new InteractiveNode(
+            config,
+            navigationNodes.length + index
+          )
+        );
+      }
+    );
+
+
+    /*
+    ============================================================
+    CREATE TENDRILS
+    ============================================================
+    */
+
+    const tendrils = [];
+
+    const primaryNodes =
+      nodes.filter(
+        node =>
+          node.primary &&
+          !node.home
+      );
+
+    const nonHomeNodes =
+      nodes.filter(
+        node =>
+          !node.home
+      );
+
+
+    /*
+    PRIMARY NODES:
+    CONNECT EVERY MAIN NODE
+    TO OTHER MAIN NODES.
+    
+    HOME IS NEVER INCLUDED.
+    */
+
+    for (
+      let i = 0;
+      i < primaryNodes.length;
+      i++
+    ) {
+
+      for (
+        let j = i + 1;
+        j < primaryNodes.length;
+        j++
+      ) {
+
+        tendrils.push(
+          new Tendril(
+            primaryNodes[i],
+            primaryNodes[j]
+          )
+        );
+      }
+    }
+
+
+    /*
+    ADD MANY ORGANIC CONNECTIONS
+    THROUGHOUT THE WEB
+    */
+
+    for (
+      let i = 0;
+      i < nonHomeNodes.length;
+      i++
+    ) {
+
+      for (
+        let j = i + 1;
+        j < nonHomeNodes.length;
+        j++
+      ) {
+
+        const a =
+          nonHomeNodes[i];
+
+        const b =
+          nonHomeNodes[j];
+
+        /*
+        Skip duplicate primary
+        connections because those
+        were already created above.
+        */
+
+        if (
+          a.primary &&
+          b.primary
+        ) {
+          continue;
+        }
+
+
+        const dx =
+          a.x - b.x;
+
+        const dy =
+          a.y - b.y;
+
+        const distance =
+          Math.hypot(dx, dy);
+
+
+        /*
+        The positions are not initialized
+        perfectly until the first frame,
+        so this is mostly a probability
+        system.
+        */
+
+        if (
+          Math.random() < 0.88
         ) {
 
-            tendrils.push(
-                new Tendril(a, b)
-            );
-        }
-    }
-}
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
-function initScene() {
-
-    nodes =
-        navigationNodes.map(
-            config =>
-                new InteractiveNode(
-                    config
-                )
-        );
-
-
-    outer =
-        outerNodes.map(
-            config =>
-                new OuterNode(
-                    config
-                )
-        );
-
-
-    particles = [];
-
-    sparkles = [];
-
-
-    /*
-      Lots of tiny glitter.
-    */
-
-    const particleCount =
-        Math.min(
-            350,
-            Math.floor(
-                width *
-                height /
-                4500
+          tendrils.push(
+            new Tendril(
+              a,
+              b
             )
-        );
-
-
-    for (
-        let i = 0;
-        i < particleCount;
-        i++
-    ) {
-
-        particles.push(
-            new GlitterParticle()
-        );
+          );
+        }
+      }
     }
 
 
     /*
-      Larger magical sparkles.
+    ============================================================
+    EXTRA CONNECTIONS
+    ============================================================
+    
+    Gives the smaller nodes several
+    additional tendrils so the whole
+    thing feels like a living web.
     */
 
+    nonHomeNodes.forEach(
+      node => {
+
+        const possible =
+          nonHomeNodes.filter(
+            other =>
+              other !== node
+          );
+
+        possible.sort(
+          () =>
+            Math.random() - 0.5
+        );
+
+        const extraCount =
+          Math.min(
+            3,
+            possible.length
+          );
+
+        for (
+          let i = 0;
+          i < extraCount;
+          i++
+        ) {
+
+          const target =
+            possible[i];
+
+          /*
+          Avoid creating another
+          HOME connection.
+          */
+
+          if (
+            node.home ||
+            target.home
+          ) {
+            continue;
+          }
+
+          tendrils.push(
+            new Tendril(
+              node,
+              target
+            )
+          );
+        }
+      }
+    );
+
+
+    /*
+    ============================================================
+    PARTICLES
+    ============================================================
+    */
+
+    const glitter = [];
+
+    const glitterCount = 320;
+
     for (
-        let i = 0;
-        i < 70;
-        i++
+      let i = 0;
+      i < glitterCount;
+      i++
     ) {
 
-        sparkles.push(
-            new Sparkle()
-        );
+      glitter.push(
+        new GlitterParticle()
+      );
     }
 
 
-    const now =
-        performance.now();
+    /*
+    ============================================================
+    SPARKLES
+    ============================================================
+    */
+
+    const sparkles = [];
+
+    const sparkleCount = 75;
+
+    for (
+      let i = 0;
+      i < sparkleCount;
+      i++
+    ) {
+
+      sparkles.push(
+        new Sparkle()
+      );
+    }
 
 
-    nodes.forEach(
-        node =>
-            node.update(now)
+    /*
+    ============================================================
+    RESIZE
+    ============================================================
+    */
+
+    function resize() {
+
+      dpr =
+        Math.min(
+          window.devicePixelRatio || 1,
+          2
+        );
+
+      width =
+        window.innerWidth;
+
+      height =
+        window.innerHeight;
+
+      canvas.width =
+        width * dpr;
+
+      canvas.height =
+        height * dpr;
+
+      canvas.style.width =
+        width + "px";
+
+      canvas.style.height =
+        height + "px";
+
+      ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+      );
+    }
+
+
+    window.addEventListener(
+      "resize",
+      resize
+    );
+
+    resize();
+
+
+    /*
+    ============================================================
+    MOUSE
+    ============================================================
+    */
+
+    window.addEventListener(
+      "mousemove",
+      event => {
+
+        mouse.x =
+          event.clientX;
+
+        mouse.y =
+          event.clientY;
+      }
     );
 
 
-    outer.forEach(
-        node =>
-            node.update(now)
+    window.addEventListener(
+      "mouseleave",
+      () => {
+
+        mouse.x = -1000;
+        mouse.y = -1000;
+      }
     );
 
 
-    createTendrils();
-}
+    /*
+    ============================================================
+    CLICK / NAVIGATION
+    ============================================================
+    */
+
+    canvas.addEventListener(
+      "click",
+      event => {
+
+        const rect =
+          canvas.getBoundingClientRect();
+
+        const x =
+          event.clientX -
+          rect.left;
+
+        const y =
+          event.clientY -
+          rect.top;
 
 
-/* =====================================================
-   ANIMATION
-===================================================== */
+        /*
+        Find the node that
+        was clicked.
+        */
 
-function animate(time) {
+        for (
+          let i = nodes.length - 1;
+          i >= 0;
+          i--
+        ) {
 
-    ctx.clearRect(
+          const node =
+            nodes[i];
+
+          if (
+            node.containsPoint(
+              x,
+              y
+            )
+          ) {
+
+            if (
+              node.url &&
+              node.url !== "#"
+            ) {
+
+              if (
+                node.url.startsWith(
+                  "http"
+                )
+              ) {
+
+                window.open(
+                  node.url,
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+
+              } else {
+
+                window.location.href =
+                  node.url;
+              }
+            }
+
+            return;
+          }
+        }
+      }
+    );
+
+
+    /*
+    ============================================================
+    CURSOR
+    ============================================================
+    */
+
+    canvas.addEventListener(
+      "mousemove",
+      event => {
+
+        const rect =
+          canvas.getBoundingClientRect();
+
+        const x =
+          event.clientX -
+          rect.left;
+
+        const y =
+          event.clientY -
+          rect.top;
+
+        let hovering =
+          false;
+
+
+        for (
+          const node of nodes
+        ) {
+
+          if (
+            node.containsPoint(
+              x,
+              y
+            )
+          ) {
+
+            hovering = true;
+            break;
+          }
+        }
+
+
+        canvas.style.cursor =
+          hovering
+            ? "pointer"
+            : "default";
+      }
+    );
+
+
+    /*
+    ============================================================
+    BACKGROUND
+    ============================================================
+    */
+
+    function drawBackground() {
+
+      /*
+      Deep radial center glow
+      */
+
+      const gradient =
+        ctx.createRadialGradient(
+          width * 0.5,
+          height * 0.5,
+          0,
+          width * 0.5,
+          height * 0.5,
+          Math.max(width, height) * 0.75
+        );
+
+      gradient.addColorStop(
+        0,
+        "rgba(76, 29, 149, 0.13)"
+      );
+
+      gradient.addColorStop(
+        0.35,
+        "rgba(29, 78, 216, 0.055)"
+      );
+
+      gradient.addColorStop(
+        0.7,
+        "rgba(15, 8, 35, 0.08)"
+      );
+
+      gradient.addColorStop(
+        1,
+        "rgba(0, 0, 0, 0)"
+      );
+
+
+      ctx.fillStyle =
+        gradient;
+
+      ctx.fillRect(
         0,
         0,
         width,
         height
-    );
+      );
 
 
-    particles.forEach(
-        particle => {
+      /*
+      Very subtle atmospheric haze
+      */
 
-            particle.update();
+      const haze =
+        ctx.createRadialGradient(
+          width * 0.25,
+          height * 0.25,
+          0,
+          width * 0.25,
+          height * 0.25,
+          width * 0.45
+        );
 
-            particle.draw();
-        }
-    );
+      haze.addColorStop(
+        0,
+        "rgba(29, 78, 216, 0.035)"
+      );
 
+      haze.addColorStop(
+        1,
+        "rgba(29, 78, 216, 0)"
+      );
 
-    sparkles.forEach(
-        sparkle =>
-            sparkle.draw()
-    );
+      ctx.fillStyle =
+        haze;
 
-
-    nodes.forEach(
-        node =>
-            node.update(time)
-    );
-
-
-    outer.forEach(
-        node =>
-            node.update(time)
-    );
+      ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+      );
+    }
 
 
     /*
-      Tendrils FIRST.
+    ============================================================
+    ANIMATION LOOP
+    ============================================================
     */
 
-    tendrils.forEach(
-        tendril =>
-            tendril.draw(time)
-    );
+    function animate(time) {
+
+      ctx.globalAlpha = 1;
+
+      ctx.globalCompositeOperation =
+        "source-over";
+
+      ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+      );
+
+
+      /*
+      BACKGROUND
+      */
+
+      drawBackground();
+
+
+      /*
+      GLITTER
+      */
+
+      for (
+        const particle of glitter
+      ) {
+
+        particle.update(time);
+        particle.draw(time);
+      }
+
+
+      /*
+      SPARKLES
+      */
+
+      for (
+        const sparkle of sparkles
+      ) {
+
+        sparkle.update(time);
+        sparkle.draw(time);
+      }
+
+
+      /*
+      UPDATE NODES
+      */
+
+      for (
+        const node of nodes
+      ) {
+
+        node.update(time);
+      }
+
+
+      /*
+      TENDRILS
+
+      IMPORTANT:
+      HOME HAS NO CONNECTIONS.
+      */
+
+      ctx.globalAlpha = 1;
+
+      for (
+        const tendril of tendrils
+      ) {
+
+        tendril.draw(time);
+      }
+
+
+      /*
+      NODES GO ON TOP
+      OF THE TENDRILS
+      */
+
+      ctx.globalAlpha = 1;
+
+      for (
+        const node of nodes
+      ) {
+
+        node.draw(time);
+      }
+
+
+      ctx.globalAlpha = 1;
+
+      requestAnimationFrame(
+        animate
+      );
+    }
 
 
     /*
-      Nodes on top.
+    START
     */
-
-    nodes.forEach(
-        node =>
-            node.draw()
-    );
-
-
-    outer.forEach(
-        node =>
-            node.draw()
-    );
-
 
     requestAnimationFrame(
-        animate
+      animate
     );
-}
 
-
-/* =====================================================
-   MOUSE
-===================================================== */
-
-canvas.addEventListener(
-    "mousemove",
-    event => {
-
-        const rect =
-            canvas.getBoundingClientRect();
-
-
-        const mx =
-            event.clientX -
-            rect.left;
-
-        const my =
-            event.clientY -
-            rect.top;
-
-
-        let found = false;
-
-
-        nodes.forEach(
-            node => {
-
-                if (
-                    node.hitTest(
-                        mx,
-                        my
-                    )
-                ) {
-
-                    found = true;
-                }
-            }
-        );
-
-
-        outer.forEach(
-            node => {
-
-                if (
-                    node.hitTest(
-                        mx,
-                        my
-                    )
-                ) {
-
-                    found = true;
-                }
-            }
-        );
-
-
-        canvas.style.cursor =
-            found
-                ? "pointer"
-                : "default";
-    }
-);
-
-
-/* =====================================================
-   MOUSE LEAVE
-===================================================== */
-
-canvas.addEventListener(
-    "mouseleave",
-    () => {
-
-        nodes.forEach(
-            node =>
-                node.isHovered = false
-        );
-
-        outer.forEach(
-            node =>
-                node.isHovered = false
-        );
-
-        canvas.style.cursor =
-            "default";
-    }
-);
-
-
-/* =====================================================
-   CLICK
-===================================================== */
-
-canvas.addEventListener(
-    "click",
-    event => {
-
-        const rect =
-            canvas.getBoundingClientRect();
-
-
-        const mx =
-            event.clientX -
-            rect.left;
-
-        const my =
-            event.clientY -
-            rect.top;
-
-
-        for (
-            const node of nodes
-        ) {
-
-            if (
-                node.hitTest(
-                    mx,
-                    my
-                )
-            ) {
-
-                if (
-                    node.url &&
-                    node.url !== "#"
-                ) {
-
-                    window.location.href =
-                        node.url;
-                }
-
-                return;
-            }
-        }
-
-
-        for (
-            const node of outer
-        ) {
-
-            if (
-                node.hitTest(
-                    mx,
-                    my
-                )
-            ) {
-
-                if (
-                    node.url &&
-                    node.url !== "#"
-                ) {
-
-                    window.location.href =
-                        node.url;
-                }
-
-                return;
-            }
-        }
-    }
-);
-
-
-/* =====================================================
-   RESIZE
-===================================================== */
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        width =
-            canvas.width =
-            window.innerWidth;
-
-        height =
-            canvas.height =
-            window.innerHeight;
-
-
-        initScene();
-    }
-);
-
-
-/* =====================================================
-   START
-===================================================== */
-
-initScene();
-
-requestAnimationFrame(
-    animate
-);
-
-</script>
+  </script>
 
 </body>
 </html>
