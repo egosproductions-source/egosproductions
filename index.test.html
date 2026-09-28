@@ -437,14 +437,63 @@
     </footer>
     <!-- ##### Footer Area End ##### -->
 
-    <!-- ##### Web Modal ##### -->
-    <div class="modal" id="web-modal">
-        <div class="modal-panel">
-            <button class="modal-close" id="close-web" aria-label="Close">✕</button>
-            <iframe src="network-viewer_Version2.html" title="Interactive Network"></iframe>
-        </div>
-    </div>
+ <!-- ##### Elfsight Script ##### -->
+<script src="https://elfsightcdn.com/platform.js" async></script>
 
+<!-- ##### All Javascript Script ##### -->
+
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+
+<!-- Active js -->
 <script src="js/active.js"></script>
+
+<!-- Modal Controls -->
+<script>
+    const modal = document.getElementById("web-modal");
+    const openBtn = document.getElementById("open-web");
+    const goBtn = document.getElementById("go-button");
+    const closeBtn = document.getElementById("close-web");
+
+    function openModal() {
+        modal.classList.add("open");
+    }
+
+    function closeModal() {
+        modal.classList.remove("open");
+    }
+
+    if (openBtn) {
+        openBtn.addEventListener("click", openModal);
+    }
+
+    if (goBtn) {
+        goBtn.addEventListener("click", openModal);
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+    }
+
+    if (modal) {
+        modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
 </body>
 </html>
