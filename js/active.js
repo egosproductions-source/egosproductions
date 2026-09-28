@@ -566,4 +566,10 @@
             requestAnimationFrame(animate);
         }
     </script>
+
+    <!-- ##### Elfsight Script ##### -->
+    <script
+        src="https://elfsightcdn.com/platform.js"
+        async>
+    </script>
 })(jQuery);
