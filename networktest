@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>e-Gos Network</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(29,78,216,0.20),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(76,29,149,0.18),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 75% 70%,
+            rgba(249,115,22,0.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #0d1630,
+            #050b17
+        );
+
+    font-family:
+        "Segoe UI",
+        Helvetica,
+        Arial,
+        sans-serif;
+}
+
+#network-canvas {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    background: transparent;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="network-canvas"></canvas>
+
+<script>
+
+const canvas =
+    document.getElementById("network-canvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+let width =
+    canvas.width =
+    window.innerWidth;
+
+let height =
+    canvas.height =
+    window.innerHeight;
+
+
+/* =====================================================
+   COLORS
+===================================================== */
+
+const palette = {
+
+    blue: "#1d4ed8",
+
+    purple: "#4c1d95",
+
+    orange: "#f97316",
+
+    white: "#f8fafc",
+
+    blueSoft:
+        "rgba(29,78,216,0.35)",
+
+    purpleSoft:
+        "rgba(76,29,149,0.35)",
+
+    orangeSoft:
+        "rgba(249,115,22,0.35)",
+
+    whiteSoft:
+        "rgba(248,250,252,0.20)"
+};
+
+
+/* =====================================================
+   MAIN NODES
+===================================================== */
+
+const navigationNodes = [
+
+    {
+        id: "home",
+        label: "HOME",
+        url: "/index.html",
+        color: palette.white,
+        glow: palette.whiteSoft,
+        size: 16,
+        bold: true
+    },
+
+    {
+        id: "about",
+        label: "ABOUT",
+        url: "/about.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 15,
+        bold: true
+    },
+
+    {
+        id: "audio",
+        label: "AUDIO",
+        url: "/audio.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 15,
+        bold: true
+    },
+
+    {
+        id: "video",
+        label: "VIDEO",
+        url: "/video.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 15,
+        bold: true
+    },
+
+    {
+        id: "visual",
+        label: "VISUAL",
+        url: "/visual.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 15,
+        bold: true
+    },
+
+    {
+        id: "performance",
+        label: "PERFORMANCE",
+        url: "/performance.html",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 13,
+        bold: true
+    },
+
+    {
+        id: "events",
+        label: "EVENTS",
+        url: "/events.html",
+        color: palette.orange,
+        glow: palette.orangeSoft,
+        size: 10
+    },
+
+    {
+        id: "contact",
+        label: "CONTACT",
+        url: "/contact.html",
+        color: palette.orange,
+        glow: palette.orangeSoft,
+        size: 10
+    },
+
+    {
+        id: "instagram",
+        label: "INSTAGRAM",
+        url: "https://www.instagram.com/egos.producer/",
+        color: palette.purple,
+        glow: palette.purpleSoft,
+        size: 6
+    },
+
+    {
+        id: "spotify",
+        label: "SPOTIFY",
+        url: "https://open.spotify.com/artist/7BO0dsRrLZgyIqVinsUjnA?si=rrb20EO4SI-xgIIj46CuUQ",
+        color: palette.purple,
+        glow: palette.purpleSoft,
+        size: 6
+    },
+
+    {
+        id: "soundcloud",
+        label: "SOUNDCLOUD",
+        url: "https://soundcloud.com/e-gosss",
+        color: palette.purple,
+        glow: palette.purpleSoft,
+        size: 6
+    },
+
+    {
+        id: "booking",
+        label: "BOOKING",
+        url: "mailto:booking@egosproductions.com",
+        color: palette.purple,
+        glow: palette.purpleSoft,
+        size: 6
+    }
+
+];
+
+
+/* =====================================================
+   LARGE OUTER NODES
+   SAME STYLE AS NORMAL NODES
+===================================================== */
+
+const outerNodes = [
+
+    {
+        id: "outer-1",
+        label: "YOUR LINK",
+        url: "#",
+        color: palette.orange,
+        glow: palette.orangeSoft,
+        size: 19,
+        distance: 360,
+        angle: 0.55
+    },
+
+    {
+        id: "outer-2",
+        label: "YOUR LINK",
+        url: "#",
+        color: palette.blue,
+        glow: palette.blueSoft,
+        size: 21,
+        distance: 370,
+        angle: 2.35
+    },
+
+    {
+        id: "outer-3",
+        label: "YOUR LINK",
+        url: "#",
+        color: palette.white,
+        glow: palette.whiteSoft,
+        size: 18,
+        distance: 355,
+        angle: 4.0
+    },
+
+    {
+        id: "outer-4",
+        label: "YOUR LINK",
+        url: "#",
+        color: palette.purple,
+        glow: palette.purpleSoft,
+        size: 17,
+        distance: 365,
+        angle: 5.4
+    }
+
+];
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+let nodes = [];
+
+let outer = [];
+
+let particles = [];
+
+let sparkles = [];
+
+let tendrils = [];
+
+
+/* =====================================================
+   NORMAL NODE
+===================================================== */
+
+class InteractiveNode {
+
+    constructor(config) {
+
+        this.id =
+            config.id;
+
+        this.label =
+            config.label;
+
+        this.url =
+            config.url;
+
+        this.color =
+            config.color;
+
+        this.glow =
+            config.glow;
+
+        this.radius =
+            config.size;
+
+        this.bold =
+            config.bold || false;
+
+        this.x = 0;
+        this.y = 0;
+
+        this.baseAngle =
+            Math.random() *
+            Math.PI * 2;
+
+        this.distance =
+            80 +
+            Math.random() * 245;
+
+        this.phase =
+            Math.random() *
+            Math.PI * 2;
+
+        this.hoverScale = 0;
+
+        this.pulse = 0;
+
+        this.isHovered = false;
+    }
+
+
+    update(time) {
+
+        const cx =
+            width / 2;
+
+        const cy =
+            height / 2;
+
+
+        const orbit =
+            this.baseAngle +
+            Math.sin(
+                time * 0.00012 +
+                this.phase
+            ) * 0.16;
+
+
+        const distance =
+            this.distance +
+            Math.sin(
+                time * 0.00018 +
+                this.phase
+            ) * 18;
+
+
+        this.x =
+            cx +
+            Math.cos(orbit) *
+            distance;
+
+        this.y =
+            cy +
+            Math.sin(orbit) *
+            distance *
+            0.72;
+
+
+        this.pulse =
+            1 +
+            Math.sin(
+                time * 0.0016 +
+                this.phase
+            ) * 0.8;
+
+
+        const target =
+            this.isHovered
+                ? 1
+                : 0;
+
+
+        this.hoverScale +=
+            (
+                target -
+                this.hoverScale
+            ) * 0.08;
+    }
+
+
+    draw() {
+
+        const glowRadius =
+            this.radius +
+            this.pulse * 7 +
+            this.hoverScale * 12;
+
+
+        /* outer halo */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            glowRadius,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            this.glow;
+
+        ctx.fill();
+
+
+        /* inner glow */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.radius +
+            this.pulse * 4 +
+            this.hoverScale * 8,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            this.glow
+                .replace(
+                    "0.35",
+                    "0.22"
+                )
+                .replace(
+                    "0.2",
+                    "0.22"
+                );
+
+        ctx.fill();
+
+
+        /* node core */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.radius +
+            this.hoverScale * 4,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            this.color;
+
+        ctx.fill();
+
+
+        /* tiny center light */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            Math.max(
+                1.6,
+                this.radius * 0.35
+            ),
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            "rgba(255,255,255,0.8)";
+
+        ctx.fill();
+
+
+        /* label */
+
+        ctx.fillStyle =
+            this.color === palette.white
+                ? "#f8fafc"
+                : this.color;
+
+        ctx.font =
+            this.bold
+                ? "700 13px Segoe UI, sans-serif"
+                : "600 10px Segoe UI, sans-serif";
+
+        ctx.textAlign =
+            "center";
+
+        ctx.textBaseline =
+            "middle";
+
+        ctx.globalAlpha =
+            0.7 +
+            this.hoverScale * 0.25;
+
+
+        const labelAngle =
+            Math.atan2(
+                this.y - height / 2,
+                this.x - width / 2
+            );
+
+
+        const labelDistance =
+            this.radius +
+            20 +
+            this.hoverScale * 8;
+
+
+        const lx =
+            this.x +
+            Math.cos(labelAngle) *
+            labelDistance;
+
+        const ly =
+            this.y +
+            Math.sin(labelAngle) *
+            labelDistance;
+
+
+        ctx.fillText(
+            this.label,
+            lx,
+            ly
+        );
+
+        ctx.globalAlpha = 1;
+    }
+
+
+    hitTest(mx, my) {
+
+        const distance =
+            Math.hypot(
+                this.x - mx,
+                this.y - my
+            );
+
+        const hitRadius =
+            this.radius +
+            15 +
+            this.hoverScale * 10;
+
+        this.isHovered =
+            distance <
+            hitRadius;
+
+        return this.isHovered;
+    }
+
+}
+
+
+/* =====================================================
+   OUTER NODE
+   Same appearance, simply larger/farther away.
+===================================================== */
+
+class OuterNode
+    extends InteractiveNode {
+
+    constructor(config) {
+
+        super(config);
+
+        this.baseAngle =
+            config.angle;
+
+        this.distance =
+            config.distance;
+    }
+
+}
+
+
+/* =====================================================
+   GLITTER PARTICLES
+===================================================== */
+
+class GlitterParticle {
+
+    constructor() {
+
+        this.x =
+            Math.random() * width;
+
+        this.y =
+            Math.random() * height;
+
+        this.vx =
+            (Math.random() - 0.5)
+            * 0.16;
+
+        this.vy =
+            (Math.random() - 0.5)
+            * 0.16;
+
+        this.size =
+            Math.random() *
+            1.7 + 0.3;
+
+        this.phase =
+            Math.random() *
+            Math.PI * 2;
+
+        this.color =
+            [
+                palette.white,
+                palette.blue,
+                palette.purple,
+                palette.orange
+            ][
+                Math.floor(
+                    Math.random() * 4
+                )
+            ];
+    }
+
+
+    update() {
+
+        this.x += this.vx;
+
+        this.y += this.vy;
+
+
+        if (
+            this.x < 0 ||
+            this.x > width
+        ) {
+            this.vx *= -1;
+        }
+
+
+        if (
+            this.y < 0 ||
+            this.y > height
+        ) {
+            this.vy *= -1;
+        }
+    }
+
+
+    draw() {
+
+        const alpha =
+            0.15 +
+            (
+                Math.sin(
+                    performance.now() *
+                    0.0018 +
+                    this.phase
+                ) + 1
+            ) * 0.25;
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            this.color;
+
+        ctx.globalAlpha =
+            alpha;
+
+        ctx.fill();
+
+        ctx.globalAlpha = 1;
+    }
+
+}
+
+
+/* =====================================================
+   BRIGHT SPARKLES
+===================================================== */
+
+class Sparkle {
+
+    constructor() {
+
+        this.x =
+            Math.random() * width;
+
+        this.y =
+            Math.random() * height;
+
+        this.size =
+            Math.random() *
+            2.5 + 0.8;
+
+        this.phase =
+            Math.random() *
+            Math.PI * 2;
+
+        this.color =
+            [
+                palette.white,
+                palette.blue,
+                palette.purple
+            ][
+                Math.floor(
+                    Math.random() * 3
+                )
+            ];
+    }
+
+
+    draw() {
+
+        const pulse =
+            (
+                Math.sin(
+                    performance.now() *
+                    0.002 +
+                    this.phase
+                ) + 1
+            ) / 2;
+
+
+        const alpha =
+            0.08 +
+            pulse * 0.65;
+
+
+        ctx.globalAlpha =
+            alpha;
+
+
+        ctx.strokeStyle =
+            this.color;
+
+        ctx.lineWidth =
+            0.7;
+
+
+        /* vertical */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            this.x,
+            this.y - this.size * 3
+        );
+
+        ctx.lineTo(
+            this.x,
+            this.y + this.size * 3
+        );
+
+        ctx.stroke();
+
+
+        /* horizontal */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            this.x - this.size * 3,
+            this.y
+        );
+
+        ctx.lineTo(
+            this.x + this.size * 3,
+            this.y
+        );
+
+        ctx.stroke();
+
+
+        /* center */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            this.color;
+
+        ctx.fill();
+
+
+        ctx.globalAlpha = 1;
+    }
+
+}
+
+
+/* =====================================================
+   SWISHY TENDRIL
+===================================================== */
+
+class Tendril {
+
+    constructor(a, b) {
+
+        this.a = a;
+
+        this.b = b;
+
+        this.phase =
+            Math.random() *
+            Math.PI * 2;
+
+        this.wave =
+            15 +
+            Math.random() * 55;
+
+        this.speed =
+            0.00025 +
+            Math.random() * 0.0004;
+
+        this.color =
+            a.color;
+    }
+
+
+    draw(time) {
+
+        const ax =
+            this.a.x;
+
+        const ay =
+            this.a.y;
+
+        const bx =
+            this.b.x;
+
+        const by =
+            this.b.y;
+
+
+        const dx =
+            bx - ax;
+
+        const dy =
+            by - ay;
+
+
+        const distance =
+            Math.hypot(
+                dx,
+                dy
+            );
+
+
+        if (distance === 0)
+            return;
+
+
+        const nx =
+            -dy / distance;
+
+        const ny =
+            dx / distance;
+
+
+        const wave =
+            Math.sin(
+                time *
+                this.speed +
+                this.phase
+            ) *
+            this.wave;
+
+
+        /*
+          Two opposing control points
+          create the smooth "squiggle".
+        */
+
+        const c1x =
+            ax +
+            dx * 0.25 +
+            nx * wave;
+
+        const c1y =
+            ay +
+            dy * 0.25 +
+            ny * wave;
+
+
+        const c2x =
+            ax +
+            dx * 0.72 -
+            nx * wave;
+
+
+        const c2y =
+            ay +
+            dy * 0.72 -
+            ny * wave;
+
+
+        /* soft glow */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            ax,
+            ay
+        );
+
+        ctx.bezierCurveTo(
+            c1x,
+            c1y,
+            c2x,
+            c2y,
+            bx,
+            by
+        );
+
+        ctx.strokeStyle =
+            this.color;
+
+        ctx.lineWidth =
+            3;
+
+        ctx.globalAlpha =
+            0.025;
+
+        ctx.stroke();
+
+
+        /* actual tendril */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            ax,
+            ay
+        );
+
+        ctx.bezierCurveTo(
+            c1x,
+            c1y,
+            c2x,
+            c2y,
+            bx,
+            by
+        );
+
+        ctx.strokeStyle =
+            this.color;
+
+        ctx.lineWidth =
+            0.7;
+
+        ctx.globalAlpha =
+            0.15;
+
+        ctx.stroke();
+
+        ctx.globalAlpha = 1;
+    }
+
+}
+
+
+/* =====================================================
+   CREATE LOTS OF CONNECTIONS
+===================================================== */
+
+function createTendrils() {
+
+    tendrils = [];
+
+
+    /*
+      Dense organic web.
+    */
+
+    for (
+        let i = 0;
+        i < nodes.length;
+        i++
+    ) {
+
+        for (
+            let j = i + 1;
+            j < nodes.length;
+            j++
+        ) {
+
+            const distance =
+                Math.hypot(
+                    nodes[i].x -
+                    nodes[j].x,
+
+                    nodes[i].y -
+                    nodes[j].y
+                );
+
+
+            if (
+                distance < 390 &&
+                Math.random() < 0.82
+            ) {
+
+                tendrils.push(
+                    new Tendril(
+                        nodes[i],
+                        nodes[j]
+                    )
+                );
+            }
+        }
+    }
+
+
+    /*
+      Connect outer nodes into
+      the main web.
+    */
+
+    outer.forEach(
+        outerNode => {
+
+            const nearby =
+                nodes
+                    .slice()
+                    .sort(
+                        (a, b) =>
+                            Math.hypot(
+                                a.x -
+                                outerNode.x,
+                                a.y -
+                                outerNode.y
+                            ) -
+                            Math.hypot(
+                                b.x -
+                                outerNode.x,
+                                b.y -
+                                outerNode.y
+                            )
+                    )
+                    .slice(0, 4);
+
+
+            nearby.forEach(
+                node => {
+
+                    tendrils.push(
+                        new Tendril(
+                            outerNode,
+                            node
+                        )
+                    );
+                }
+            );
+        }
+    );
+
+
+    /*
+      Extra random tendrils.
+    */
+
+    for (
+        let i = 0;
+        i < 25;
+        i++
+    ) {
+
+        const a =
+            nodes[
+                Math.floor(
+                    Math.random() *
+                    nodes.length
+                )
+            ];
+
+        const b =
+            nodes[
+                Math.floor(
+                    Math.random() *
+                    nodes.length
+                )
+            ];
+
+
+        if (
+            a &&
+            b &&
+            a !== b
+        ) {
+
+            tendrils.push(
+                new Tendril(a, b)
+            );
+        }
+    }
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+function initScene() {
+
+    nodes =
+        navigationNodes.map(
+            config =>
+                new InteractiveNode(
+                    config
+                )
+        );
+
+
+    outer =
+        outerNodes.map(
+            config =>
+                new OuterNode(
+                    config
+                )
+        );
+
+
+    particles = [];
+
+    sparkles = [];
+
+
+    /*
+      Lots of tiny glitter.
+    */
+
+    const particleCount =
+        Math.min(
+            350,
+            Math.floor(
+                width *
+                height /
+                4500
+            )
+        );
+
+
+    for (
+        let i = 0;
+        i < particleCount;
+        i++
+    ) {
+
+        particles.push(
+            new GlitterParticle()
+        );
+    }
+
+
+    /*
+      Larger magical sparkles.
+    */
+
+    for (
+        let i = 0;
+        i < 70;
+        i++
+    ) {
+
+        sparkles.push(
+            new Sparkle()
+        );
+    }
+
+
+    const now =
+        performance.now();
+
+
+    nodes.forEach(
+        node =>
+            node.update(now)
+    );
+
+
+    outer.forEach(
+        node =>
+            node.update(now)
+    );
+
+
+    createTendrils();
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+function animate(time) {
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    particles.forEach(
+        particle => {
+
+            particle.update();
+
+            particle.draw();
+        }
+    );
+
+
+    sparkles.forEach(
+        sparkle =>
+            sparkle.draw()
+    );
+
+
+    nodes.forEach(
+        node =>
+            node.update(time)
+    );
+
+
+    outer.forEach(
+        node =>
+            node.update(time)
+    );
+
+
+    /*
+      Tendrils FIRST.
+    */
+
+    tendrils.forEach(
+        tendril =>
+            tendril.draw(time)
+    );
+
+
+    /*
+      Nodes on top.
+    */
+
+    nodes.forEach(
+        node =>
+            node.draw()
+    );
+
+
+    outer.forEach(
+        node =>
+            node.draw()
+    );
+
+
+    requestAnimationFrame(
+        animate
+    );
+}
+
+
+/* =====================================================
+   MOUSE
+===================================================== */
+
+canvas.addEventListener(
+    "mousemove",
+    event => {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        const mx =
+            event.clientX -
+            rect.left;
+
+        const my =
+            event.clientY -
+            rect.top;
+
+
+        let found = false;
+
+
+        nodes.forEach(
+            node => {
+
+                if (
+                    node.hitTest(
+                        mx,
+                        my
+                    )
+                ) {
+
+                    found = true;
+                }
+            }
+        );
+
+
+        outer.forEach(
+            node => {
+
+                if (
+                    node.hitTest(
+                        mx,
+                        my
+                    )
+                ) {
+
+                    found = true;
+                }
+            }
+        );
+
+
+        canvas.style.cursor =
+            found
+                ? "pointer"
+                : "default";
+    }
+);
+
+
+/* =====================================================
+   MOUSE LEAVE
+===================================================== */
+
+canvas.addEventListener(
+    "mouseleave",
+    () => {
+
+        nodes.forEach(
+            node =>
+                node.isHovered = false
+        );
+
+        outer.forEach(
+            node =>
+                node.isHovered = false
+        );
+
+        canvas.style.cursor =
+            "default";
+    }
+);
+
+
+/* =====================================================
+   CLICK
+===================================================== */
+
+canvas.addEventListener(
+    "click",
+    event => {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        const mx =
+            event.clientX -
+            rect.left;
+
+        const my =
+            event.clientY -
+            rect.top;
+
+
+        for (
+            const node of nodes
+        ) {
+
+            if (
+                node.hitTest(
+                    mx,
+                    my
+                )
+            ) {
+
+                if (
+                    node.url &&
+                    node.url !== "#"
+                ) {
+
+                    window.location.href =
+                        node.url;
+                }
+
+                return;
+            }
+        }
+
+
+        for (
+            const node of outer
+        ) {
+
+            if (
+                node.hitTest(
+                    mx,
+                    my
+                )
+            ) {
+
+                if (
+                    node.url &&
+                    node.url !== "#"
+                ) {
+
+                    window.location.href =
+                        node.url;
+                }
+
+                return;
+            }
+        }
+    }
+);
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        width =
+            canvas.width =
+            window.innerWidth;
+
+        height =
+            canvas.height =
+            window.innerHeight;
+
+
+        initScene();
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+initScene();
+
+requestAnimationFrame(
+    animate
+);
+
+</script>
+
+</body>
+</html>
