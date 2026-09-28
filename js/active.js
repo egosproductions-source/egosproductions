@@ -211,6 +211,7 @@
         $('.catagory-menu a').removeClass('active');
         $(this).addClass('active');
     })
+        })(jQuery);
    <!-- ##### Elfsight Script ##### -->
     <script
         src="https://elfsightcdn.com/platform.js"
@@ -236,7 +237,6 @@
     <script src="js/active.js"></script>
 
     <!-- Modal Controls -->
-    <script>
         const modal = document.getElementById("web-modal");
         const openBtn = document.getElementById("open-web");
         const goBtn = document.getElementById("go-button");
@@ -260,10 +260,9 @@
                 closeModal();
             }
         });
-    </script>
+   
 
-    <!-- Performance Network Canvas Script -->
-    <script>
+  
         const canvas = document.getElementById("network-canvas");
         if (canvas) {
             const ctx = canvas.getContext("2d");
@@ -565,11 +564,5 @@
             initScene();
             requestAnimationFrame(animate);
         }
-    </script>
 
-    <!-- ##### Elfsight Script ##### -->
-    <script
-        src="https://elfsightcdn.com/platform.js"
-        async>
-    </script>
-})(jQuery);
+
