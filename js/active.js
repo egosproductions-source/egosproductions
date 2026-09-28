@@ -212,54 +212,39 @@
         $(this).addClass('active');
     })
         })(jQuery);
-   <!-- ##### Elfsight Script ##### -->
-    <script
-        src="https://elfsightcdn.com/platform.js"
-        async>
-    </script>
+// Modal Controls
+const modal = document.getElementById("web-modal");
+const openBtn = document.getElementById("open-web");
+const goBtn = document.getElementById("go-button");
+const closeBtn = document.getElementById("close-web");
 
+function openModal() {
+    if (modal) modal.classList.add("open");
+}
 
-    <!-- ##### All Javascript Script ##### -->
+function closeModal() {
+    if (modal) modal.classList.remove("open");
+}
 
-    <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+if (openBtn) {
+    openBtn.addEventListener("click", openModal);
+}
 
-    <!-- Popper js -->
-    <script src="js/bootstrap/popper.min.js"></script>
+if (goBtn) {
+    goBtn.addEventListener("click", openModal);
+}
 
-    <!-- Bootstrap js -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
+if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
+}
 
-    <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
-
-    <!-- Active js -->
-    <script src="js/active.js"></script>
-
-    <!-- Modal Controls -->
-        const modal = document.getElementById("web-modal");
-        const openBtn = document.getElementById("open-web");
-        const goBtn = document.getElementById("go-button");
-        const closeBtn = document.getElementById("close-web");
-
-        function openModal() {
-            modal.classList.add("open");
+if (modal) {
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            closeModal();
         }
-
-        function closeModal() {
-            modal.classList.remove("open");
-        }
-
-        openBtn.addEventListener("click", openModal);
-        goBtn.addEventListener("click", openModal);
-
-        closeBtn.addEventListener("click", closeModal);
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
+    });
+}
    
 
   
