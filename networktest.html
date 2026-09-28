@@ -581,183 +581,64 @@ class InteractiveNode {
             0.12;
     }
 
+draw(time) {
+    const twinkle =
+        (Math.sin(time * this.speed + this.phase) + 1) * 0.5;
 
-    draw(time) {
+    const alpha =
+        0.18 + twinkle * 0.30;
 
-        const pulse =
-            (
-                Math.sin(
-                    time * 0.002 +
-                    this.phase
-                ) + 1
-            ) * 0.5;
+    const size =
+        this.size * (0.75 + twinkle * 0.9);
 
+    // Most particles are just soft, non-glowing glitter dots
+    ctx.beginPath();
+    ctx.arc(
+        this.x,
+        this.y,
+        size,
+        0,
+        Math.PI * 2
+    );
 
-        /*
-        OUTER GLOW
-        */
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+
+    // Only some particles get a subtle glow
+    if (this.hasGlow) {
 
         ctx.beginPath();
-
         ctx.arc(
             this.x,
             this.y,
-            this.radius +
-            12 +
-            pulse * 5 +
-            this.hoverScale * 8,
+            size * 2.5,
             0,
             Math.PI * 2
         );
 
-        ctx.fillStyle =
-            this.glow;
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = alpha * 0.05;
+        ctx.fill();
 
+        ctx.beginPath();
+        ctx.arc(
+            this.x,
+            this.y,
+            size * 0.35,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle = "#ffffff";
         ctx.globalAlpha =
-            0.55 +
-            pulse * 0.15;
+            0.35 + twinkle * 0.25;
 
         ctx.fill();
-
-
-        /*
-        SECOND GLOW
-        */
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.radius +
-            5 +
-            this.hoverScale * 4,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            this.glow;
-
-        ctx.globalAlpha =
-            0.55;
-
-        ctx.fill();
-
-
-        /*
-        CORE
-        */
-
-        ctx.globalAlpha = 1;
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.radius +
-            this.hoverScale * 3,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            this.color;
-
-        ctx.fill();
-
-
-        /*
-        WHITE CENTER
-        */
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            Math.max(
-                1.5,
-                this.radius * 0.34
-            ),
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            "#ffffff";
-
-        ctx.globalAlpha =
-            0.55 +
-            pulse * 0.30;
-
-        ctx.fill();
-
-
-        /*
-        LABEL
-        */
-
-        ctx.globalAlpha = 1;
-
-        const angle =
-            Math.atan2(
-                this.y - height / 2,
-                this.x - width / 2
-            );
-
-
-        const labelDistance =
-            this.radius +
-            20 +
-            this.hoverScale * 7;
-
-
-        const labelX =
-            this.x +
-            Math.cos(angle) *
-            labelDistance;
-
-
-        const labelY =
-            this.y +
-            Math.sin(angle) *
-            labelDistance;
-
-
-        ctx.fillStyle =
-            this.color === palette.white
-                ? "#f8fafc"
-                : this.color;
-
-
-        ctx.font =
-            this.isBold
-                ? "600 14px 'Trebuchet MS', 'Segoe UI', sans-serif"
-                : "500 11px 'Trebuchet MS', 'Segoe UI', sans-serif";
-
-
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-
-        ctx.shadowBlur = 10;
-
-        ctx.shadowColor =
-            this.color;
-
-
-        ctx.fillText(
-            this.label,
-            labelX,
-            labelY
-        );
-
-
-        ctx.shadowBlur = 0;
     }
 
+    ctx.globalAlpha = 1;
+}
 
     containsPoint(x, y) {
 
@@ -1152,6 +1033,9 @@ class GlitterParticle {
         this.speed =
             0.001 +
             Math.random() * 0.002;
+      
+        this.hasGlow =
+    Math.random() < 0.18;
 
 
         this.color =
@@ -1250,23 +1134,21 @@ class GlitterParticle {
 
         ctx.beginPath();
 
-        ctx.arc(
-            this.x,
-            this.y,
-            size * 5,
-            0,
-            Math.PI * 2
-        );
+       ctx.arc(
+    this.x,
+    this.y,
+    size * 2.5,
+    0,
+    Math.PI * 2
+);
 
-        ctx.fillStyle =
-            this.color;
+ctx.fillStyle =
+    this.color;
 
-        ctx.globalAlpha =
-            alpha * 0.18;
+ctx.globalAlpha =
+    alpha * 0.05;
 
-        ctx.fill();
-
-
+ctx.fill();
         /*
         Bright particle.
         */
@@ -1337,9 +1219,9 @@ that the glitter is unmistakable.
 
 const glitterCount =
     Math.min(
-        320,
+        500,
         Math.floor(
-            (width * height) / 4500
+            (width * height) / 3000
         )
     );
 
@@ -1463,7 +1345,7 @@ class Sparkle {
 
         const alpha =
             0.18 +
-            pulse * 0.65;
+            pulse * 0.30;
 
 
         /*
