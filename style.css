@@ -1268,4 +1268,25 @@ img {
 }
 .web-button-nav:hover i {
     transform: translateX(3px);
+  /* FOOTER NAV - HORIZONTAL */
+.footer-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-nav ul li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-nav ul li a {
+    display: inline-block;
+    white-space: nowrap;
+}
 }
