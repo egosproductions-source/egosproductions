@@ -1792,14 +1792,13 @@ canvas.addEventListener(
 );
 
 
-/* ============================================================
-   BACKGROUND
-============================================================ */
+/function drawBackground() {
 
-function drawBackground() {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
 
     /*
-    Main atmospheric gradient
+    Deep atmospheric background
     */
 
     const gradient =
@@ -1811,40 +1810,30 @@ function drawBackground() {
             width * 0.50,
             height * 0.50,
 
-            Math.max(
-                width,
-                height
-            ) * 0.75
+            Math.max(width, height) * 0.85
         );
-
 
     gradient.addColorStop(
         0,
-        "rgba(76,29,149,0.14)"
+        "rgba(76,29,149,0.20)"
     );
-
 
     gradient.addColorStop(
         0.35,
-        "rgba(29,78,216,0.055)"
+        "rgba(29,78,216,0.09)"
     );
-
 
     gradient.addColorStop(
-        0.7,
-        "rgba(10,5,25,0.05)"
+        0.70,
+        "rgba(20,8,35,0.12)"
     );
-
 
     gradient.addColorStop(
         1,
-        "rgba(0,0,0,0)"
+        "rgba(3,3,10,1)"
     );
 
-
-    ctx.fillStyle =
-        gradient;
-
+    ctx.fillStyle = gradient;
 
     ctx.fillRect(
         0,
@@ -1853,8 +1842,6 @@ function drawBackground() {
         height
     );
 }
-
-
 /* ============================================================
    ANIMATION
 ============================================================ */
@@ -1882,9 +1869,44 @@ function animate(time) {
     drawBackground();
 
 
+   function animate(time) {
+
     /*
-    GLITTER
+    Reset canvas state
     */
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.shadowBlur = 0;
+    ctx.shadowColor = "transparent";
+
+
+    /*
+    Clear
+    */
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+    Background atmosphere
+    */
+
+    drawBackground();
+
+
+    /*
+    ========================================================
+    MOVING GLITTER
+    ========================================================
+    */
+
+    ctx.globalCompositeOperation = "screen";
 
     for (
         const particle of glitter
@@ -1897,7 +1919,9 @@ function animate(time) {
 
 
     /*
-    SPARKLES
+    ========================================================
+    LARGE SPARKLES
+    ========================================================
     */
 
     for (
@@ -1911,7 +1935,17 @@ function animate(time) {
 
 
     /*
+    Reset before network
+    */
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+
+
+    /*
+    ========================================================
     UPDATE NODES
+    ========================================================
     */
 
     for (
@@ -1921,6 +1955,47 @@ function animate(time) {
         node.update(time);
     }
 
+
+    /*
+    ========================================================
+    TENDRILS
+    ========================================================
+    */
+
+    ctx.globalAlpha = 1;
+
+    for (
+        const tendril of tendrils
+    ) {
+
+        tendril.draw(time);
+    }
+
+
+    /*
+    ========================================================
+    NODES
+    ========================================================
+    */
+
+    ctx.globalAlpha = 1;
+
+    for (
+        const node of nodes
+    ) {
+
+        node.draw(time);
+    }
+
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+
+
+    requestAnimationFrame(
+        animate
+    );
+}
 
     /*
     TENDRILS
