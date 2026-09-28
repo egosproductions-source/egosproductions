@@ -218,12 +218,20 @@ const openBtn = document.getElementById("open-web");
 const goBtn = document.getElementById("go-button");
 const closeBtn = document.getElementById("close-web");
 
-function openModal() {
-    if (modal) modal.classList.add("open");
+function openModal(e) {
+    if (e) e.preventDefault();
+
+    if (modal) {
+        modal.classList.add("open");
+    }
 }
 
-function closeModal() {
-    if (modal) modal.classList.remove("open");
+function closeModal(e) {
+    if (e) e.preventDefault();
+
+    if (modal) {
+        modal.classList.remove("open");
+    }
 }
 
 if (openBtn) {
