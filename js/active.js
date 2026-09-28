@@ -559,3 +559,53 @@ if (modal) {
         }
 
 
+// :: 14.0 Gallery Menu Active Code
+$('.catagory-menu a').on('click', function () {
+    $('.catagory-menu a').removeClass('active');
+    $(this).addClass('active');
+});
+
+})(jQuery);
+
+
+// Modal Controls
+const modal = document.getElementById("web-modal");
+const openBtn = document.getElementById("open-web");
+const goBtn = document.getElementById("go-button");
+const closeBtn = document.getElementById("close-web");
+
+function openModal(e) {
+    if (e) e.preventDefault();
+
+    if (modal) {
+        modal.classList.add("open");
+    }
+}
+
+function closeModal(e) {
+    if (e) e.preventDefault();
+
+    if (modal) {
+        modal.classList.remove("open");
+    }
+}
+
+if (openBtn) {
+    openBtn.addEventListener("click", openModal);
+}
+
+if (goBtn) {
+    goBtn.addEventListener("click", openModal);
+}
+
+if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
+}
+
+if (modal) {
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
