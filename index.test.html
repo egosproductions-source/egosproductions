@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="e-GoS Productions is a multidisciplinary artist collective exploring music, performance, video, and visual art in St. Louis.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>e-Gos Productions</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg-1: #050b17;
+            --bg-2: #0d1630;
+            --bg-3: #120d25;
+            --blue: #1d4ed8;
+            --blue-soft: rgba(29, 78, 216, 0.3);
+            --purple: #4c1d95;
+            --purple-soft: rgba(76, 29, 149, 0.3);
+            --orange: #f97316;
+            --orange-soft: rgba(249, 115, 22, 0.3);
+            --white: #f8fafc;
+            --white-soft: rgba(248, 250, 252, 0.25);
+            --line: rgba(148, 163, 184, 0.18);
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 51;
+        }
+
+        .web-button-header {
+            position: absolute;
+            top: 14px;
+            right: 32px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            padding: 10px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .web-button-header:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        #performance-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
+                radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
+                linear-gradient(180deg, var(--bg-2), var(--bg-1));
+        }
+
+        #network-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: transparent;
+            cursor: default;
+        }
+
+        .go-button {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            padding: 10px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .go-button:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* modal overlay */
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-panel {
+            position: relative;
+            width: min(92vw, 1200px);
+            height: min(88vh, 900px);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0b1220;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: #050b17;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ##### Preloader ##### -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ##### Web Button in Header ##### -->
+    <button class="web-button-header" id="open-web">Web</button>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+
+                <div class="container">
+
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav" aria-label="Main navigation">
+
+                         <!-- Nav brand -->
+                        <a href="index.html" class="nav-brand"><img src="images/g8.jpg" alt="e-Gos"></a>
+
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap">
+                                    <span class="top"></span>
+                                    <span class="bottom"></span>
+                                </div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li>
+                                        <a href="index.html">Home</a>
+                                    </li>
+
+                                     <li>
+                                        <a href="audio.html">Audio</a>
+                                    </li>
+                                     <li>
+                                        <a href="video.html">Video</a>
+                                    </li>
+                                     <li>
+                                        <a href="visual.html">Visual</a>
+                                    </li>
+                                     <li>
+                                        <a href="performance.html">Performance </a>
+                                    </li>
+                                    <li>
+                                        <a href="event.html">Events</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="contact.html">Contact</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+
+                        </div>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+<!-- ##### Hero Area Start - First Hero Slide ##### -->
+<section class="hero-area">
+
+    <div class="hero-slides owl-carousel">
+
+        <!-- Hero Slide 1 - Main e-Gos Hero -->
+        <div class="single-hero-slide d-flex align-items-start justify-content-center">
+
+            <!-- Background Image -->
+            <div
+                class="slide-img bg-img"
+                style="background-image: url('images/g (4).jpg');">
+            </div>
+
+            <!-- Hero Content -->
+            <div class="container" style="padding-top: 150px;">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="hero-slides-content text-center">
+
+                            <h2
+                                data-animation="fadeInUp"
+                                data-delay="300ms"
+                                style="margin-bottom: 30px;">
+                                e-Gos Productions
+                                <span>e-Gos Productions</span>
+                            </h2>
+                            <button
+                                id="go-button"
+                                class="go-button"
+                                data-animation="fadeInUp"
+                                data-delay="500ms"
+                                style="animation: pulse 2s infinite;">
+                                Go
+                                <i class="fa fa-angle-double-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ##### Hero Area End ##### -->
+
+
+<!-- ##### Performance Hero Section (Interactive Network) ##### -->
+<section id="performance-hero">
+    <canvas id="network-canvas"></canvas>
+</section>
+<!-- ##### Performance Hero Section End ##### -->
+
+
+<!-- ##### Walleye Project Section (Third scrollable section) ##### -->
+<section id="about" class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed" style="background-image: url('images/g (4).jpg');">
+
+    <div class="container">
+
+        <div class="row align-items-end">
+
+            <!-- Artist Image -->
+            <div class="col-12 col-md-5 col-lg-4">
+
+                <div class="featured-artist-thumb">
+                    <img
+                        src="images/g (2).jpg"
+                        alt="e-Gos Productions">
+                </div>
+
+            </div>
+
+
+            <!-- Walleye Project Information -->
+            <div class="col-12 col-md-7 col-lg-8">
+
+                <div class="featured-artist-content">
+
+                    <div class="section-heading white text-left mb-30">
+                        
+                        <h2 style="color: #fff; margin-bottom: 20px;">
+                            about
+                        </h2>
+
+                        <p>
+                            e-GoS (Gabriel Vianello) is a multi-disciplinary artist
+                            based in St. Louis, Missouri.
+
+                            The producer performs experimental jazz and electronic
+                            music, often accompanied by dancers who help guide the
+                            experience into the realm of performance art. Always on
+                            a creative pursuit, e-GoS has been known to
+                            collaborate musically with St. Louis-based dance
+                            companies such as the Resilience Dance Company and
+                            Karlovsky Company Dance.
+
+                            As an all-around creative, e-GoS also experiments in
+                            the world of videography and visual art, enhancing his
+                            performances, as well as collaborating with other artists.
+                            The twenty-five year old artist isn't afraid to explore
+                            new realms of creative expression, always evoking a
+                            sense of wonder and playfulness in his work.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ##### Walleye Project Section End ##### -->
+
+
+    <!-- ##### Latest Albums / Instagram Area Start ##### -->
+    <section class="latest-albums-area section-padding-100">
+
+        <div class="container">
+
+            <!-- Elfsight Instagram Feed -->
+            <script
+                src="https://elfsightcdn.com/platform.js"
+                async>
+            </script>
+
+            <div
+                class="elfsight-app-088075e0-323e-4332-981f-584156d042f5"
+                data-elfsight-app-lazy>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- ##### Latest Albums / Instagram Area End ##### -->
+
+
+    <!-- ##### Contact Area Start ##### -->
+    <section
+        id="contact"
+        class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img"
+        style="background-image: url('images/g (9).jpg');">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div
+                        class="section-heading white wow fadeInUp"
+                        data-wow-delay="100ms">
+
+                        <p>See what's new</p>
+
+                        <h2>Get In Touch</h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div class="contact-form-area">
+
+                        <form action="#" method="post">
+
+                            <div class="row">
+
+                                <!-- Name -->
+                                <div class="col-md-6 col-lg-4">
+
+                                    <div
+                                        class="form-group wow fadeInUp"
+                                        data-wow-delay="100ms">
+
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="name"
+                                            placeholder="Name"
+                                            aria-label="Name">
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Email -->
+                                <div class="col-md-6 col-lg-4">
+
+                                    <div
+                                        class="form-group wow fadeInUp"
+                                        data-wow-delay="200ms">
+
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="email"
+                                            placeholder="E-mail"
+                                            aria-label="E-mail">
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Subject -->
+                                <div class="col-lg-4">
+
+                                    <div
+                                        class="form-group wow fadeInUp"
+                                        data-wow-delay="300ms">
+
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="subject"
+                                            placeholder="Subject"
+                                            aria-label="Subject">
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Message -->
+                                <div class="col-12">
+
+                                    <div
+                                        class="form-group wow fadeInUp"
+                                        data-wow-delay="400ms">
+
+                                        <textarea
+                                            name="message"
+                                            class="form-control"
+                                            id="message"
+                                            cols="30"
+                                            rows="10"
+                                            placeholder="Message"
+                                            aria-label="Message"></textarea>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Submit -->
+                                <div
+                                    class="col-12 text-center wow fadeInUp"
+                                    data-wow-delay="500ms">
+
+                                    <button
+                                        class="btn oneMusic-btn mt-30"
+                                        type="submit">
+
+                                        Send
+                                        <i class="fa fa-angle-double-right"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- ##### Contact Area End ##### -->
+
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+
+        <div class="container">
+
+            <div class="row d-flex flex-wrap align-items-center">
+
+                <!-- Footer Menu -->
+                <div class="col-12 col-md-6">
+
+                    <div class="footer-nav">
+
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="#">Audio</a></li>
+                            <li><a href="#">Video</a></li>
+                            <li><a href="#">Visual</a></li>
+                            <li><a href="#">Performance</a></li>
+                            <li><a href="event.html">Events</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="footer-social">
+
+                        <div
+                            class="elfsight-app-b176c188-5678-4a50-9bb8-8afe633a527e"
+                            data-elfsight-app-lazy>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+    <!-- ##### Footer Area End ##### -->
+
+    <!-- ##### Web Modal ##### -->
+    <div class="modal" id="web-modal">
+        <div class="modal-panel">
+            <button class="modal-close" id="close-web" aria-label="Close">✕</button>
+            <iframe src="network-viewer.html" title="Interactive Network"></iframe>
+        </div>
+    </div>
+
+
+    <!-- ##### Elfsight Script ##### -->
+    <script
+        src="https://elfsightcdn.com/platform.js"
+        async>
+    </script>
+
+
+    <!-- ##### All Javascript Script ##### -->
+
+    <!-- jQuery-2.2.4 js -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+
+    <!-- Popper js -->
+    <script src="js/bootstrap/popper.min.js"></script>
+
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- All Plugins js -->
+    <script src="js/plugins/plugins.js"></script>
+
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+
+    <!-- Modal Controls -->
+    <script>
+        const modal = document.getElementById("web-modal");
+        const openBtn = document.getElementById("open-web");
+        const goBtn = document.getElementById("go-button");
+        const closeBtn = document.getElementById("close-web");
+
+        function openModal() {
+            modal.classList.add("open");
+        }
+
+        function closeModal() {
+            modal.classList.remove("open");
+        }
+
+        openBtn.addEventListener("click", openModal);
+        goBtn.addEventListener("click", openModal);
+
+        closeBtn.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+
+    <!-- Performance Network Canvas Script -->
+    <script>
+        const canvas = document.getElementById("network-canvas");
+        if (canvas) {
+            const ctx = canvas.getContext("2d");
+
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            const palette = {
+                blue: "#1d4ed8",
+                purple: "#4c1d95",
+                orange: "#f97316",
+                white: "#f8fafc",
+                blueSoft: "rgba(29, 78, 216, 0.35)",
+                purpleSoft: "rgba(76, 29, 149, 0.35)",
+                orangeSoft: "rgba(249, 115, 22, 0.35)",
+                whiteSoft: "rgba(248, 250, 252, 0.2)"
+            };
+
+            const navigationNodes = [
+                { label: "HOME", url: "/index.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 0.2, distance: 260, size: 13, isBold: true },
+                { label: "ABOUT", url: "/about.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 1.7, distance: 290, size: 15, isBold: true },
+                { label: "AUDIO", url: "/audio.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 3.4, distance: 265, size: 15, isBold: true  },
+                { label: "VIDEO", url: "/video.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 5.2, distance: 300, size: 15, isBold: true },
+                { label: "VISUAL", url: "/visual.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 6.8, distance: 270, size: 15, isBold: true },
+                { label: "PERFORMANCE", url: "/performance.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 0.9, distance: 155, size: 15, isBold: true },
+                
+                { label: "EVENTS", url: "/events.html", color: palette.orange, glow: palette.orangeSoft, baseAngle: 2.9, distance: 170, size: 10 },
+                { label: "CONTACT", url: "/contact.html", color: palette.white, glow: palette.whiteSoft, baseAngle: 5.1, distance: 165, size: 10 },
+
+                { label: "INSTAGRAM", url: "https://instagram.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 1.1, distance: 72, size: 6 },
+                { label: "SPOTIFY", url: "https://spotify.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 2.5, distance: 78, size: 6 },
+                { label: "SOUNDCLOUD", url: "https://soundcloud.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 4.2, distance: 82, size: 6 },
+                { label: "BOOKING", url: "mailto:booking@egos.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 5.8, distance: 74, size: 6 }
+            ];
+
+            let nodes = [];
+            let particles = [];
+            let tendrils = [];
+
+            class InteractiveNode {
+                constructor(config) {
+                    this.label = config.label;
+                    this.url = config.url;
+                    this.baseAngle = config.baseAngle;
+                    this.distance = config.distance;
+                    this.color = config.color;
+                    this.glow = config.glow;
+                    this.radius = config.size;
+                    this.size = config.size;
+                    this.isBold = config.isBold || false;
+
+                    this.x = 0;
+                    this.y = 0;
+                    this.hoverScale = 0;
+                    this.pulse = 0;
+                    this.phase = Math.random() * Math.PI * 2;
+                    this.isHovered = false;
+                }
+
+                update(time) {
+                    const cx = width / 2;
+                    const cy = height / 2;
+
+                    const drift = Math.sin(time * 0.00018 + this.phase) * 8;
+                    const orbit = this.baseAngle + Math.sin(time * 0.00012 + this.phase) * 0.14;
+                    const distance = this.distance + drift;
+
+                    this.x = cx + Math.cos(orbit) * distance;
+                    this.y = cy + Math.sin(orbit) * distance;
+
+                    this.pulse = 1 + Math.sin(time * 0.0016 + this.phase) * 0.8;
+
+                    const target = this.isHovered ? 1 : 0;
+                    this.hoverScale += (target - this.hoverScale) * 0.08;
+                }
+
+                draw() {
+                    const glowRadius = this.radius + this.pulse * 7 + this.hoverScale * 12;
+
+                    // soft outer halo
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, glowRadius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.glow;
+                    ctx.fill();
+
+                    // inner glow bloom
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius + this.pulse * 4 + this.hoverScale * 8, 0, Math.PI * 2);
+                    ctx.fillStyle = this.glow.replace("0.35", "0.22").replace("0.2", "0.22");
+                    ctx.fill();
+
+                    // node core
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius + this.hoverScale * 4, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+
+                    // soft center highlight
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, Math.max(1.6, this.radius * 0.35), 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(255,255,255,0.8)";
+                    ctx.fill();
+
+                    // label
+                    ctx.fillStyle = this.color === palette.white ? "#f8fafc" : this.color;
+                    ctx.font = this.isBold ? "700 13px Segoe UI, sans-serif" : "600 10px Segoe UI, sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.letterSpacing = "0.08em";
+                    ctx.globalAlpha = 0.7 + this.hoverScale * 0.25;
+
+                    const labelAngle = Math.atan2(this.y - height / 2, this.x - width / 2);
+                    const labelDistance = this.radius + 20 + this.hoverScale * 8;
+                    const lx = this.x + Math.cos(labelAngle) * labelDistance;
+                    const ly = this.y + Math.sin(labelAngle) * labelDistance;
+
+                    ctx.fillText(this.label, lx, ly);
+                    ctx.globalAlpha = 1;
+                }
+
+                hitTest(mx, my) {
+                    const dist = Math.hypot(this.x - mx, this.y - my);
+                    const hitRadius = this.radius + 14 + this.hoverScale * 10;
+                    this.isHovered = dist < hitRadius;
+                    return this.isHovered;
+                }
+            }
+
+            class GlitterParticle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.18;
+                    this.vy = (Math.random() - 0.5) * 0.18;
+                    this.size = Math.random() * 1.8 + 0.5;
+                    this.alpha = Math.random() * 0.7 + 0.2;
+                    this.phase = Math.random() * Math.PI * 2;
+                    this.color = ["#f8fafc", "#1d4ed8", "#4c1d95"][Math.floor(Math.random() * 3)];
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                    this.x = Math.min(width, Math.max(0, this.x));
+                    this.y = Math.min(height, Math.max(0, this.y));
+
+                    this.alpha = 0.2 + (Math.sin(performance.now() * 0.0018 + this.phase) + 1) * 0.25;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            class Tendril {
+                constructor(a, b) {
+                    this.a = a;
+                    this.b = b;
+                    this.offset = Math.random() * Math.PI * 2;
+                    this.baseColor = a.color === palette.white ? palette.white : a.color;
+                }
+
+                update(time) {
+                    this.offset = time * 0.00008 + this.offset * 0.02;
+                }
+
+                draw() {
+                    const dx = this.b.x - this.a.x;
+                    const dy = this.b.y - this.a.y;
+                    const midX = (this.a.x + this.b.x) / 2;
+                    const midY = (this.a.y + this.b.y) / 2;
+                    const curve = 18;
+
+                    const waveX = midX + Math.sin(this.offset) * curve;
+                    const waveY = midY + Math.cos(this.offset * 1.4) * curve;
+
+                    ctx.beginPath();
+                    ctx.moveTo(this.a.x, this.a.y);
+                    ctx.quadraticCurveTo(waveX, waveY, this.b.x, this.b.y);
+
+                    ctx.strokeStyle = this.baseColor;
+                    ctx.lineWidth = 0.7;
+                    ctx.globalAlpha = 0.18;
+                    ctx.stroke();
+
+                    // faint glow layer
+                    ctx.beginPath();
+                    ctx.moveTo(this.a.x, this.a.y);
+                    ctx.quadraticCurveTo(waveX, waveY, this.b.x, this.b.y);
+
+                    ctx.strokeStyle = this.baseColor;
+                    ctx.lineWidth = 2.2;
+                    ctx.globalAlpha = 0.04;
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            function createTendrils() {
+                tendrils = [];
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const distance = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+                        if (distance < 420) {
+                            tendrils.push(new Tendril(nodes[i], nodes[j]));
+                        }
+                    }
+                }
+            }
+
+            function initScene() {
+                nodes = navigationNodes.map(config => new InteractiveNode(config));
+                particles = [];
+
+                for (let i = 0; i < 120; i++) {
+                    particles.push(new GlitterParticle());
+                }
+
+                createTendrils();
+            }
+
+            function animate(time) {
+                ctx.clearRect(0, 0, width, height);
+
+                particles.forEach(p => p.update());
+                nodes.forEach(node => node.update(time));
+
+                // draw tendrils first
+                tendrils.forEach(t => t.update(time));
+                tendrils.forEach(t => t.draw());
+
+                // draw particles
+                particles.forEach(p => p.draw());
+
+                // draw nodes
+                nodes.forEach(node => node.draw());
+
+                requestAnimationFrame(animate);
+            }
+
+            let lastPointer = { x: 0, y: 0 };
+            let pointerActive = false;
+
+            canvas.addEventListener("mousemove", (event) => {
+                const rect = canvas.getBoundingClientRect();
+                const mx = event.clientX - rect.left;
+                const my = event.clientY - rect.top;
+
+                lastPointer.x = mx;
+                lastPointer.y = my;
+                pointerActive = true;
+
+                let hoverFound = false;
+                nodes.forEach(node => {
+                    if (node.hitTest(mx, my)) {
+                        hoverFound = true;
+                    }
+                });
+
+                canvas.style.cursor = hoverFound ? "pointer" : "default";
+            });
+
+            canvas.addEventListener("mouseleave", () => {
+                pointerActive = false;
+                nodes.forEach(node => {
+                    node.isHovered = false;
+                });
+                canvas.style.cursor = "default";
+            });
+
+            canvas.addEventListener("click", (event) => {
+                const rect = canvas.getBoundingClientRect();
+                const mx = event.clientX - rect.left;
+                const my = event.clientY - rect.top;
+
+                for (const node of nodes) {
+                    if (node.hitTest(mx, my)) {
+                        window.location.href = node.url;
+                        return;
+                    }
+                }
+            });
+
+            window.addEventListener("resize", () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                initScene();
+            });
+
+            initScene();
+            requestAnimationFrame(animate);
+        }
+    </script>
+
+</body>
+
+</html>
