@@ -31,26 +31,40 @@
             --line: rgba(148, 163, 184, 0.18);
         }
 
-        #performance-hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
-                radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
-                linear-gradient(180deg, var(--bg-2), var(--bg-1));
-        }
+     #performance-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
+        radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
+        linear-gradient(180deg, var(--bg-2), var(--bg-1));
+}
 
-        #network-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            background: transparent;
-            cursor: default;
-        }
+
+.hero-breadcrumb {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--white);
+}
+
+.hero-breadcrumb p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.hero-breadcrumb h2 {
+    margin: 0;
+    font-size: 60px;
+    font-weight: 700;
+}
     </style>
 </head>
 
@@ -140,58 +154,23 @@
 
     </header>
     <!-- ##### Header Area End ##### -->
+    
+    <!-- ##### Hero Area Start ##### -->
+<section id="performance-hero">
 
+    <div class="hero-breadcrumb">
+        <p>See what's new</p>
+        <h2>Events</h2>
+    </div>
 
-
-    <!-- ##### Breadcumb Area Start ##### -->
-    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
-        <div class="bradcumbContent">
-            <p>See what’s new</p>
-            <h2>Login</h2>
-        </div>
-    </section>
-    <!-- ##### Breadcumb Area End ##### -->
-
-    <!-- ##### Login Area Start ##### -->
-    <section class="login-area section-padding-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-8">
-                    <div class="login-content">
-                        <h3>Welcome Back</h3>
-                        <!-- Login Form -->
-                        <div class="login-form">
-                            <form action="#" method="post">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-mail">
-                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30">Login</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Login Area End ##### -->
-
+</section>
+<!-- ##### Hero Area End ##### -->
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
         <div class="container">
             <div class="row d-flex flex-wrap align-items-center">
                 <div class="col-12 col-md-6">
                     <a href="#"><img src="img/core-img/logo.png" alt=""></a>
-                    <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
-
                 <div class="col-12 col-md-6">
                     <div class="footer-nav">
                         <ul>
