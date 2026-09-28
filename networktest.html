@@ -1,129 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>e-Gos Network</title>
+    <meta charset="UTF-8">
 
-<style>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-* {
-    box-sizing: border-box;
-}
+    <title>e-Gos Network</title>
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    background: #03030a;
-}
 
-body {
-    position: relative;
-    font-family:
-        "Trebuchet MS",
-        "Segoe UI",
-        sans-serif;
-}
+    <style>
 
-#network-canvas {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    cursor: default;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.network-title {
-    position: fixed;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
 
-    color: rgba(248, 250, 252, 0.7);
+        html,
+        body {
 
-    font-size: 11px;
-    font-weight: 500;
+            width: 100%;
+            height: 100%;
 
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
+            overflow: hidden;
 
-    pointer-events: none;
-    white-space: nowrap;
+            /*
+            ====================================================
+            ATMOSPHERIC BACKGROUND
+            ====================================================
+            */
 
-    text-shadow:
-        0 0 12px rgba(255,255,255,0.22),
-        0 0 28px rgba(76,29,149,0.4);
-}
+            background:
 
-.network-hint {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(29, 78, 216, 0.20),
+                    transparent 32%
+                ),
 
-    z-index: 5;
+                radial-gradient(
+                    circle at 25% 25%,
+                    rgba(76, 29, 149, 0.18),
+                    transparent 32%
+                ),
 
-    color: rgba(248,250,252,0.35);
+                radial-gradient(
+                    circle at 80% 75%,
+                    rgba(249, 115, 22, 0.08),
+                    transparent 28%
+                ),
 
-    font-size: 9px;
-    font-weight: 500;
+                linear-gradient(
+                    180deg,
+                    #0d1630,
+                    #050b17
+                );
 
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+            font-family:
+                "Trebuchet MS",
+                "Segoe UI",
+                Helvetica,
+                Arial,
+                sans-serif;
+        }
 
-    pointer-events: none;
-    white-space: nowrap;
-}
 
-</style>
+        #network-canvas {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            background: transparent;
+
+            cursor: default;
+        }
+
+
+        .network-title {
+
+            position: fixed;
+
+            top: 24px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            z-index: 5;
+
+            color:
+                rgba(
+                    248,
+                    250,
+                    252,
+                    0.70
+                );
+
+            font-size: 11px;
+
+            font-weight: 500;
+
+            letter-spacing:
+                0.28em;
+
+            text-transform:
+                uppercase;
+
+            pointer-events: none;
+
+            white-space: nowrap;
+
+            text-shadow:
+
+                0 0 12px
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.22
+                ),
+
+                0 0 28px
+                rgba(
+                    76,
+                    29,
+                    149,
+                    0.40
+                );
+        }
+
+
+        .network-hint {
+
+            position: fixed;
+
+            bottom: 20px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            z-index: 5;
+
+            color:
+                rgba(
+                    248,
+                    250,
+                    252,
+                    0.35
+                );
+
+            font-size: 9px;
+
+            font-weight: 500;
+
+            letter-spacing:
+                0.16em;
+
+            text-transform:
+                uppercase;
+
+            pointer-events: none;
+
+            white-space: nowrap;
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<div class="network-title">
-    e-Gos Productions
-</div>
 
-<canvas id="network-canvas"></canvas>
+    <div class="network-title">
+        e-Gos Productions
+    </div>
 
-<div class="network-hint">
-    explore the web
-</div>
+
+    <canvas id="network-canvas"></canvas>
+
+
+    <div class="network-hint">
+        explore the web
+    </div>
+
 
 
 <script>
 
+
+/* ============================================================
+   CANVAS
+============================================================ */
+
 const canvas =
-    document.getElementById("network-canvas");
+    document.getElementById(
+        "network-canvas"
+    );
 
 const ctx =
     canvas.getContext("2d");
 
+
 let width = 0;
 let height = 0;
 
-const mouse = {
-    x: -1000,
-    y: -1000
-};
 
 
 /* ============================================================
-   COLORS
+   MOUSE
+============================================================ */
+
+const mouse = {
+
+    x: -1000,
+
+    y: -1000
+
+};
+
+
+
+/* ============================================================
+   COLOR PALETTE
 ============================================================ */
 
 const palette = {
 
-    blue: "#1d4ed8",
-    purple: "#4c1d95",
-    orange: "#f97316",
-    white: "#f8fafc",
+    blue:
+        "#1d4ed8",
+
+    purple:
+        "#4c1d95",
+
+    orange:
+        "#f97316",
+
+    white:
+        "#f8fafc",
+
 
     blueSoft:
         "rgba(29,78,216,0.35)",
@@ -139,6 +269,7 @@ const palette = {
 };
 
 
+
 /* ============================================================
    MAIN NAVIGATION
 ============================================================ */
@@ -147,247 +278,457 @@ const navigationNodes = [
 
     {
         id: "home",
+
         label: "HOME",
+
         url: "/index.html",
-        color: palette.white,
-        glow: palette.whiteSoft,
+
+        color:
+            palette.white,
+
+        glow:
+            palette.whiteSoft,
+
         size: 23,
+
         bold: true,
+
         primary: true,
+
         home: true,
+
         fixedX: 0.50,
+
         fixedY: 0.50
     },
 
+
     {
         id: "visual",
+
         label: "VISUAL",
+
         url: "/visual.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
+
+        color:
+            palette.blue,
+
+        glow:
+            palette.blueSoft,
+
         size: 18,
+
         bold: true,
+
         primary: true,
+
         fixedX: 0.50,
+
         fixedY: 0.16
     },
 
+
     {
         id: "video",
+
         label: "VIDEO",
+
         url: "/video.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
+
+        color:
+            palette.blue,
+
+        glow:
+            palette.blueSoft,
+
         size: 18,
+
         bold: true,
+
         primary: true,
+
         fixedX: 0.79,
+
         fixedY: 0.29
     },
 
+
     {
         id: "performance",
+
         label: "PERFORMANCE",
+
         url: "/performance.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
+
+        color:
+            palette.blue,
+
+        glow:
+            palette.blueSoft,
+
         size: 18,
+
         bold: true,
+
         primary: true,
+
         fixedX: 0.82,
+
         fixedY: 0.68
     },
+
 
     {
         id: "contact",
+
         label: "CONTACT",
+
         url: "/contact.html",
-        color: palette.orange,
-        glow: palette.orangeSoft,
+
+        color:
+            palette.orange,
+
+        glow:
+            palette.orangeSoft,
+
         size: 17,
+
         bold: true,
+
         primary: true,
+
         fixedX: 0.55,
+
         fixedY: 0.86
     },
 
+
     {
         id: "events",
+
         label: "EVENTS",
+
         url: "/events.html",
-        color: palette.orange,
-        glow: palette.orangeSoft,
+
+        color:
+            palette.orange,
+
+        glow:
+            palette.orangeSoft,
+
         size: 17,
+
         bold: true,
+
         primary: true,
+
         fixedX: 0.19,
+
         fixedY: 0.68
     },
 
+
     {
         id: "audio",
+
         label: "AUDIO",
+
         url: "/audio.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
+
+        color:
+            palette.blue,
+
+        glow:
+            palette.blueSoft,
+
         size: 18,
+
         bold: true,
+
         primary: true,
+
         fixedX: 0.21,
+
         fixedY: 0.30
     },
 
+
     {
         id: "about",
+
         label: "ABOUT",
+
         url: "/about.html",
-        color: palette.blue,
-        glow: palette.blueSoft,
+
+        color:
+            palette.blue,
+
+        glow:
+            palette.blueSoft,
+
         size: 11
     },
 
+
     {
         id: "instagram",
+
         label: "INSTAGRAM",
-        url: "https://www.instagram.com/egos.producer/",
-        color: palette.purple,
-        glow: palette.purpleSoft,
+
+        url:
+            "https://www.instagram.com/egos.producer/",
+
+        color:
+            palette.purple,
+
+        glow:
+            palette.purpleSoft,
+
         size: 6
     },
+
 
     {
         id: "spotify",
+
         label: "SPOTIFY",
-        url: "https://open.spotify.com/artist/7BO0dsRrLZgyIqVinsUjnA?si=rrb20EO4SI-xgIIj46CuUQ",
-        color: palette.purple,
-        glow: palette.purpleSoft,
+
+        url:
+            "https://open.spotify.com/artist/7BO0dsRrLZgyIqVinsUjnA?si=rrb20EO4SI-xgIIj46CuUQ",
+
+        color:
+            palette.purple,
+
+        glow:
+            palette.purpleSoft,
+
         size: 6
     },
+
 
     {
         id: "soundcloud",
+
         label: "SOUNDCLOUD",
-        url: "https://soundcloud.com/e-gosss",
-        color: palette.purple,
-        glow: palette.purpleSoft,
+
+        url:
+            "https://soundcloud.com/e-gosss",
+
+        color:
+            palette.purple,
+
+        glow:
+            palette.purpleSoft,
+
         size: 6
     },
 
+
     {
         id: "booking",
+
         label: "BOOKING",
-        url: "mailto:booking@egosproductions.com",
-        color: palette.purple,
-        glow: palette.purpleSoft,
+
+        url:
+            "mailto:booking@egosproductions.com",
+
+        color:
+            palette.purple,
+
+        glow:
+            palette.purpleSoft,
+
         size: 6
     }
 
 ];
 
 
+
 /* ============================================================
-   OUTER NODES
+   CUSTOM OUTER NODES
 ============================================================ */
 
 const outerNodes = [
 
     {
         id: "outer-1",
+
         label: "YOUR LINK",
+
         url: "#",
-        color: palette.purple,
-        glow: palette.purpleSoft,
+
+        color:
+            palette.purple,
+
+        glow:
+            palette.purpleSoft,
+
         size: 16,
+
         distance: 330,
+
         angle: 5.7
     },
 
+
     {
         id: "outer-2",
+
         label: "YOUR LINK",
+
         url: "#",
-        color: palette.orange,
-        glow: palette.orangeSoft,
+
+        color:
+            palette.orange,
+
+        glow:
+            palette.orangeSoft,
+
         size: 17,
+
         distance: 325,
+
         angle: 2.7
     },
 
+
     {
         id: "outer-3",
+
         label: "YOUR LINK",
+
         url: "#",
-        color: palette.white,
-        glow: palette.whiteSoft,
+
+        color:
+            palette.white,
+
+        glow:
+            palette.whiteSoft,
+
         size: 16,
+
         distance: 335,
+
         angle: 4.6
     }
 
 ];
 
 
+
 /* ============================================================
-   NODE
+   INTERACTIVE NODE
 ============================================================ */
 
 class InteractiveNode {
 
-    constructor(config, index = 0) {
 
-        this.id = config.id;
-        this.label = config.label;
-        this.url = config.url;
+    constructor(
+        config,
+        index = 0
+    ) {
 
-        this.color = config.color;
-        this.glow = config.glow;
+        this.id =
+            config.id;
 
-        this.radius = config.size || 8;
+        this.label =
+            config.label;
 
-        this.isBold = config.bold || false;
-        this.primary = config.primary || false;
-        this.home = config.home || false;
+        this.url =
+            config.url;
 
-        this.fixedX = config.fixedX;
-        this.fixedY = config.fixedY;
+        this.color =
+            config.color;
 
-        this.index = index;
+        this.glow =
+            config.glow;
+
+        this.radius =
+            config.size || 8;
+
+        this.isBold =
+            config.bold || false;
+
+        this.primary =
+            config.primary || false;
+
+        this.home =
+            config.home || false;
+
+        this.fixedX =
+            config.fixedX;
+
+        this.fixedY =
+            config.fixedY;
+
+        this.index =
+            index;
+
 
         this.baseAngle =
             config.angle !== undefined
                 ? config.angle
-                : Math.random() * Math.PI * 2;
+                : Math.random() *
+                  Math.PI * 2;
+
 
         this.distance =
             config.distance ||
-            110 + Math.random() * 210;
+            110 +
+            Math.random() *
+            210;
+
 
         this.phase =
-            Math.random() * Math.PI * 2;
+            Math.random() *
+            Math.PI * 2;
+
 
         this.x = 0;
+
         this.y = 0;
 
         this.hoverScale = 0;
     }
 
 
+
     update(time) {
 
-        const cx = width / 2;
-        const cy = height / 2;
+        const cx =
+            width / 2;
+
+        const cy =
+            height / 2;
 
 
-        if (this.primary) {
+        /*
+        PRIMARY NODES
+        */
+
+        if (
+            this.primary
+        ) {
 
             this.x =
-                width * this.fixedX;
+                width *
+                this.fixedX;
 
             this.y =
-                height * this.fixedY;
+                height *
+                this.fixedY;
 
 
-            if (!this.home) {
+            /*
+            Tiny breathing movement.
+
+            HOME stays completely fixed.
+            */
+
+            if (
+                !this.home
+            ) {
 
                 this.x +=
                     Math.sin(
@@ -402,26 +743,38 @@ class InteractiveNode {
                     ) * 2;
             }
 
-        } else {
+        }
+
+
+        /*
+        SMALLER / OUTER NODES
+        */
+
+        else {
 
             const orbit =
                 this.baseAngle +
+
                 Math.sin(
                     time * 0.00012 +
                     this.phase
                 ) * 0.10;
 
+
             const distance =
                 this.distance +
+
                 Math.sin(
                     time * 0.00015 +
                     this.phase
                 ) * 12;
 
+
             this.x =
                 cx +
                 Math.cos(orbit) *
                 distance;
+
 
             this.y =
                 cy +
@@ -431,14 +784,25 @@ class InteractiveNode {
         }
 
 
+        /*
+        HOVER
+        */
+
         const dx =
-            mouse.x - this.x;
+            mouse.x -
+            this.x;
 
         const dy =
-            mouse.y - this.y;
+            mouse.y -
+            this.y;
+
 
         const distance =
-            Math.hypot(dx, dy);
+            Math.hypot(
+                dx,
+                dy
+            );
+
 
         const target =
             distance <
@@ -446,158 +810,287 @@ class InteractiveNode {
                 ? 1
                 : 0;
 
+
         this.hoverScale +=
-            (target - this.hoverScale) *
-            0.12;
+            (
+                target -
+                this.hoverScale
+            ) * 0.12;
     }
 
 
+
     draw(time) {
+
+        /*
+        Pulsing glow
+        */
 
         const pulse =
             Math.sin(
                 time * 0.002 +
                 this.phase
-            ) * 0.5 + 0.5;
+            ) *
+            0.5 +
+            0.5;
+
+
+        const pulseAmount =
+            pulse * 4;
 
 
         /*
-        GLOW
+        ========================================================
+        OUTER GLOW
+        ========================================================
         */
-
-        ctx.globalAlpha =
-            0.10 +
-            pulse * 0.08 +
-            this.hoverScale * 0.12;
 
         ctx.beginPath();
 
         ctx.arc(
+
             this.x,
+
             this.y,
+
             this.radius +
-            6 +
-            this.hoverScale * 10,
+            10 +
+            pulseAmount +
+            this.hoverScale * 8,
+
             0,
+
             Math.PI * 2
         );
 
-        ctx.fillStyle = this.glow;
+
+        ctx.fillStyle =
+            this.glow;
+
+
+        ctx.globalAlpha =
+            0.65 +
+            pulse * 0.15;
+
+
         ctx.fill();
 
 
         /*
+        SECONDARY SOFT GLOW
+        */
+
+        ctx.beginPath();
+
+        ctx.arc(
+
+            this.x,
+
+            this.y,
+
+            this.radius +
+            5 +
+            this.hoverScale * 5,
+
+            0,
+
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            this.glow;
+
+
+        ctx.globalAlpha =
+            0.45;
+
+
+        ctx.fill();
+
+
+        /*
+        ========================================================
         CORE
+        ========================================================
         */
 
         ctx.globalAlpha = 1;
 
+
         ctx.beginPath();
 
         ctx.arc(
+
             this.x,
+
             this.y,
+
             this.radius +
             this.hoverScale * 3,
+
             0,
+
             Math.PI * 2
         );
 
-        ctx.fillStyle = this.color;
+
+        ctx.fillStyle =
+            this.color;
+
+
         ctx.fill();
 
 
         /*
-        CENTER
+        ========================================================
+        BRIGHT CENTER
+        ========================================================
         */
 
         ctx.beginPath();
 
         ctx.arc(
+
             this.x,
+
             this.y,
+
             Math.max(
-                1.5,
+                1.6,
                 this.radius * 0.34
             ),
+
             0,
+
             Math.PI * 2
         );
+
 
         ctx.fillStyle =
             "rgba(255,255,255,0.82)";
 
+
         ctx.globalAlpha =
             0.55 +
-            pulse * 0.3;
+            pulse * 0.30;
+
 
         ctx.fill();
 
 
         /*
+        ========================================================
         LABEL
+        ========================================================
         */
 
         ctx.globalAlpha = 1;
 
+
         const labelAngle =
             Math.atan2(
-                this.y - height / 2,
-                this.x - width / 2
+
+                this.y -
+                height / 2,
+
+                this.x -
+                width / 2
             );
+
 
         const labelDistance =
             this.radius +
-            19 +
+            20 +
             this.hoverScale * 7;
+
 
         const lx =
             this.x +
             Math.cos(labelAngle) *
             labelDistance;
 
+
         const ly =
             this.y +
             Math.sin(labelAngle) *
             labelDistance;
 
+
         ctx.fillStyle =
-            this.color === palette.white
+            this.color ===
+            palette.white
                 ? "#f8fafc"
                 : this.color;
 
+
         ctx.font =
             this.isBold
+
                 ? "600 14px 'Trebuchet MS', 'Segoe UI', sans-serif"
+
                 : "500 11px 'Trebuchet MS', 'Segoe UI', sans-serif";
 
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
 
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = this.color;
+        ctx.textAlign =
+            "center";
+
+
+        ctx.textBaseline =
+            "middle";
+
+
+        /*
+        Text glow
+        */
+
+        ctx.shadowBlur = 10;
+
+        ctx.shadowColor =
+            this.color;
+
 
         ctx.fillText(
+
             this.label,
+
             lx,
+
             ly
         );
+
 
         ctx.shadowBlur = 0;
     }
 
 
-    containsPoint(x, y) {
+
+    containsPoint(
+        x,
+        y
+    ) {
 
         return (
+
             Math.hypot(
-                x - this.x,
-                y - this.y
-            ) <
-            this.radius + 18
+
+                x -
+                this.x,
+
+                y -
+                this.y
+
+            )
+
+            <
+
+            this.radius +
+            18
         );
     }
+
 }
+
 
 
 /* ============================================================
@@ -606,22 +1099,35 @@ class InteractiveNode {
 
 class Tendril {
 
-    constructor(a, b, options = {}) {
+
+    constructor(
+        a,
+        b,
+        options = {}
+    ) {
 
         this.a = a;
+
         this.b = b;
+
 
         this.phase =
             Math.random() *
             Math.PI * 2;
 
+
         this.wave =
             options.wave ||
-            35 + Math.random() * 45;
+            35 +
+            Math.random() *
+            45;
+
 
         this.speed =
             0.0003 +
-            Math.random() * 0.0003;
+            Math.random() *
+            0.0003;
+
 
         this.alpha =
             options.alpha ||
@@ -629,49 +1135,101 @@ class Tendril {
     }
 
 
+
     draw(time) {
 
-        const ax = this.a.x;
-        const ay = this.a.y;
+        const ax =
+            this.a.x;
 
-        const bx = this.b.x;
-        const by = this.b.y;
+        const ay =
+            this.a.y;
 
-        const dx = bx - ax;
-        const dy = by - ay;
+        const bx =
+            this.b.x;
+
+        const by =
+            this.b.y;
+
+
+        const dx =
+            bx -
+            ax;
+
+        const dy =
+            by -
+            ay;
+
 
         const distance =
-            Math.hypot(dx, dy);
+            Math.hypot(
+                dx,
+                dy
+            );
 
-        if (!distance) return;
+
+        if (
+            !distance
+        ) {
+
+            return;
+        }
+
+
+        /*
+        Perpendicular direction
+        */
 
         const nx =
-            -dy / distance;
+            -dy /
+            distance;
 
         const ny =
-            dx / distance;
+            dx /
+            distance;
+
+
+        /*
+        Moving wave
+        */
 
         const wave =
             Math.sin(
-                time * this.speed +
+
+                time *
+                this.speed +
+
                 this.phase
+
             ) *
+
             this.wave;
+
+
+        /*
+        First control point
+        */
 
         const c1x =
             ax +
             dx * 0.18 +
             nx * wave;
 
+
         const c1y =
             ay +
             dy * 0.18 +
             ny * wave;
 
+
+        /*
+        Second control point
+        */
+
         const c2x =
             ax +
             dx * 0.72 -
             nx * wave * 1.25;
+
 
         const c2y =
             ay +
@@ -679,115 +1237,210 @@ class Tendril {
             ny * wave * 1.25;
 
 
+        /*
+        ========================================================
+        SOFT OUTER TENDRIL
+        ========================================================
+        */
+
         ctx.beginPath();
 
-        ctx.moveTo(ax, ay);
+        ctx.moveTo(
+            ax,
+            ay
+        );
+
 
         ctx.bezierCurveTo(
+
             c1x,
             c1y,
+
             c2x,
             c2y,
+
             bx,
             by
         );
+
 
         ctx.strokeStyle =
             "rgba(130,100,255,0.035)";
 
+
         ctx.lineWidth = 3;
+
+
+        ctx.globalAlpha = 1;
+
 
         ctx.stroke();
 
 
+        /*
+        ========================================================
+        MAIN TENDRIL
+        ========================================================
+        */
+
         ctx.beginPath();
 
-        ctx.moveTo(ax, ay);
+        ctx.moveTo(
+            ax,
+            ay
+        );
+
 
         ctx.bezierCurveTo(
+
             c1x,
             c1y,
+
             c2x,
             c2y,
+
             bx,
             by
         );
 
-        ctx.strokeStyle =
-            `rgba(190,175,255,${this.alpha})`;
 
-        ctx.lineWidth = 0.65;
+        ctx.strokeStyle =
+            `rgba(
+                190,
+                175,
+                255,
+                ${this.alpha}
+            )`;
+
+
+        ctx.lineWidth =
+            0.65;
+
 
         ctx.stroke();
     }
+
 }
 
 
+
 /* ============================================================
-   NODES
+   CREATE NODES
 ============================================================ */
 
 const nodes = [];
 
+
 navigationNodes.forEach(
-    (config, index) => {
+
+    (
+        config,
+        index
+    ) => {
 
         nodes.push(
+
             new InteractiveNode(
+
                 config,
+
                 index
             )
         );
     }
 );
 
+
 outerNodes.forEach(
-    (config, index) => {
+
+    (
+        config,
+        index
+    ) => {
 
         nodes.push(
+
             new InteractiveNode(
+
                 config,
-                navigationNodes.length + index
+
+                navigationNodes.length +
+                index
             )
         );
     }
 );
 
 
+
 /* ============================================================
-   TENDRILS
+   CREATE TENDRILS
 ============================================================ */
 
 const tendrils = [];
 
+
+/*
+PRIMARY NODES
+
+HOME deliberately excluded.
+*/
+
 const primaryNodes =
     nodes.filter(
+
         node =>
+
             node.primary &&
             !node.home
     );
 
 
+
+/*
+Connect every primary
+node to every other primary.
+
+This keeps the main web
+dense and intentional.
+*/
+
 for (
+
     let i = 0;
-    i < primaryNodes.length;
+
+    i <
+    primaryNodes.length;
+
     i++
+
 ) {
 
     for (
+
         let j = i + 1;
-        j < primaryNodes.length;
+
+        j <
+        primaryNodes.length;
+
         j++
+
     ) {
 
         tendrils.push(
+
             new Tendril(
+
                 primaryNodes[i],
+
                 primaryNodes[j],
+
                 {
+
                     wave:
                         45 +
-                        Math.random() * 35,
+                        Math.random() *
+                        35,
 
                     alpha:
                         0.105
@@ -798,52 +1451,94 @@ for (
 }
 
 
+
+/*
+SMALLER WEB NODES
+*/
+
 const webNodes =
     nodes.filter(
+
         node =>
             !node.home
     );
 
 
 for (
+
     let i = 0;
-    i < webNodes.length;
+
+    i <
+    webNodes.length;
+
     i++
+
 ) {
 
     for (
+
         let j = i + 1;
-        j < webNodes.length;
+
+        j <
+        webNodes.length;
+
         j++
+
     ) {
 
-        const a = webNodes[i];
-        const b = webNodes[j];
+        const a =
+            webNodes[i];
+
+        const b =
+            webNodes[j];
+
+
+        /*
+        Don't duplicate
+        primary connections.
+        */
 
         if (
+
             a.primary &&
             b.primary
+
         ) {
+
             continue;
         }
 
+
+        /*
+        Sparse extra network.
+        */
+
         if (
+
             Math.random() <
             0.34
+
         ) {
 
             tendrils.push(
+
                 new Tendril(
+
                     a,
+
                     b,
+
                     {
+
                         wave:
                             28 +
-                            Math.random() * 42,
+                            Math.random() *
+                            42,
 
                         alpha:
                             0.075 +
-                            Math.random() * 0.045
+                            Math.random() *
+                            0.045
                     }
                 )
             );
@@ -852,36 +1547,58 @@ for (
 }
 
 
+
+/*
+OUTER NODES
+
+Each gets two connections.
+*/
+
 outerNodes.forEach(
+
     config => {
 
         const outer =
             nodes.find(
+
                 node =>
-                    node.id === config.id
+                    node.id ===
+                    config.id
             );
+
 
         const possible =
             primaryNodes.slice();
 
+
         possible.sort(
+
             () =>
-                Math.random() - 0.5
+                Math.random() -
+                0.5
         );
+
 
         possible
             .slice(0, 2)
             .forEach(
+
                 target => {
 
                     tendrils.push(
+
                         new Tendril(
+
                             outer,
+
                             target,
+
                             {
+
                                 wave:
                                     55 +
-                                    Math.random() * 35,
+                                    Math.random() *
+                                    35,
 
                                 alpha:
                                     0.09
@@ -894,358 +1611,626 @@ outerNodes.forEach(
 );
 
 
+
 /* ============================================================
-   ATMOSPHERIC GLITTER
+   MOVING GLITTER
 ============================================================ */
 
-class Glitter {
+class GlitterParticle {
+
 
     constructor() {
 
         this.x =
-            Math.random() * width;
+            Math.random() *
+            width;
+
 
         this.y =
-            Math.random() * height;
+            Math.random() *
+            height;
+
+
+        this.vx =
+            (
+                Math.random() -
+                0.5
+            ) *
+            0.22;
+
+
+        this.vy =
+            (
+                Math.random() -
+                0.5
+            ) *
+            0.22;
+
 
         this.size =
-            0.5 +
-            Math.random() * 1.6;
+            Math.random() *
+            1.8 +
+            0.4;
+
 
         this.phase =
             Math.random() *
             Math.PI * 2;
 
-        this.speed =
-            0.0008 +
-            Math.random() * 0.002;
-
-        this.drift =
-            0.05 +
-            Math.random() * 0.18;
-
-        const colors = [
-            palette.white,
-            palette.blue,
-            palette.purple,
-            palette.orange
-        ];
 
         this.color =
-            colors[
+
+            [
+
+                palette.white,
+
+                palette.blue,
+
+                palette.purple,
+
+                palette.orange
+
+            ][
+
                 Math.floor(
-                    Math.random() *
-                    colors.length
+                    Math.random() * 4
                 )
             ];
     }
 
 
-    update(time) {
+
+    update() {
 
         this.x +=
-            Math.sin(
-                time * 0.0002 +
-                this.phase
-            ) *
-            this.drift;
+            this.vx;
 
         this.y +=
-            Math.cos(
-                time * 0.00016 +
-                this.phase
-            ) *
-            this.drift *
-            0.7;
+            this.vy;
 
 
-        if (this.x < -5)
-            this.x = width + 5;
+        /*
+        Bounce softly
+        */
 
-        if (this.x > width + 5)
-            this.x = -5;
+        if (
 
-        if (this.y < -5)
-            this.y = height + 5;
+            this.x < 0 ||
+            this.x > width
 
-        if (this.y > height + 5)
-            this.y = -5;
+        ) {
+
+            this.vx *= -1;
+        }
+
+
+        if (
+
+            this.y < 0 ||
+            this.y > height
+
+        ) {
+
+            this.vy *= -1;
+        }
     }
 
 
-    draw(time) {
+
+    draw() {
 
         const pulse =
-            Math.sin(
-                time * this.speed +
-                this.phase
-            ) * 0.5 + 0.5;
+
+            (
+
+                Math.sin(
+
+                    performance.now() *
+                    0.0015 +
+
+                    this.phase
+
+                )
+
+                + 1
+
+            ) * 0.5;
 
 
-        ctx.globalAlpha =
-            0.20 +
-            pulse * 0.65;
+        /*
+        ========================================================
+        SOFT GLITTER GLOW
+        ========================================================
+        */
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+
+            this.x,
+
+            this.y,
+
+            this.size * 4,
+
+            0,
+
+            Math.PI * 2
+        );
+
 
         ctx.fillStyle =
             this.color;
 
-        ctx.beginPath();
 
-        ctx.arc(
-            this.x,
-            this.y,
-            this.size +
-            pulse * 0.8,
-            0,
-            Math.PI * 2
-        );
+        ctx.globalAlpha =
+
+            0.025 +
+            pulse * 0.07;
+
 
         ctx.fill();
 
 
         /*
-        Tiny halo
+        ========================================================
+        GLITTER CORE
+        ========================================================
         */
 
-        if (pulse > 0.72) {
+        ctx.beginPath();
 
-            ctx.globalAlpha =
-                0.10 * pulse;
 
-            ctx.beginPath();
+        ctx.arc(
 
-            ctx.arc(
-                this.x,
-                this.y,
-                this.size * 3.5,
-                0,
-                Math.PI * 2
-            );
+            this.x,
 
-            ctx.fill();
+            this.y,
 
-        }
+            this.size +
+            pulse * 0.7,
+
+            0,
+
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            this.color;
+
+
+        ctx.globalAlpha =
+
+            0.18 +
+            pulse * 0.50;
+
+
+        ctx.fill();
+
+
+        ctx.globalAlpha = 1;
     }
+
 }
 
 
+
+/*
+180 moving particles
+*/
+
 const glitter = [];
 
+
 for (
+
     let i = 0;
+
     i < 180;
+
     i++
+
 ) {
 
     glitter.push(
-        new Glitter()
+
+        new GlitterParticle()
     );
 }
 
 
+
 /* ============================================================
-   LARGE MAGICAL SPARKLES
+   LARGE SPARKLES
 ============================================================ */
 
 class Sparkle {
 
+
     constructor() {
 
         this.x =
-            Math.random() * width;
+            Math.random() *
+            width;
+
 
         this.y =
-            Math.random() * height;
+            Math.random() *
+            height;
+
 
         this.size =
-            2 +
-            Math.random() * 4;
+            1.8 +
+            Math.random() *
+            4.5;
+
 
         this.phase =
             Math.random() *
             Math.PI * 2;
 
+
         this.speed =
             0.001 +
-            Math.random() * 0.002;
+            Math.random() *
+            0.0025;
 
-        this.drift =
-            0.04 +
-            Math.random() * 0.10;
 
-        const colors = [
-            palette.white,
-            palette.blue,
-            palette.purple,
-            palette.orange
-        ];
+        this.vx =
+            (
+                Math.random() -
+                0.5
+            ) *
+            0.06;
+
+
+        this.vy =
+            (
+                Math.random() -
+                0.5
+            ) *
+            0.06;
+
 
         this.color =
-            colors[
+
+            [
+
+                palette.white,
+
+                palette.blue,
+
+                palette.purple,
+
+                palette.orange
+
+            ][
+
                 Math.floor(
-                    Math.random() *
-                    colors.length
+                    Math.random() * 4
                 )
             ];
     }
 
 
+
     update(time) {
 
         this.x +=
-            Math.sin(
-                time * 0.00013 +
-                this.phase
-            ) *
-            this.drift;
+            this.vx;
 
         this.y +=
-            Math.cos(
-                time * 0.00011 +
+            this.vy;
+
+
+        /*
+        Gentle floating movement
+        */
+
+        this.x +=
+
+            Math.sin(
+
+                time * 0.00012 +
                 this.phase
-            ) *
-            this.drift;
+
+            ) * 0.035;
 
 
-        if (this.x < -20)
-            this.x = width + 20;
+        this.y +=
 
-        if (this.x > width + 20)
+            Math.cos(
+
+                time * 0.00010 +
+                this.phase
+
+            ) * 0.035;
+
+
+        /*
+        Wrap around
+        */
+
+        if (
+            this.x < -20
+        ) {
+
+            this.x =
+                width + 20;
+        }
+
+
+        if (
+            this.x >
+            width + 20
+        ) {
+
             this.x = -20;
+        }
 
-        if (this.y < -20)
-            this.y = height + 20;
 
-        if (this.y > height + 20)
+        if (
+            this.y < -20
+        ) {
+
+            this.y =
+                height + 20;
+        }
+
+
+        if (
+            this.y >
+            height + 20
+        ) {
+
             this.y = -20;
+        }
     }
+
 
 
     draw(time) {
 
         const pulse =
-            Math.sin(
-                time * this.speed +
-                this.phase
-            ) * 0.5 + 0.5;
+
+            (
+
+                Math.sin(
+
+                    time *
+                    this.speed +
+
+                    this.phase
+
+                )
+
+                + 1
+
+            ) * 0.5;
 
 
         const size =
+
             this.size *
+
             (
-                0.3 +
-                pulse
+
+                0.35 +
+                pulse * 0.95
+
             );
 
 
         const alpha =
-            0.10 +
-            pulse * 0.65;
+
+            0.08 +
+            pulse * 0.58;
 
 
         /*
-        Glow
+        ========================================================
+        SOFT LARGE GLOW
+        ========================================================
         */
 
+        const glow =
+            ctx.createRadialGradient(
+
+                this.x,
+                this.y,
+                0,
+
+                this.x,
+                this.y,
+                size * 4
+            );
+
+
+        glow.addColorStop(
+
+            0,
+
+            "rgba(255,255,255,0.55)"
+        );
+
+
+        glow.addColorStop(
+
+            0.18,
+
+            this.color
+        );
+
+
+        glow.addColorStop(
+
+            1,
+
+            "rgba(0,0,0,0)"
+        );
+
+
         ctx.globalAlpha =
-            alpha * 0.10;
+            alpha * 0.35;
+
 
         ctx.fillStyle =
-            this.color;
+            glow;
+
 
         ctx.beginPath();
 
+
         ctx.arc(
+
             this.x,
             this.y,
-            size * 3,
+
+            size * 4,
+
             0,
             Math.PI * 2
         );
+
 
         ctx.fill();
 
 
         /*
-        Center
+        ========================================================
+        BRIGHT CENTER
+        ========================================================
         */
 
         ctx.globalAlpha =
             alpha;
 
+
         ctx.beginPath();
 
+
         ctx.arc(
+
             this.x,
             this.y,
-            size * 0.45,
+
+            size * 0.42,
+
             0,
             Math.PI * 2
         );
+
+
+        ctx.fillStyle =
+            this.color;
+
 
         ctx.fill();
 
 
         /*
-        Horizontal ray
+        ========================================================
+        HORIZONTAL RAY
+        ========================================================
         */
 
         ctx.globalAlpha =
-            alpha * 0.45;
+            alpha * 0.42;
+
 
         ctx.strokeStyle =
             this.color;
 
-        ctx.lineWidth = 0.5;
+
+        ctx.lineWidth =
+            0.55;
+
 
         ctx.beginPath();
 
+
         ctx.moveTo(
-            this.x - size * 2.8,
+
+            this.x -
+            size * 2.8,
+
             this.y
         );
 
+
         ctx.lineTo(
-            this.x + size * 2.8,
+
+            this.x +
+            size * 2.8,
+
             this.y
         );
+
 
         ctx.stroke();
 
 
         /*
-        Vertical ray
+        ========================================================
+        VERTICAL RAY
+        ========================================================
         */
 
         ctx.beginPath();
 
+
         ctx.moveTo(
+
             this.x,
-            this.y - size * 2.8
+
+            this.y -
+            size * 2.8
         );
+
 
         ctx.lineTo(
+
             this.x,
-            this.y + size * 2.8
+
+            this.y +
+            size * 2.8
         );
 
+
         ctx.stroke();
+
+
+        ctx.globalAlpha = 1;
     }
+
 }
 
 
+
+/*
+38 larger sparkles
+*/
+
 const sparkles = [];
 
+
 for (
+
     let i = 0;
+
     i < 38;
+
     i++
+
 ) {
 
     sparkles.push(
         new Sparkle()
     );
 }
+
 
 
 /* ============================================================
@@ -1257,22 +2242,29 @@ function resize() {
     width =
         window.innerWidth;
 
+
     height =
         window.innerHeight;
+
 
     canvas.width =
         width;
 
+
     canvas.height =
         height;
+
 
     canvas.style.width =
         width + "px";
 
+
     canvas.style.height =
         height + "px";
 
+
     ctx.setTransform(
+
         1,
         0,
         0,
@@ -1282,12 +2274,17 @@ function resize() {
     );
 }
 
+
 window.addEventListener(
+
     "resize",
+
     resize
 );
 
+
 resize();
+
 
 
 /* ============================================================
@@ -1295,7 +2292,9 @@ resize();
 ============================================================ */
 
 window.addEventListener(
+
     "mousemove",
+
     event => {
 
         mouse.x =
@@ -1306,14 +2305,19 @@ window.addEventListener(
     }
 );
 
+
 window.addEventListener(
+
     "mouseleave",
+
     () => {
 
         mouse.x = -1000;
+
         mouse.y = -1000;
     }
 );
+
 
 
 /* ============================================================
@@ -1321,15 +2325,19 @@ window.addEventListener(
 ============================================================ */
 
 canvas.addEventListener(
+
     "click",
+
     event => {
 
         const rect =
             canvas.getBoundingClientRect();
 
+
         const x =
             event.clientX -
             rect.left;
+
 
         const y =
             event.clientY -
@@ -1337,35 +2345,50 @@ canvas.addEventListener(
 
 
         for (
-            let i = nodes.length - 1;
+
+            let i =
+                nodes.length - 1;
+
             i >= 0;
+
             i--
+
         ) {
 
             const node =
                 nodes[i];
 
+
             if (
+
                 node.containsPoint(
                     x,
                     y
                 )
+
             ) {
 
                 if (
+
                     node.url &&
                     node.url !== "#"
+
                 ) {
 
                     if (
+
                         node.url.startsWith(
                             "http"
                         )
+
                     ) {
 
                         window.open(
+
                             node.url,
+
                             "_blank",
+
                             "noopener,noreferrer"
                         );
 
@@ -1376,6 +2399,7 @@ canvas.addEventListener(
                     }
                 }
 
+
                 return;
             }
         }
@@ -1383,99 +2407,66 @@ canvas.addEventListener(
 );
 
 
+
 /* ============================================================
    CURSOR
 ============================================================ */
 
 canvas.addEventListener(
+
     "mousemove",
+
     event => {
 
         const rect =
             canvas.getBoundingClientRect();
 
+
         const x =
             event.clientX -
             rect.left;
+
 
         const y =
             event.clientY -
             rect.top;
 
+
         let hovering = false;
 
+
         for (
+
             const node of nodes
+
         ) {
 
             if (
+
                 node.containsPoint(
                     x,
                     y
                 )
+
             ) {
 
                 hovering = true;
+
                 break;
             }
         }
 
+
         canvas.style.cursor =
+
             hovering
+
                 ? "pointer"
+
                 : "default";
     }
 );
 
-
-/* ============================================================
-   BACKGROUND
-============================================================ */
-
-function drawBackground() {
-
-    ctx.globalAlpha = 1;
-
-    const gradient =
-        ctx.createRadialGradient(
-            width * 0.50,
-            height * 0.50,
-            0,
-            width * 0.50,
-            height * 0.50,
-            Math.max(width, height) * 0.80
-        );
-
-    gradient.addColorStop(
-        0,
-        "rgba(76,29,149,0.18)"
-    );
-
-    gradient.addColorStop(
-        0.35,
-        "rgba(29,78,216,0.07)"
-    );
-
-    gradient.addColorStop(
-        0.70,
-        "rgba(15,5,30,0.08)"
-    );
-
-    gradient.addColorStop(
-        1,
-        "#03030a"
-    );
-
-    ctx.fillStyle =
-        gradient;
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
-}
 
 
 /* ============================================================
@@ -1484,84 +2475,110 @@ function drawBackground() {
 
 function animate(time) {
 
+
     /*
-    RESET CANVAS STATE
+    ========================================================
+    CLEAR
+    ========================================================
     */
 
     ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation =
-        "source-over";
 
-
-    /*
-    CLEAR
-    */
 
     ctx.clearRect(
+
         0,
         0,
+
         width,
         height
     );
 
 
     /*
-    BACKGROUND
+    ========================================================
+    GLITTER
+    ========================================================
     */
 
-    drawBackground();
+    for (
+
+        const particle of glitter
+
+    ) {
+
+        particle.update();
+
+        particle.draw();
+    }
 
 
     /*
     ========================================================
-    ATMOSPHERE
+    LARGE SPARKLES
     ========================================================
     */
 
     for (
-        const particle of glitter
-    ) {
 
-        particle.update(time);
-        particle.draw(time);
-    }
-
-
-    for (
         const sparkle of sparkles
+
     ) {
 
         sparkle.update(time);
+
         sparkle.draw(time);
     }
 
 
     /*
     ========================================================
-    NETWORK
+    UPDATE NODES
     ========================================================
     */
 
-    ctx.globalAlpha = 1;
-
     for (
+
         const node of nodes
+
     ) {
 
         node.update(time);
     }
 
 
+    /*
+    ========================================================
+    TENDRILS
+    ========================================================
+    */
+
+    ctx.globalAlpha = 1;
+
+
     for (
+
         const tendril of tendrils
+
     ) {
 
         tendril.draw(time);
     }
 
 
+    /*
+    ========================================================
+    NODES
+    ========================================================
+    */
+
+    ctx.globalAlpha = 1;
+
+
     for (
+
         const node of nodes
+
     ) {
 
         node.draw(time);
@@ -1573,14 +2590,18 @@ function animate(time) {
     */
 
     ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation =
-        "source-over";
+
+    ctx.shadowBlur = 0;
+
+    ctx.shadowColor =
+        "transparent";
 
 
     requestAnimationFrame(
         animate
     );
 }
+
 
 
 /* ============================================================
