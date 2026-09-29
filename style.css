@@ -1268,6 +1268,7 @@ img {
 }
 .web-button-nav:hover i {
     transform: translateX(3px);
+}
  .footer-nav ul {
     display: flex;
     align-items: center;
