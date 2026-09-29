@@ -1622,37 +1622,28 @@ img {
            IMAGE GRID
            ----------------------------------------- */
 
-        .egos-image-grid {
-            display: grid;
-
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 30px;
-
-            margin-top: 30px;
-        }
-
-
-        .egos-image-grid-item {
-            overflow: hidden;
-
-            background: #000;
-        }
-
-
-        .egos-image-grid-item img {
-            width: 100%;
-
-            display: block;
-
-            transition: transform 600ms ease;
-        }
-
-
-        .egos-image-grid-item:hover img {
-            transform: scale(1.025);
-        }
-
+        /* ========================================= e-GOS IMAGE GRID ========================================= */ 
+.egos-image-grid-section { width: 100%; padding: 100px 0; }
+.egos-image-grid-container { width: min(1450px, 92%); margin: 0 auto; } 
+/* SECTION HEADING */ 
+.egos-image-grid-heading { margin-bottom: 50px; } 
+.egos-image-grid-heading p { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 5px; color: #888; }
+.egos-image-grid-heading h2 { margin: 0; font-size: 42px; line-height: 1; text-transform: uppercase; letter-spacing: 4px; } 
+/* LARGE FEATURE IMAGE */ 
+.egos-image-grid-feature { width: 100%; overflow: hidden; background: #000; margin-bottom: 30px; } 
+.egos-image-grid-feature img { width: 100%; height: auto; display: block; transition: transform 600ms ease; } 
+.egos-image-grid-feature:hover img { transform: scale(1.02); } 
+/* TWO-COLUMN GRID */
+.egos-image-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; } 
+/* GRID IMAGES */
+.egos-image-grid-item { width: 100%; overflow: hidden; background: #000; }
+.egos-image-grid-item img { width: 100%; height: auto; display: block; transition: transform 600ms ease; } 
+.egos-image-grid-item:hover img { transform: scale(1.025); } 
+/* MOBILE */ 
+@media only screen and (max-width: 767px) { 
+          .egos-image-grid-section { padding: 70px 0; }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             .egos-image-grid { grid-template-columns: 1fr; gap: 20px; }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             .egos-image-grid-heading h2 { font-size: 30px; } }
 
         /* -----------------------------------------
            BLANK MEDIA SPACE
