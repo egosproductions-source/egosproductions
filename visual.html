@@ -14,44 +14,6 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        :root {
-            --bg-1: #050b17;
-            --bg-2: #0d1630;
-            --bg-3: #120d25;
-            --blue: #1d4ed8;
-            --blue-soft: rgba(29, 78, 216, 0.3);
-            --purple: #4c1d95;
-            --purple-soft: rgba(76, 29, 149, 0.3);
-            --orange: #f97316;
-            --orange-soft: rgba(249, 115, 22, 0.3);
-            --white: #f8fafc;
-            --white-soft: rgba(248, 250, 252, 0.25);
-            --line: rgba(148, 163, 184, 0.18);
-        }
-
-        #performance-hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
-                radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
-                linear-gradient(180deg, var(--bg-2), var(--bg-1));
-        }
-
-        #network-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            background: transparent;
-            cursor: default;
-        }
-    </style>
 </head>
 
 <body>
@@ -78,7 +40,7 @@
                     <nav class="classy-navbar justify-content-between" id="oneMusicNav" aria-label="Main navigation">
 
                          <!-- Nav brand -->
-                        <a href="index.html" class="nav-brand"><img src="images/g8.jpg" alt="e-Gos"></a>
+                        <a href="index.html" class="nav-brand"><img src="images/Logo.png" alt="e-Gos"></a>
 
 
                         <!-- Navbar Toggler -->
@@ -152,34 +114,41 @@
     </section>
     <!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Login Area Start ##### -->
-    <section class="login-area section-padding-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-8">
-                    <div class="login-content">
-                        <h3>Welcome Back</h3>
-                        <!-- Login Form -->
-                        <div class="login-form">
-                            <form action="#" method="post">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-mail">
-                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30">Login</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Login Area End ##### -->
+    
+    /* -----------------------------------------
+           IMAGE GRID
+           ----------------------------------------- */
+
+        .egos-image-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 30px;
+
+            margin-top: 30px;
+        }
+
+
+        .egos-image-grid-item {
+            overflow: hidden;
+
+            background: #000;
+        }
+
+
+        .egos-image-grid-item img {
+            width: 100%;
+
+            display: block;
+
+            transition: transform 600ms ease;
+        }
+
+
+        .egos-image-grid-item:hover img {
+            transform: scale(1.025);
+        }
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
