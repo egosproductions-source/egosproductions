@@ -1904,3 +1904,29 @@ img {
             }
 
         }
+
+/* =========================================
+   SMALL HERO FOR INTERNAL PAGES
+   ========================================= */
+
+.single-hero-slide.page-hero-small {
+    height: 450px;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .single-hero-slide.page-hero-small {
+        height: 450px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .single-hero-slide.page-hero-small {
+        height: 400px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .single-hero-slide.page-hero-small {
+        height: 300px;
+    }
+}
