@@ -16,7 +16,7 @@
   padding: 0; }
 
 body {
-  font-family: "Archivo Narrow", sans-serif;
+  font-family: "Exo, sans-serif;
   font-size: 14px; }
 
 h1,
@@ -25,13 +25,15 @@ h3,
 h4,
 h5,
 h6 {
- 
-.exo-<uniquifier> {
-  font-family: "Exo", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
+  margin: 0;
+  font-weight: 500;
+  color: #000000;
 }
+
+.exo {
+  font-family: "Exo", sans-serif;
+}
+
 a,
 a:hover,
 a:focus {
