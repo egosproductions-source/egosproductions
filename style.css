@@ -26,6 +26,7 @@ h4,
 h5,
 h6 {
   margin: 0;
+  font-family: "Exo", sans-serif;
   font-weight: 500;
   color: #000000;
 }
@@ -260,9 +261,11 @@ img {
   background-color: #f5f9fa; }
 
 .font-bold {
+  font-family: "Exo", sans-serif;
   font-weight: 700; }
 
 .font-light {
+  font-family: "Exo", sans-serif;
   font-weight: 300; }
 
 .bg-overlay {
@@ -323,6 +326,7 @@ img {
   padding: 0 30px;
   font-size: 16px;
   line-height: 47px;
+  font-family: "Exo", sans-serif;
   font-weight: 700;
   text-transform: capitalize; }
   .oneMusic-btn i {
@@ -393,6 +397,7 @@ img {
         .header-area .oneMusic-main-menu .classy-navbar {
           height: 70px; } }
       .header-area .oneMusic-main-menu .classy-navbar .classynav ul li a {
+        font-family: "Exo", sans-serif;
         font-weight: 700;
         text-transform: capitalize;
         color: #ffffff;
@@ -462,6 +467,7 @@ img {
           transition-duration: 500ms;
           margin-bottom: 0;
           color: #fff;
+          font-family: "Exo", sans-serif;
           font-weight: 700;
           font-size: 16px;
           cursor: pointer;
@@ -493,6 +499,7 @@ img {
             left: -10px;
             z-index: 10;
             font-size: 9px;
+            font-family: "Exo", sans-serif;
             font-weight: 400;
             border-radius: 50%;
             line-height: 13px;
@@ -589,6 +596,7 @@ img {
       font-size: 60px;
       color: #ffffff;
       margin-bottom: 0;
+      font-family: "Exo", sans-serif;
       font-weight: 400;
       display: block;
       text-transform: capitalize;
@@ -684,6 +692,7 @@ img {
     color: #fff;
 
     font-size: 60px;
+  font-family: "Exo", sans-serif;
     font-weight: 400;
 
     letter-spacing: 15px;
@@ -812,6 +821,7 @@ img {
         z-index: 1;
         color: #fff;
         font-size: 15px;
+        font-family: "Exo", sans-serif;
         font-weight: 400;
         display: inline-block;
         padding-right: 29px; }
@@ -833,6 +843,7 @@ img {
       padding-right: 0;
       border-radius: 0; }
       .single-event-area .event-text .see-more-btn:hover, .single-event-area .event-text .see-more-btn:focus {
+        font-family: "Exo", sans-serif;
         font-weight: 400; }
   .single-event-area:hover, .single-event-area:focus {
     box-shadow: 0 5px 80px 0 rgba(0, 0, 0, 0.2); }
@@ -1259,7 +1270,7 @@ img {
     border: 1px solid rgba(148, 163, 184, 0.35);
     border-radius: 4px;
 
-    font-family: inherit;
+    font-family: "Exo", sans-serif;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -1451,6 +1462,7 @@ img {
             color: rgba(255,255,255,0.65);
 
             font-size: 13px;
+          font-family: "Exo", sans-serif;
             font-weight: 400;
 
             text-transform: uppercase;
@@ -1465,7 +1477,7 @@ img {
 
             font-size: clamp(55px, 9vw, 120px);
             line-height: 0.95;
-
+font-family: "Exo", sans-serif;
             font-weight: 700;
             letter-spacing: 5px;
 
@@ -1543,6 +1555,7 @@ img {
             margin: 0 0 10px;
 
             font-size: 12px;
+          font-family: "Exo", sans-serif;
             font-weight: 500;
 
             text-transform: uppercase;
@@ -1557,7 +1570,7 @@ img {
 
             font-size: clamp(30px, 5vw, 52px);
             line-height: 1;
-
+font-family: "Exo", sans-serif;
             font-weight: 700;
 
             letter-spacing: 4px;
