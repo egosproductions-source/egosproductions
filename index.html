@@ -15,43 +15,7 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        :root {
-            --bg-1: #050b17;
-            --bg-2: #0d1630;
-            --bg-3: #120d25;
-            --blue: #1d4ed8;
-            --blue-soft: rgba(29, 78, 216, 0.3);
-            --purple: #4c1d95;
-            --purple-soft: rgba(76, 29, 149, 0.3);
-            --orange: #f97316;
-            --orange-soft: rgba(249, 115, 22, 0.3);
-            --white: #f8fafc;
-            --white-soft: rgba(248, 250, 252, 0.25);
-            --line: rgba(148, 163, 184, 0.18);
-        }
-
-        #performance-hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 50% 45%, rgba(29, 78, 216, 0.18), transparent 25%),
-                radial-gradient(circle at 35% 30%, rgba(76, 29, 149, 0.18), transparent 30%),
-                linear-gradient(180deg, var(--bg-2), var(--bg-1));
-        }
-
-        #network-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            background: transparent;
-            cursor: default;
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -66,7 +30,6 @@
         </div>
     </div>
 
-
     <!-- ##### Header Area Start ##### -->
     <header class="header-area">
 
@@ -78,7 +41,7 @@
                     <nav class="classy-navbar justify-content-between" id="oneMusicNav" aria-label="Main navigation">
 
                          <!-- Nav brand -->
-                        <a href="index.html" class="nav-brand"><img src="images/g8.jpg" alt="e-Gos"></a>
+                        <a href="index.html" class="nav-brand"><img src="images/Logo.png" alt="e-Gos"></a>
 
 
                         <!-- Navbar Toggler -->
@@ -104,6 +67,7 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
+            
                                     <li>
                                         <a href="index.html">Home</a>
                                     </li>
@@ -127,6 +91,7 @@
                                     <li>
                                         <a href="contact.html">Contact</a>
                                     </li>
+
                                 </ul>
                             </div>
                             <!-- Nav End -->
@@ -160,7 +125,7 @@
                 <div class="row">
                     <div class="col-12">
 
-                        <div class="hero-slides-content text-center">
+                          <div class="hero-slides-content text-center">
 
                             <h2
                                 data-animation="fadeInUp"
@@ -169,15 +134,6 @@
                                 e-Gos Productions
                                 <span>e-Gos Productions</span>
                             </h2>
-                            <a
-                                data-animation="fadeInUp"
-                                data-delay="500ms"
-                                href="#performance-hero"
-                                class="btn oneMusic-btn pulse-button"
-                                style="animation: pulse 2s infinite;">
-                                Go
-                                <i class="fa fa-angle-double-right"></i>
-                            </a>
 
                         </div>
 
@@ -193,15 +149,8 @@
 <!-- ##### Hero Area End ##### -->
 
 
-<!-- ##### Performance Hero Section (Interactive Network) ##### -->
-<section id="performance-hero">
-    <canvas id="network-canvas"></canvas>
-</section>
-<!-- ##### Performance Hero Section End ##### -->
-
-
 <!-- ##### Walleye Project Section (Third scrollable section) ##### -->
-<section id="about" class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed" style="background-image: url('images/g (4).jpg');">
+<section id="about" class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed" style="background-image: url('images/g (8).jpg');">
 
     <div class="container">
 
@@ -434,379 +383,72 @@
 
 
     <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
+<footer class="footer-area">
 
-        <div class="container">
+    <div class="container">
 
-            <div class="row d-flex flex-wrap align-items-center">
+        <div class="row d-flex flex-wrap align-items-center">
 
-                <!-- Footer Menu -->
-                <div class="col-12 col-md-6">
+            <!-- Footer Menu -->
+            <div class="col-12 col-md-6">
 
-                    <div class="footer-nav">
+                <div class="footer-nav">
 
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="#">Audio</a></li>
-                            <li><a href="#">Video</a></li>
-                            <li><a href="#">Visual</a></li>
-                            <li><a href="#">Performance</a></li>
-                            <li><a href="event.html">Events</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-
-                    </div>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="audio.html">Audio</a></li>
+                        <li><a href="video.html">Video</a></li>
+                        <li><a href="visual.html">Visual</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
 
                 </div>
 
-                <div class="col-12 col-md-6">
-                    <div class="footer-social">
+            </div>
 
-                        <div
-                            class="elfsight-app-b176c188-5678-4a50-9bb8-8afe633a527e"
-                            data-elfsight-app-lazy>
-                        </div>
 
+            <!-- Social Feed -->
+            <div class="col-12 col-md-6">
+
+                <div class="footer-social">
+
+                    <div
+                        class="elfsight-app-b176c188-5678-4a50-9bb8-8afe633a527e"
+                        data-elfsight-app-lazy>
                     </div>
+
                 </div>
 
             </div>
 
         </div>
 
-    </footer>
+    </div>
+
+</footer>
     <!-- ##### Footer Area End ##### -->
-
-
-    <!-- ##### Elfsight Script ##### -->
-    <script
-        src="https://elfsightcdn.com/platform.js"
-        async>
-    </script>
-
-
-    <!-- ##### All Javascript Script ##### -->
-
-    <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-
-    <!-- Popper js -->
-    <script src="js/bootstrap/popper.min.js"></script>
-
-    <!-- Bootstrap js -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-
-    <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
-
-    <!-- Active js -->
-    <script src="js/active.js"></script>
-
-    <!-- Performance Network Canvas Script -->
-    <script>
-        const canvas = document.getElementById("network-canvas");
-        if (canvas) {
-            const ctx = canvas.getContext("2d");
-
-            let width = canvas.width = window.innerWidth;
-            let height = canvas.height = window.innerHeight;
-
-            const palette = {
-                blue: "#1d4ed8",
-                purple: "#4c1d95",
-                orange: "#f97316",
-                white: "#f8fafc",
-                blueSoft: "rgba(29, 78, 216, 0.35)",
-                purpleSoft: "rgba(76, 29, 149, 0.35)",
-                orangeSoft: "rgba(249, 115, 22, 0.35)",
-                whiteSoft: "rgba(248, 250, 252, 0.2)"
-            };
-
-            const navigationNodes = [
-                { label: "HOME", url: "/index.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 0.2, distance: 260, size: 13, isBold: true },
-                { label: "ABOUT", url: "/about.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 1.7, distance: 290, size: 15, isBold: true },
-                { label: "AUDIO", url: "/audio.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 3.4, distance: 265, size: 15, isBold: true  },
-                { label: "VIDEO", url: "/video.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 5.2, distance: 300, size: 15, isBold: true },
-                { label: "VISUAL", url: "/visual.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 6.8, distance: 270, size: 15, isBold: true },
-                { label: "PERFORMANCE", url: "/performance.html", color: palette.blue, glow: palette.blueSoft, baseAngle: 0.9, distance: 155, size: 15, isBold: true },
-                
-                { label: "EVENTS", url: "/events.html", color: palette.orange, glow: palette.orangeSoft, baseAngle: 2.9, distance: 170, size: 10 },
-                { label: "CONTACT", url: "/contact.html", color: palette.white, glow: palette.whiteSoft, baseAngle: 5.1, distance: 165, size: 10 },
-
-                { label: "INSTAGRAM", url: "https://instagram.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 1.1, distance: 72, size: 6 },
-                { label: "SPOTIFY", url: "https://spotify.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 2.5, distance: 78, size: 6 },
-                { label: "SOUNDCLOUD", url: "https://soundcloud.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 4.2, distance: 82, size: 6 },
-                { label: "BOOKING", url: "mailto:booking@egos.com", color: palette.purple, glow: palette.purpleSoft, baseAngle: 5.8, distance: 74, size: 6 }
-            ];
-
-            let nodes = [];
-            let particles = [];
-            let tendrils = [];
-
-            class InteractiveNode {
-                constructor(config) {
-                    this.label = config.label;
-                    this.url = config.url;
-                    this.baseAngle = config.baseAngle;
-                    this.distance = config.distance;
-                    this.color = config.color;
-                    this.glow = config.glow;
-                    this.radius = config.size;
-                    this.size = config.size;
-                    this.isBold = config.isBold || false;
-
-                    this.x = 0;
-                    this.y = 0;
-                    this.hoverScale = 0;
-                    this.pulse = 0;
-                    this.phase = Math.random() * Math.PI * 2;
-                    this.isHovered = false;
-                }
-
-                update(time) {
-                    const cx = width / 2;
-                    const cy = height / 2;
-
-                    const drift = Math.sin(time * 0.00018 + this.phase) * 8;
-                    const orbit = this.baseAngle + Math.sin(time * 0.00012 + this.phase) * 0.14;
-                    const distance = this.distance + drift;
-
-                    this.x = cx + Math.cos(orbit) * distance;
-                    this.y = cy + Math.sin(orbit) * distance;
-
-                    this.pulse = 1 + Math.sin(time * 0.0016 + this.phase) * 0.8;
-
-                    const target = this.isHovered ? 1 : 0;
-                    this.hoverScale += (target - this.hoverScale) * 0.08;
-                }
-
-                draw() {
-                    const glowRadius = this.radius + this.pulse * 7 + this.hoverScale * 12;
-
-                    // soft outer halo
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, glowRadius, 0, Math.PI * 2);
-                    ctx.fillStyle = this.glow;
-                    ctx.fill();
-
-                    // inner glow bloom
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius + this.pulse * 4 + this.hoverScale * 8, 0, Math.PI * 2);
-                    ctx.fillStyle = this.glow.replace("0.35", "0.22").replace("0.2", "0.22");
-                    ctx.fill();
-
-                    // node core
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius + this.hoverScale * 4, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-
-                    // soft center highlight
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, Math.max(1.6, this.radius * 0.35), 0, Math.PI * 2);
-                    ctx.fillStyle = "rgba(255,255,255,0.8)";
-                    ctx.fill();
-
-                    // label
-                    ctx.fillStyle = this.color === palette.white ? "#f8fafc" : this.color;
-                    ctx.font = this.isBold ? "700 13px Segoe UI, sans-serif" : "600 10px Segoe UI, sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.letterSpacing = "0.08em";
-                    ctx.globalAlpha = 0.7 + this.hoverScale * 0.25;
-
-                    const labelAngle = Math.atan2(this.y - height / 2, this.x - width / 2);
-                    const labelDistance = this.radius + 20 + this.hoverScale * 8;
-                    const lx = this.x + Math.cos(labelAngle) * labelDistance;
-                    const ly = this.y + Math.sin(labelAngle) * labelDistance;
-
-                    ctx.fillText(this.label, lx, ly);
-                    ctx.globalAlpha = 1;
-                }
-
-                hitTest(mx, my) {
-                    const dist = Math.hypot(this.x - mx, this.y - my);
-                    const hitRadius = this.radius + 14 + this.hoverScale * 10;
-                    this.isHovered = dist < hitRadius;
-                    return this.isHovered;
-                }
-            }
-
-            class GlitterParticle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.18;
-                    this.vy = (Math.random() - 0.5) * 0.18;
-                    this.size = Math.random() * 1.8 + 0.5;
-                    this.alpha = Math.random() * 0.7 + 0.2;
-                    this.phase = Math.random() * Math.PI * 2;
-                    this.color = ["#f8fafc", "#1d4ed8", "#4c1d95"][Math.floor(Math.random() * 3)];
-                }
-
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
-
-                    this.x = Math.min(width, Math.max(0, this.x));
-                    this.y = Math.min(height, Math.max(0, this.y));
-
-                    this.alpha = 0.2 + (Math.sin(performance.now() * 0.0018 + this.phase) + 1) * 0.25;
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.globalAlpha = this.alpha;
-                    ctx.fill();
-                    ctx.globalAlpha = 1;
-                }
-            }
-
-            class Tendril {
-                constructor(a, b) {
-                    this.a = a;
-                    this.b = b;
-                    this.offset = Math.random() * Math.PI * 2;
-                    this.baseColor = a.color === palette.white ? palette.white : a.color;
-                }
-
-                update(time) {
-                    this.offset = time * 0.00008 + this.offset * 0.02;
-                }
-
-                draw() {
-                    const dx = this.b.x - this.a.x;
-                    const dy = this.b.y - this.a.y;
-                    const midX = (this.a.x + this.b.x) / 2;
-                    const midY = (this.a.y + this.b.y) / 2;
-                    const curve = 18;
-
-                    const waveX = midX + Math.sin(this.offset) * curve;
-                    const waveY = midY + Math.cos(this.offset * 1.4) * curve;
-
-                    ctx.beginPath();
-                    ctx.moveTo(this.a.x, this.a.y);
-                    ctx.quadraticCurveTo(waveX, waveY, this.b.x, this.b.y);
-
-                    ctx.strokeStyle = this.baseColor;
-                    ctx.lineWidth = 0.7;
-                    ctx.globalAlpha = 0.18;
-                    ctx.stroke();
-
-                    // faint glow layer
-                    ctx.beginPath();
-                    ctx.moveTo(this.a.x, this.a.y);
-                    ctx.quadraticCurveTo(waveX, waveY, this.b.x, this.b.y);
-
-                    ctx.strokeStyle = this.baseColor;
-                    ctx.lineWidth = 2.2;
-                    ctx.globalAlpha = 0.04;
-                    ctx.stroke();
-                    ctx.globalAlpha = 1;
-                }
-            }
-
-            function createTendrils() {
-                tendrils = [];
-                for (let i = 0; i < nodes.length; i++) {
-                    for (let j = i + 1; j < nodes.length; j++) {
-                        const distance = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-                        if (distance < 420) {
-                            tendrils.push(new Tendril(nodes[i], nodes[j]));
-                        }
-                    }
-                }
-            }
-
-            function initScene() {
-                nodes = navigationNodes.map(config => new InteractiveNode(config));
-                particles = [];
-
-                for (let i = 0; i < 120; i++) {
-                    particles.push(new GlitterParticle());
-                }
-
-                createTendrils();
-            }
-
-            function animate(time) {
-                ctx.clearRect(0, 0, width, height);
-
-                particles.forEach(p => p.update());
-                nodes.forEach(node => node.update(time));
-
-                // draw tendrils first
-                tendrils.forEach(t => t.update(time));
-                tendrils.forEach(t => t.draw());
-
-                // draw particles
-                particles.forEach(p => p.draw());
-
-                // draw nodes
-                nodes.forEach(node => node.draw());
-
-                requestAnimationFrame(animate);
-            }
-
-            let lastPointer = { x: 0, y: 0 };
-            let pointerActive = false;
-
-            canvas.addEventListener("mousemove", (event) => {
-                const rect = canvas.getBoundingClientRect();
-                const mx = event.clientX - rect.left;
-                const my = event.clientY - rect.top;
-
-                lastPointer.x = mx;
-                lastPointer.y = my;
-                pointerActive = true;
-
-                let hoverFound = false;
-                nodes.forEach(node => {
-                    if (node.hitTest(mx, my)) {
-                        hoverFound = true;
-                    }
-                });
-
-                canvas.style.cursor = hoverFound ? "pointer" : "default";
-            });
-
-            canvas.addEventListener("mouseleave", () => {
-                pointerActive = false;
-                nodes.forEach(node => {
-                    node.isHovered = false;
-                });
-                canvas.style.cursor = "default";
-            });
-
-            canvas.addEventListener("click", (event) => {
-                const rect = canvas.getBoundingClientRect();
-                const mx = event.clientX - rect.left;
-                const my = event.clientY - rect.top;
-
-                for (const node of nodes) {
-                    if (node.hitTest(mx, my)) {
-                        window.location.href = node.url;
-                        return;
-                    }
-                }
-            });
-
-            window.addEventListener("resize", () => {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-                initScene();
-            });
-
-            initScene();
-            requestAnimationFrame(animate);
-        }
-    </script>
+<!-- WEB POPUP -->
+<div class="modal" id="web-modal">
+    <div class="modal-panel">
+        <button class="modal-close" id="close-web" aria-label="Close">✕</button>
+
+        <iframe
+            src="network-viewer.html"
+            title="Interactive Network">
+        </iframe>
+    </div>
+</div>
+
+
+<!-- ##### All Javascript Script ##### -->
+
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<script src="js/bootstrap/popper.min.js"></script>
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/plugins/plugins.js"></script>
+<script src="js/active.js"></script>
 
 </body>
-
 </html>
