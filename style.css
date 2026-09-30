@@ -629,6 +629,87 @@ img {
       .single-hero-slide .hero-slides-content .btn:hover, .single-hero-slide .hero-slides-content .btn:focus {
         background-color: #fff;
         color: #000000; }
+/* =========================================
+   INTERNAL PAGE HERO
+   ========================================= */
+
+.internal-hero {
+    width: 100%;
+    height: 450px;
+
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+  background:
+    linear-gradient(
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.55)
+    ),
+    url("images/images/g (2).jpg");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.internal-hero-content {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+
+    text-align: center;
+}
+
+.internal-hero-content h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 60px;
+    line-height: 1;
+
+    font-weight: 400;
+
+    text-transform: capitalize;
+    letter-spacing: 15px;
+}
+
+.internal-hero-content h2 span {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    color: rgba(255, 255, 255, 0.15);
+
+    animation: textsonar 6s linear infinite;
+}
+
+
+/* MOBILE */
+
+@media only screen and (max-width: 767px) {
+
+    .internal-hero {
+        height: 300px;
+    }
+
+    .internal-hero-content h2 {
+        font-size: 36px;
+        letter-spacing: 7px;
+    }
+
+}
 
 @-webkit-keyframes textsonar {
   0% {
