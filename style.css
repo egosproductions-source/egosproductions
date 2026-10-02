@@ -1945,51 +1945,74 @@ font-family: "Exo", sans-serif;
 }
 
 /* =========================================
-   HERO IMAGE EFFECT
+   E-GOS HERO IMAGE
    ========================================= */
 
 .hero-image-effect {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto 30px auto;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 auto 30px auto !important;
+
+    /* Starting position */
+    opacity: 0 !important;
+    transform: translateY(50px) !important;
 
     /* Animation */
-    opacity: 0;
-    transform: translateY(30px);
-    animation: heroImageFadeIn 1s ease-out 0.3s forwards;
+    animation-name: eGosHeroImage !important;
+    animation-duration: 1.2s !important;
+    animation-timing-function: ease-out !important;
+    animation-delay: 0.3s !important;
+    animation-iteration-count: 1 !important;
+    animation-fill-mode: forwards !important;
 }
+
+
+/* THE IMAGE */
 
 .hero-image-main {
-    display: block;
-    width: auto;
-    max-width: 80%;
-    height: auto;
+    display: block !important;
+    position: relative !important;
 
-    /* Keep PNG transparency */
+    width: auto !important;
+    max-width: 80% !important;
+    height: auto !important;
+
     background: transparent !important;
-    border: none;
-    box-shadow: none;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-/* Fade + upward movement */
-@keyframes heroImageFadeIn {
+
+/* =========================================
+   ANIMATION
+   ========================================= */
+
+@keyframes eGosHeroImage {
+
     0% {
-        opacity: 0;
-        transform: translateY(30px);
+        opacity: 0 !important;
+        transform: translateY(50px) !important;
     }
 
     100% {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 1 !important;
+        transform: translateY(0) !important;
     }
+
 }
 
-/* Mobile */
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
 @media only screen and (max-width: 767px) {
+
     .hero-image-main {
-        max-width: 90%;
+        max-width: 90% !important;
     }
+
 }
