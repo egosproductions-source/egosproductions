@@ -1943,3 +1943,60 @@ font-family: "Exo", sans-serif;
         height: 300px;
     }
 }
+
+/* =========================================
+   HERO IMAGE EFFECT
+   ========================================= */
+
+.hero-image-effect {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+    max-width: 80%;
+    animation: heroImageFade 1s ease forwards;
+}
+
+/* Main image */
+.hero-image-main {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Duplicated image underneath */
+.hero-image-shadow {
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    left: 8px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.35;
+    filter: blur(2px);
+    transform: scale(1.02);
+    pointer-events: none;
+}
+
+/* Entrance animation */
+@keyframes heroImageFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile */
+@media only screen and (max-width: 767px) {
+    .hero-image-effect {
+        max-width: 90%;
+    }
+}
