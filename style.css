@@ -2034,3 +2034,53 @@ font-family: "Exo", sans-serif;
     height: 100%;
     border: 0;
 }
+
+/* =========================================
+   HEADER SOCIAL BUTTONS
+   ========================================= */
+
+.header-social-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 25px;
+}
+
+.header-social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    color: #ffffff;
+    font-size: 16px;
+
+    text-decoration: none;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.header-social-links a:hover {
+    color: #ffffff;
+    transform: translateY(-3px);
+    opacity: 0.7;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media only screen and (max-width: 991px) {
+
+    .header-social-links {
+        margin: 20px 0 10px 0;
+        justify-content: center;
+    }
+
+}
